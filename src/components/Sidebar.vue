@@ -19,44 +19,42 @@ async function logout() {
       <span class="fs-4">Sidebar</span>
     </a>
     <hr>
-    <ul class="nav nav-pills flex-column mb-auto">
-      <li>
-				<RouterLink to="/dashboard" class="nav-link text-white">
-					<i class="bi-eye"></i>
-					Dashboard
-				</RouterLink>
-      </li>
 
-			<li>
-				<RouterLink to="/rent" class="nav-link text-white">
-					<i class="bi-clipboard2-data-fill"></i>
-					Rental
-				</RouterLink>
-      </li>
+   <div class="nav nav-pills flex-column mb-auto text-white">
+			<RouterLink to="/dashboard" class="nav-link">
+				<i class="bi-eye"></i>
+				Dashboard
+			</RouterLink>
+		
 
-			<li>
-				<RouterLink to="/user" class="nav-link text-white">
-					<i class="bi-person-fill"></i>
-					User
-				</RouterLink>
-      </li>
+		
+			<RouterLink to="/rent" class="nav-link">
+				<i class="bi-clipboard2-data-fill"></i>
+				Rental
+			</RouterLink>
+		
 
-			<li>
-				<RouterLink to="/customer" class="nav-link text-white">
-					<i class="bi-person-lines-fill"></i>
-					Customers
-				</RouterLink>
-      </li>
+		
+			<RouterLink to="/user" class="nav-link">
+				<i class="bi-person-fill"></i>
+				User
+			</RouterLink>
+		
 
-			<li>
-				<RouterLink to="/gerobak" class="nav-link text-white">
-					<i class="bi-minecart-loaded"></i>
-					Gerobak
-				</RouterLink>
-      </li>
-    
-   
-    </ul>
+		
+			<RouterLink to="/customer" class="nav-link">
+				<i class="bi-person-lines-fill"></i>
+				Customers
+			</RouterLink>
+		
+
+		
+			<RouterLink to="/gerobak" class="nav-link">
+				<i class="bi-minecart-loaded"></i>
+				Gerobak
+			</RouterLink>
+    </div>
+
     <hr>
     <div class="dropdown">
       <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
@@ -75,7 +73,11 @@ async function logout() {
 </template>
 
 <style scoped>
-	.router-link-active{
+/* div.nav>a{
+	color: white;
+} */
+
+a.router-link-exact-active{
 		color: red;
 	}
 </style>

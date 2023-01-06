@@ -21,35 +21,35 @@ async function logout() {
     <hr>
 
    <div class="nav nav-pills flex-column mb-auto text-white">
-			<RouterLink to="/dashboard" class="nav-link">
+			<RouterLink to="/dashboard" class="nav-link" active-class="active">
 				<i class="bi-eye"></i>
 				Dashboard
 			</RouterLink>
 		
 
 		
-			<RouterLink to="/rent" class="nav-link">
+			<RouterLink to="/rent" class="nav-link" active-class="active">
 				<i class="bi-clipboard2-data-fill"></i>
 				Rental
 			</RouterLink>
 		
 
 		
-			<RouterLink to="/user" class="nav-link">
+			<RouterLink to="/user" class="nav-link" active-class="active">
 				<i class="bi-person-fill"></i>
 				User
 			</RouterLink>
 		
 
 		
-			<RouterLink to="/customer" class="nav-link">
+			<RouterLink to="/customer" class="nav-link" active-class="active">
 				<i class="bi-person-lines-fill"></i>
 				Customers
 			</RouterLink>
 		
 
 		
-			<RouterLink to="/gerobak" class="nav-link">
+			<RouterLink to="/gerobak" class="nav-link" active-class="active">
 				<i class="bi-minecart-loaded"></i>
 				Gerobak
 			</RouterLink>
@@ -73,11 +73,11 @@ async function logout() {
 </template>
 
 <style scoped>
-/* div.nav>a{
+.nav a{
 	color: white;
-} */
+}
 
 a.router-link-exact-active{
-		color: red;
+		/* color: red !important; */
 	}
 </style>

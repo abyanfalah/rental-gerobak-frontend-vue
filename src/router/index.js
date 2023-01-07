@@ -7,6 +7,9 @@ const router = createRouter({
       path: "/",
       name: "home",
       component: () => import("../views/Dashboard.vue"),
+      redirect: (to) => {
+        return { name: "dashboard" };
+      },
     },
     {
       path: "/login",
@@ -57,10 +60,14 @@ const router = createRouter({
   ],
 });
 
-// router.beforeEach((to, from, next) => {
-//   if (!authStore.isAuthenticated && !to.meta.authPage) {
-//     next("/login");
-//   }
-// });
+router.beforeEach((to, from, next) => {
+  // next({ name: "login" });
+  // next();
+  if (to.name != "login") {
+    next({ name: "login" });
+  } else {
+    next();
+  }
+});
 
 export default router;

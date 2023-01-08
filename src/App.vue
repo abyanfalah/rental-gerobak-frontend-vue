@@ -5,6 +5,8 @@ import Sidebar from './components/Sidebar.vue'
 
 const authStore = useAuthStore();
 
+console.log("isAuthenticated =>", authStore.isAuthenticated)
+
 </script>
 
 <template>

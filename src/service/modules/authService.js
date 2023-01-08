@@ -1,14 +1,15 @@
 import api from "../apiService";
-api.defaults.baseURL += "auth/";
+const url = api.defaults.baseURL + "auth/";
 
 export default {
   login: (username, password) => {
-    return api.post(`login`, {
+    console.log();
+    return api.post(url + "login", {
       username,
       password,
     });
   },
   logout: () => {
-    return api.post(`logout`);
+    return api.post(url + "logout");
   },
 };

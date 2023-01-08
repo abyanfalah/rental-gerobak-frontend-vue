@@ -1,14 +1,21 @@
 <script setup>
 import { ref } from 'vue';
-import userService from '../service/modules/userService';
+import router from '../router';
+import authService from '../service/modules/authService'
+import { useAuthStore } from '../stores/auth';
+
+const authStore = useAuthStore();
 
 const username = ref("")
 const password = ref("")
 
 async function login() {
 	try {
-		const response =	userService.login(username.value, password.value)
-		console.log(response)
+		const response = await authService.login(username.value, password.value)
+		if (response.status == 200) {
+			authStore.isAuthenticated = true;
+			router.push("/dashboard")
+		}
 	}
 	catch(err) {
 		console.error(err)

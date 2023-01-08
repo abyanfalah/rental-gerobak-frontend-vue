@@ -1,20 +1,20 @@
 import api from "../apiService";
-api.defaults.baseURL += "gerobak";
+const url = api.defaults.baseURL + "gerobak/";
 export default {
   getAll: () => {
     // TODO: add pagination params
-    return api.get();
+    return api.get(url);
   },
   getById: (id) => {
-    return api.get(`/${id}`);
+    return api.get(url + id);
   },
-  create: (newUser) => {
-    return api.post();
+  create: (newData) => {
+    return api.post(url, newData);
   },
   update: (newData) => {
-    return api.put(``);
+    return api.put(url, newData);
   },
   delete: (id) => {
-    return api.put(`/${id}`);
+    return api.put(url + id);
   },
 };

@@ -10,19 +10,17 @@ const username = ref("")
 const password = ref("")
 
 async function login() {
-authStore.isAuthenticated = true;
-			router.push("/dashboard")
 
-	// try {
-	// 	const response = await authService.login(username.value, password.value)
-	// 	if (response.status == 200) {
-	// 		authStore.isAuthenticated = true;
-	// 		router.push("/dashboard")
-	// 	}
-	// }
-	// catch(err) {
-	// 	console.error(err)
-	// }
+	try {
+		const response = await authService.login(username.value, password.value)
+		if (response.status == 200) {
+			authStore.isAuthenticated = true;
+			router.push("/dashboard")
+		}
+	}
+	catch(err) {
+		console.error(err)
+	}
 }	
 </script>
 

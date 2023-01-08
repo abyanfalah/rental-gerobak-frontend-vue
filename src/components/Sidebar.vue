@@ -4,22 +4,16 @@ import authService from '../service/modules/authService';
 import { useAuthStore } from '../stores/auth';
 const authStore = useAuthStore()
 async function logout() {
-	console.log(authStore.isAuthenticated)
-	authStore.isAuthenticated = false
-	console.log(authStore.isAuthenticated)
-	router.replace("/login")
-
-
-	// try {
-	// 	const response = await authService.logout()
-	// 	console.log(response)
-	// 	if (response.status == 200) {
-	// 		authStore.isAuthenticated == false
-	// 		router.push("/login")
-	// 	}
-	// } catch (err) {
-	// 	console.error(err)
-	// }
+	try {
+		const response = await authService.logout()
+		console.log(response)
+		if (response.status == 200) {
+			authStore.isAuthenticated = false
+			router.replace("/login")
+		}
+	} catch (err) {
+		console.error(err)
+	}
 }
 
 </script>

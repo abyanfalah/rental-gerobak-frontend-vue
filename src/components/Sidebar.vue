@@ -1,24 +1,34 @@
 <script setup>
-import userService from '../service/modules/userService';
-
+import router from '../router';
+import authService from '../service/modules/authService';
+import { useAuthStore } from '../stores/auth';
+const authStore = useAuthStore()
 async function logout() {
-	try {
-		const response = await userService.logout()
-		console.log(response)
-	} catch (err) {
-		console.error(err)
-	}
+	console.log(authStore.isAuthenticated)
+	authStore.isAuthenticated = false
+	console.log(authStore.isAuthenticated)
+	router.replace("/login")
+
+
+	// try {
+	// 	const response = await authService.logout()
+	// 	console.log(response)
+	// 	if (response.status == 200) {
+	// 		authStore.isAuthenticated == false
+	// 		router.push("/login")
+	// 	}
+	// } catch (err) {
+	// 	console.error(err)
+	// }
 }
 
 </script>
 
 <template>
 		 <div class="d-flex flex-column flex-shrink-0 p-3 text-white bg-dark position-fixed h-100" style="width: 280px;">
-    <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
-      <svg class="bi me-2" width="40" height="32"><use xlink:href="#bootstrap"/></svg>
-      <span class="fs-4">Sidebar</span>
-    </a>
-    <hr>
+    <router-link to="/" class="text-white text-center mb-4">
+			<i class="bi-minecart display-1 me-3"></i>
+		</router-link>
 
    <div class="nav nav-pills flex-column mb-auto text-white">
 			<RouterLink to="/dashboard" class="nav-link" active-class="active">
@@ -65,7 +75,7 @@ async function logout() {
       	<li><a class="dropdown-item" href="#">Profil</a></li>
         <li><hr class="dropdown-divider"></li>
         <li>
-					<button class="dropdown-item">Logout</button>
+					<button class="dropdown-item"  @click="logout">Logout</button>
 				</li>
       </ul>
     </div>
@@ -76,8 +86,4 @@ async function logout() {
 .nav a{
 	color: white;
 }
-
-a.router-link-exact-active{
-		/* color: red !important; */
-	}
 </style>

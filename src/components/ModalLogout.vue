@@ -9,6 +9,7 @@ async function logout() {
     const response = await authService.logout();
     if (response.status == 200) {
 			authStore.isAuthenticated = false;
+			authStore.user = null;
 			console.log("logout success");
       router.push("/login");
     }

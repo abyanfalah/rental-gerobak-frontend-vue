@@ -1,5 +1,5 @@
 <script setup>
-import { onMounted, ref } from "vue";
+import { onBeforeMount, onMounted, ref } from "vue";
 import gerobakService from "../service/modules/gerobakService"
 import gerobakTypeService from "../service/modules/gerobakTypeService"
 
@@ -29,8 +29,19 @@ async function getGerobakListWithType() {
 }
 
 
+function getBadgeColor(gerobakStatus) {
+	const colors = {
+		ada: "success",
+		disewa: "primary",
+	}
 
-onMounted(() => {
+	return colors[gerobakStatus.toLowerCase()];
+}
+
+
+
+
+onBeforeMount(() => {
 	getGerobakListWithType()
 });
 </script>
@@ -56,8 +67,15 @@ onMounted(() => {
 							<tr v-for="(gerobak, index) in gerobakList">
 								<td>{{ ++index }}</td>
 								<td>{{ gerobak.code }}</td>
+								<td>
+									<span
+										class="badge"
+										:class="`bg-${getBadgeColor(gerobak.status)}`"
+									 >
+										{{ gerobak.status }}
+									</span>
+								</td>
 								<!-- <td>{{ gerobakTypeNameList[gerobak.type_id] }}</td> -->
-								<td>{{ gerobak.status }}</td>
 								<td class="text-center">
 									<div class="btn-group btn-group-sm">
 										<button class="btn btn-primary">

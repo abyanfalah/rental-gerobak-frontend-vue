@@ -1,6 +1,6 @@
 <script setup>
 import capitalize from "capitalize";
-import { onMounted, ref } from "vue";
+import { onBeforeMount, onMounted, ref } from "vue";
 import customerService from "../service/modules/customerService";
 
 const customerList = ref();
@@ -17,7 +17,17 @@ async function getCustomer() {
   }
 }
 
-onMounted(() => {
+function getBadgeColor(rentStatus) {
+	const colors = {
+		ok: "success",
+		berlangsung: "primary",
+		partial: "warning"
+	}
+
+	return colors[rentStatus.toLowerCase()];
+}
+
+onBeforeMount(() => {
   getCustomer();
 });
 </script>
@@ -27,7 +37,7 @@ onMounted(() => {
     <div class="card mt-3">
       <div class="card-body">
         <h1>Tabel pelanggan</h1>
-					<p class="text-center muted" v-if="error">Error: cannot fetch data.</p>
+				<p class="text-center muted" v-if="error">Error: cannot fetch data.</p>
         <table v-else class="table table-borderless table-striped">
           <thead>
             <tr>

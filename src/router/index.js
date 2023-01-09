@@ -1,7 +1,6 @@
 import capitalize from "capitalize";
 import { createRouter, createWebHistory } from "vue-router";
 import { useAuthStore } from "../stores/auth";
-import authService from "../service/modules/authService";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),

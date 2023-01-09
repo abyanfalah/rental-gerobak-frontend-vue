@@ -8,7 +8,8 @@ export const useAuthStore = defineStore(
     const user = ref({});
     const isAuthenticated = ref(false);
     const isAdmin = computed(() => {
-      return user.value.access === "admin";
+      const access = user.value?.access ?? "user";
+      return access.toLowerCase() === "admin";
     });
 
     return {

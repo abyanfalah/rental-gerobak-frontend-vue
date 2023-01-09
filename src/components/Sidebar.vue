@@ -53,7 +53,7 @@ const authStore = useAuthStore();
         aria-expanded="false"
       >
         <!-- TODO: add user image -->
-        <strong>{{ capitalize.words(authStore.user.name) }}</strong>
+        <strong v-if="authStore.user">{{ capitalize.words(authStore.user.name) }}</strong>
       </a>
       <ul
         class="dropdown-menu dropdown-menu-dark text-small shadow"
@@ -70,6 +70,8 @@ const authStore = useAuthStore();
 </template>
 
 <style scoped>
+@import url("../assets/sidebars.css");
+
 .nav a {
   color: white;
 }

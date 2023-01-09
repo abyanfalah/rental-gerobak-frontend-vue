@@ -1,7 +1,73 @@
 <script setup>
-import { onMounted } from "vue";
+import { onMounted, ref } from "vue";
+import gerobakService from "../service/modules/gerobakService"
+import gerobakTypeService from "../service/modules/gerobakTypeService"
+
+
+const gerobakList = ref([])
+const georbakTypeList = ref({})
+
+async function getGerobakListWithType() {
+	try {
+		const responseGerobak = await gerobakService.getAll()
+		gerobakList.value = responseGerobak.data.data 
+
+		const responseGerobakType = await gerobakTypeService.getAll()
+		const typeList = responseGerobakType.data.data
+		typeList.forEach(gerobakType => {
+			georbakTypeList.value[gerobakType.id] = gerobakType;
+		});	
+	}
+	catch (err) {
+		console.error(err)
+	}
+}
+
+
+onMounted(() => {
+	getGerobakListWithType()
+});
 </script>
 
 <template>
-  <h1>Gerobak</h1>
+	<div>
+		  <div class="card mt-3">
+				<div class="card-body">
+					<h1>Tabel Gerobak</h1>
+					<table class="table table-borderless table-striped">
+						<thead>
+							<tr>
+								<th>#</th>
+								<th>Kode</th>
+								<th>Tipe</th>
+								<th>Status</th>
+								<th class="text-center">Opsi</th>
+							</tr>
+						</thead>
+
+						<tbody>
+							<tr v-for="(gerobak, index) in gerobakList">
+								<td>{{ ++index }}</td>
+								<td>{{ gerobak.code }}</td>
+								<td>{{ georbakTypeList[gerobak.type_id].name }}</td>
+								<td>{{ gerobak.status }}</td>
+								<td class="text-center">
+									<div class="btn-group btn-group-sm">
+										<button class="btn btn-primary">
+											<i class="bi-eye"></i>
+										</button>
+										<button class="btn btn-warning">
+											<i class="bi-pencil"></i>
+										</button>
+										<button class="btn btn-danger">
+											<i class="bi-trash"></i>
+										</button>
+									</div>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+    </div>
+	</div>
 </template>

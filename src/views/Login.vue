@@ -14,7 +14,8 @@ async function login() {
     const response = await authService.login(username.value, password.value);
 		if (response.status == 200) {
 			console.log("login success")
-      authStore.isAuthenticated = true;
+			authStore.isAuthenticated = true;
+			authStore.user = response.data.userdata;
       router.push("/dashboard");
     }
 	} catch (err) {

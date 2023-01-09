@@ -1,22 +1,10 @@
 <script setup>
+import capitalize from "capitalize";
 import router from "../router";
 import authService from "../service/modules/authService";
 import { useAuthStore } from "../stores/auth";
 const authStore = useAuthStore();
-async function logout() {
-  try {
-    const response = await authService.logout();
-    console.log(response);
-    if (response.status == 200) {
-      authStore.isAuthenticated = false;
-      router.replace("/login");
-    }
-  } catch (err) {
-    console.error(err);
-    authStore.isAuthenticated = false;
-    router.replace("/login");
-  }
-}
+
 </script>
 
 <template>
@@ -65,7 +53,7 @@ async function logout() {
         aria-expanded="false"
       >
         <!-- TODO: add user image -->
-        <strong>mdo</strong>
+        <strong>{{ capitalize.words(authStore.user.name) }}</strong>
       </a>
       <ul
         class="dropdown-menu dropdown-menu-dark text-small shadow"
@@ -74,7 +62,7 @@ async function logout() {
         <li><a class="dropdown-item" href="#">Profil</a></li>
         <li><hr class="dropdown-divider" /></li>
         <li>
-          <button class="dropdown-item" @click="logout">Logout</button>
+          <button class="dropdown-item" data-bs-toggle="modal" data-bs-target="#modalLogout">Logout</button>
         </li>
       </ul>
     </div>

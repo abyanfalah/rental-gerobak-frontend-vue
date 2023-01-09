@@ -3,8 +3,7 @@ import { RouterLink, RouterView } from "vue-router";
 import { useAuthStore } from "./stores/auth";
 import Sidebar from "./components/Sidebar.vue";
 import router from "./router";
-
-document.head.title = router.name;
+import ModalLogout from "./components/ModalLogout.vue";
 
 const authStore = useAuthStore();
 
@@ -14,7 +13,7 @@ console.log("isAuthenticated =>", authStore.isAuthenticated);
 <template>
   <div id="mainContainer" class="container-fluid ps-0">
     <div class="row">
-      <div v-if="authStore.isAuthenticated" class="col-md-3 pe-0">
+      <div v-if="!router.currentRoute.value.meta.isAuthPage" class="col-md-3 pe-0">
         <Sidebar />
       </div>
       <div class="col ps-0">
@@ -24,6 +23,8 @@ console.log("isAuthenticated =>", authStore.isAuthenticated);
       </div>
     </div>
   </div>
+
+	<ModalLogout />
 </template>
 
 <style scoped>

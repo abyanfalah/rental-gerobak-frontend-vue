@@ -1,5 +1,5 @@
 <script setup></script>
 
 <template>
-	<h1>Rent</h1>
+  <h1>Rent</h1>
 </template>

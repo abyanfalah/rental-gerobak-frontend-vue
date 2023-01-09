@@ -1,3 +1,4 @@
+import capitalize from "capitalize";
 import { createRouter, createWebHistory } from "vue-router";
 import { useAuthStore } from "../stores/auth";
 
@@ -8,7 +9,7 @@ const router = createRouter({
       path: "/",
       name: "home",
       component: () => import("../views/Dashboard.vue"),
-      redirect: (to) => {
+      redirect: () => {
         return { name: "dashboard" };
       },
     },
@@ -62,6 +63,11 @@ const router = createRouter({
 });
 
 router.beforeEach((to, from, next) => {
+  document.title = `${import.meta.env.VITE_APP_NAME} - ${capitalize.words(
+    to.name
+  )}`;
+
+  // auth guard router
   const authStore = useAuthStore();
   if (!authStore.isAuthenticated && !to.meta.isAuthPage) {
     next({ name: "login" });

@@ -1,4 +1,5 @@
 <script setup>
+import capitalize from "capitalize";
 import { onMounted, ref } from "vue";
 import userService from "../service/modules/userService";
 
@@ -12,6 +13,15 @@ async function getUser() {
   } catch (err) {
     console.error(err);
   }
+}
+
+function getBadgeColor(userAccess) {
+	const colors = {
+		admin: "danger",
+		user: "primary"
+	}
+
+	return colors[userAccess.toLowerCase()];
 }
 
 onMounted(() => {
@@ -39,8 +49,15 @@ onMounted(() => {
             <tr v-for="(user, index) in userList">
               <td>{{ ++index }}</td>
               <td>{{ user.username }}</td>
-              <td>{{ user.name }}</td>
-              <td>{{ user.access }}</td>
+              <td>{{ capitalize.words(user.name) }}</td>
+              <td>
+								<span 
+									class="badge"
+									:class="`bg-${getBadgeColor(user.access)}`"
+								>
+									{{ capitalize(user.access) }}
+								</span>
+							</td>
               <td class="text-center">
                 <div class="btn-group btn-group-sm">
                   <button class="btn btn-primary">

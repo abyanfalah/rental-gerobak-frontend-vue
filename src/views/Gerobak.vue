@@ -5,7 +5,7 @@ import gerobakTypeService from "../service/modules/gerobakTypeService"
 
 
 const gerobakList = ref([])
-const georbakTypeList = ref({})
+const gerobakTypeNameList = ref({})
 
 async function getGerobakListWithType() {
 	try {
@@ -15,13 +15,14 @@ async function getGerobakListWithType() {
 		const responseGerobakType = await gerobakTypeService.getAll()
 		const typeList = responseGerobakType.data.data
 		typeList.forEach(gerobakType => {
-			georbakTypeList.value[gerobakType.id] = gerobakType;
+			gerobakTypeNameList.value[gerobakType.id] = gerobakType.name;
 		});	
 	}
 	catch (err) {
 		console.error(err)
 	}
 }
+
 
 
 onMounted(() => {
@@ -39,7 +40,7 @@ onMounted(() => {
 							<tr>
 								<th>#</th>
 								<th>Kode</th>
-								<th>Tipe</th>
+								<!-- <th>Tipe</th> -->
 								<th>Status</th>
 								<th class="text-center">Opsi</th>
 							</tr>
@@ -49,7 +50,7 @@ onMounted(() => {
 							<tr v-for="(gerobak, index) in gerobakList">
 								<td>{{ ++index }}</td>
 								<td>{{ gerobak.code }}</td>
-								<td>{{ georbakTypeList[gerobak.type_id].name }}</td>
+								<!-- <td>{{ gerobakTypeNameList[gerobak.type_id] }}</td> -->
 								<td>{{ gerobak.status }}</td>
 								<td class="text-center">
 									<div class="btn-group btn-group-sm">

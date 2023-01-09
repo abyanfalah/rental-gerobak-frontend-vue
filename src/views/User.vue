@@ -4,14 +4,17 @@ import { onMounted, ref } from "vue";
 import userService from "../service/modules/userService";
 
 const userList = ref();
-
+const error = ref(false)
 async function getUser() {
   try {
     const response = await userService.getAll();
-    console.log(response.data.data);
-    userList.value = response.data.data;
+		error.value = false
+    // console.log(response.data.data);
+		userList.value = response.data.data;
   } catch (err) {
-    console.error(err);
+		console.error(err);
+		error.value = true
+		
   }
 }
 
@@ -24,6 +27,10 @@ function getBadgeColor(userAccess) {
 	return colors[userAccess.toLowerCase()];
 }
 
+function ale() {
+	alert("hey ale")
+}
+
 onMounted(() => {
   getUser();
 });
@@ -34,7 +41,8 @@ onMounted(() => {
     <div class="card mt-3">
       <div class="card-body">
         <h1>Tabel user</h1>
-        <table id="tableBarang" class="table table-borderless table-striped">
+				<p class="text-center muted" v-if="error">Error: cannot fetch data.</p>
+				<table v-else class="table table-borderless table-hover">
           <thead>
             <tr>
               <th>#</th>
@@ -46,7 +54,7 @@ onMounted(() => {
           </thead>
 
           <tbody>
-            <tr v-for="(user, index) in userList">
+            <tr @click="ale" v-for="(user, index) in userList">
               <td>{{ ++index }}</td>
               <td>{{ user.username }}</td>
               <td>{{ capitalize.words(user.name) }}</td>

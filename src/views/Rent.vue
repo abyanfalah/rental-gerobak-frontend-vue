@@ -4,13 +4,17 @@ import { onMounted, ref } from "vue";
 import rentService from "../service/modules/rentService";
 
 const rentList = ref();
+const error = ref(false)
+
 
 async function getRent() {
   try {
     const response = await rentService.getAll();
-    console.log(response.data.data);
+    // console.log(response.data.data);
+		error.value = false
     rentList.value = response.data.data;
   } catch (err) {
+		error.value = true
     console.error(err);
   }
 }
@@ -35,7 +39,8 @@ onMounted(() => {
     <div class="card mt-3">
       <div class="card-body">
         <h1>Tabel rental</h1>
-        <table class="table table-borderless table-striped">
+				<p class="text-center muted" v-if="error">Error: cannot fetch data.</p>
+        <table v-else class="table table-borderless table-striped">
           <thead>
             <tr>
               <th>#</th>

@@ -6,6 +6,7 @@ import gerobakTypeService from "../service/modules/gerobakTypeService"
 
 const gerobakList = ref([])
 const gerobakTypeNameList = ref({})
+const error = ref(false)
 
 async function getGerobakListWithType() {
 	try {
@@ -14,12 +15,16 @@ async function getGerobakListWithType() {
 
 		const responseGerobakType = await gerobakTypeService.getAll()
 		const typeList = responseGerobakType.data.data
+
 		typeList.forEach(gerobakType => {
 			gerobakTypeNameList.value[gerobakType.id] = gerobakType.name;
 		});	
+
+		error.value = false
 	}
 	catch (err) {
 		console.error(err)
+		error.value = true
 	}
 }
 
@@ -35,7 +40,8 @@ onMounted(() => {
 		  <div class="card mt-3">
 				<div class="card-body">
 					<h1>Tabel Gerobak</h1>
-					<table class="table table-borderless table-striped">
+					<p class="text-center muted" v-if="error">Error: cannot fetch data.</p>
+					<table v-else class="table table-borderless table-striped">
 						<thead>
 							<tr>
 								<th>#</th>

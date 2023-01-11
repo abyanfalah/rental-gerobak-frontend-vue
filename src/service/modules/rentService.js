@@ -11,7 +11,11 @@ export default {
     });
   },
   getById: (id) => {
-    return api.get(url + id);
+    return api.get(url + id, {
+      params: {
+        get_view: true,
+      },
+    });
   },
   create: (newData) => {
     return api.post(url, newData);

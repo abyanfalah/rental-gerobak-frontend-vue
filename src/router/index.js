@@ -59,10 +59,11 @@ const router = createRouter({
       component: () => import("../views/Rent.vue"),
     },
     {
-      path: ":id",
+      path: "/rent/:id",
       name: "rentDetail",
       component: () => import("../views/RentDetail.vue"),
       props: true,
+      alias: "/rent",
     },
   ],
 });

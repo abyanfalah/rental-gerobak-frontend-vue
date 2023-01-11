@@ -4,6 +4,7 @@ import { useAuthStore } from "./stores/auth";
 import Sidebar from "./components/Sidebar.vue";
 import router from "./router";
 import ModalLogout from "./components/ModalLogout.vue";
+import ModalError from "./components/ModalError.vue";
 
 const authStore = useAuthStore();
 
@@ -16,7 +17,6 @@ const authStore = useAuthStore();
     <div class="row">
       <div v-if="!router.currentRoute.value.meta.isAuthPage" class="col-md-3 pe-0">
         <Sidebar v-if="authStore.isAuthenticated && !router.currentRoute.value.meta.isAuthPage" />
-        <!-- <Sidebar v-if="!router.currentRoute.value.meta.isAuthPage" /> -->
       </div>
       <div class="col ps-0">
         <div class="mt-3">
@@ -27,10 +27,5 @@ const authStore = useAuthStore();
   </div>
 
 	<ModalLogout />
+	<ModalError />
 </template>
-
-<style scoped>
-	/* #mainContainer{
-		min-height: 100%;
-	} */
-</style>

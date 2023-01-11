@@ -8,19 +8,31 @@ const authStore = useAuthStore();
 
 const username = ref("");
 const password = ref("");
+const errorMessage = ref()
 
 async function login() {
   try {
     const response = await authService.login(username.value, password.value);
-		if (response.status == 200) {
-			console.log("login success")
-			authStore.isAuthenticated = true;
-			authStore.user = response.data.userdata;
-      router.push("/dashboard");
-    }
-	} catch (err) {
 		console.log("login success")
-    console.error(err);
+		authStore.isAuthenticated = true;
+		authStore.user = response.data.userdata;
+		router.push("/dashboard");
+	
+	} catch (err) {
+		console.error(err)
+	
+
+		switch (err.response.status) {
+			case 400: errorMessage.value = "Username atau password tidak valid.";
+				break;
+			case 500: errorMessage.value = "Terjadi error pada server. Bersihkan cache browser, log out dari komputer. Bila masih terjadi error, hubungi admin.";
+				break;
+
+			default: errorMessage.value = err.message;
+		}
+
+
+		console.log(errorMessage.value)
   }
 }
 </script>

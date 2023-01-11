@@ -58,6 +58,12 @@ const router = createRouter({
       name: "rent",
       component: () => import("../views/Rent.vue"),
     },
+    {
+      path: ":id",
+      name: "rentDetail",
+      component: () => import("../views/RentDetail.vue"),
+      props: true,
+    },
   ],
 });
 

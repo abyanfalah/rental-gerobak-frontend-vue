@@ -7,14 +7,15 @@ import ModalLogout from "./components/ModalLogout.vue";
 
 const authStore = useAuthStore();
 
-console.log("isAuthenticated =>", authStore.isAuthenticated);
+
+	console.log("app.authStore.isAuthenticated =>", authStore.isAuthenticated);
 </script>
 
 <template>
   <div id="mainContainer" class="container-fluid ps-0">
     <div class="row">
       <div v-if="!router.currentRoute.value.meta.isAuthPage" class="col-md-3 pe-0">
-        <Sidebar v-if="authStore.isAuthenticated" />
+        <Sidebar v-if="authStore.isAuthenticated && !router.currentRoute.value.meta.isAuthPage" />
         <!-- <Sidebar v-if="!router.currentRoute.value.meta.isAuthPage" /> -->
       </div>
       <div class="col ps-0">

@@ -23,10 +23,13 @@ app.use(VueAxios, axios);
 app.use(pinia);
 
 // check session to server.
-console.log("session check => ", await authService.checkAuth());
+// console.log("session check => ", await authService.checkAuth());
 
-if (!(await authService.checkAuth())) {
-  router.push("/login");
+try {
+  await authService.checkAuth();
+} catch (err) {
+  console.error(err);
+  alert(`${err.message}: you may forgot to run the backend`);
 }
 
 app.mount("#app");

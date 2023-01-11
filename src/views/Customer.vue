@@ -17,16 +17,6 @@ async function getCustomer() {
   }
 }
 
-function getBadgeColor(rentStatus) {
-	const colors = {
-		ok: "success",
-		berlangsung: "primary",
-		partial: "warning"
-	}
-
-	return colors[rentStatus.toLowerCase()];
-}
-
 onBeforeMount(() => {
   getCustomer();
 });

@@ -14,7 +14,8 @@ console.log("isAuthenticated =>", authStore.isAuthenticated);
   <div id="mainContainer" class="container-fluid ps-0">
     <div class="row">
       <div v-if="!router.currentRoute.value.meta.isAuthPage" class="col-md-3 pe-0">
-        <Sidebar v-if="!router.currentRoute.value.meta.isAuthPage" />
+        <Sidebar v-if="authStore.isAuthenticated" />
+        <!-- <Sidebar v-if="!router.currentRoute.value.meta.isAuthPage" /> -->
       </div>
       <div class="col ps-0">
         <div class="mt-3">

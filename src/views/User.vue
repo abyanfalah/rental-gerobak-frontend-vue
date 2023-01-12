@@ -1,6 +1,7 @@
 <script setup>
 import capitalize from "capitalize";
 import { onMounted, ref } from "vue";
+import dateTimeService from "../service/modules/dateTimeService";
 import userService from "../service/modules/userService";
 
 const userList = ref();
@@ -40,13 +41,15 @@ onMounted(() => {
 
 <template>
 	<div>
+		<h1>Tabel user</h1>
 		<div class="row">
-			<div class="col-md-6 pt-3">
+
+			<!-- user table column -->
+			<div class="col-md-6">
 				<div class="card">
 					<div class="card-body">
-						<h1>Tabel user</h1>
 						<p class="text-center muted" v-if="error">Error: cannot fetch data.</p>
-						<table v-else class="table table-borderless table-hover">
+						<table v-else class="table  table-hover">
 							<thead>
 								<tr>
 									<th>#</th>
@@ -76,48 +79,75 @@ onMounted(() => {
 				</div>
 			</div>
 
+			<!-- user detail column -->
 			<div class="col-md-6">
+				<div class="card sticky-top shadow-sm" v-if="choosenUser.id">
+					<div class="card-header d-flex justify-content-around">
+						Detail user
+						<small class="ms-auto">
+							<button class="btn-close" @click="choosenUser = {}"></button>
+						</small>
+					</div>
+					<div class="card-body p-4">
+						<div class="row mb-3">
+							<div class="col-md-4 text-muted">ID</div>
+							<div class="col"><small>{{ choosenUser.id }}</small></div>
+						</div>
 
-				<div class="sticky-top pt-3">
-					<div class="card shadow-sm" v-if="choosenUser.id">
-						<div class="card-header d-flex justify-content-around">
-							Detail user
-							<small class="ms-auto">
-								<button class="btn-close" @click="choosenUser = {}"></button>
-							</small>
+						<div class="row mb-3">
+							<div class="col-md-4 text-muted">Nama</div>
+							<div class="col">{{ choosenUser.name }}</div>
 						</div>
-						<div class="card-body">
-							<table class="table table-striped">
-								<tr>
-									<td class="text-muted">Nama</td>
-									<td class="text-muted">:</td>
-									<td>{{ capitalize.words(choosenUser.name) }}</td>
-								</tr>
-	
-								<tr>
-									<td class="text-muted">Username</td>
-									<td class="text-muted">:</td>
-									<td>{{ choosenUser.username }}</td>
-								</tr>
-	
-								<tr>
-									<td class="text-muted">Tipe akses</td>
-									<td class="text-muted">:</td>
-									<td>
-										<span class="badge badge-sm" :class="`bg-${getBadgeColor(choosenUser.access)}`">
-											{{ choosenUser.access }}
+
+						<div class="row mb-3">
+							<div class="col-md-4 text-muted">Username</div>
+							<div class="col">{{ choosenUser.username }}</div>
+						</div>
+
+						<div class="row mb-3">
+							<div class="col-md-4 text-muted">Akses</div>
+							<div class="col">
+								<span 
+											class="badge"
+											:class="`bg-${getBadgeColor(choosenUser.access)}`"
+										>
+											{{ capitalize(choosenUser.access) }}
 										</span>
-									</td>
-								</tr>
-	
-							</table>
+							</div>
 						</div>
+
+						<div class="row mb-3">
+							<div class="col-md-4 text-muted">Registrasi</div>
+							<div class="col">{{ dateTimeService(choosenUser.created_at).full() }}</div>
+						</div>
+
+						<div class="row mb-3">
+							<div class="col-md-4 text-muted">Update terakhir</div>
+							<div class="col">{{ choosenUser.updated_at ? dateTimeService(choosenUser.updated_at).full() : '-' }}</div>
+						</div>
+
+						<div class="row">
+							<div class="col text-end">
+								<button class="btn btn-warning">
+									<i class="bi-pencil"></i>
+									Edit
+								</button>
+
+								<button class="btn btn-danger ms-1">
+									<i class="bi-trash"></i>
+									Hapus
+								</button>
+							</div>
+						</div>
+
 					</div>
 				</div>
-
-
 			</div>
 		</div>
+	</div>
+
+	<div v-if="choosenUser">
+		{{ choosenUser }}
 	</div>
 
 </template>

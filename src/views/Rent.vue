@@ -44,16 +44,16 @@ onMounted(() => {
 </script>
 
 <template>
-	<div class="container-fluid">
+	<div class="container-fluid ms-0 ps-0">
+		<h1 class="mb-3">Daftar penyewaan</h1>
 		<div class="row">
-			<div class="col-md-4" v-for="(rent, index) in rentList">
+			<div class="col-md-4 mb-3" v-for="(rent, index) in rentList">
 				<RouterLink :to="`rent/${rent.id}`" class="text-decoration-none">
 					<div 
 						class="card shadow-sm"
 						:class="[`bg-${getBadgeColor(rent.status)}`, getTextColor(rent.status)]"
 					>
 						<div class="card-body">
-							
 							<div class="row">
 								<div class="col">
 									<span class="fs-3">

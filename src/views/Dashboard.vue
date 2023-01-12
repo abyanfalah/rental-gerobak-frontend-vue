@@ -9,15 +9,17 @@ const indexStore = useIndexStore()
 
 onMounted(function () {
 	setTimeout(function () {
+		// document.querySelector("#welcomeAlert").hide()
 		indexStore.justLoggedIn = false;
-	}, 5000)
+	}, 2000)
 })
 </script>
 
 <template>
   <h1>Dashboard</h1>
-	<div v-if="indexStore.justLoggedIn" class="alert alert-success d-flex flex-row justify-content-between">
+	<div v-if="indexStore.justLoggedIn" id="welcomeAlert" class="alert alert-success alert-dismissible">
 		Welcome {{ capitalize(authStore.user.name) }}
 		<button class="btn-close" data-bs-dismiss="alert" @click="indexStore.justLoggedIn = false"></button>
 	</div>
+
 </template>

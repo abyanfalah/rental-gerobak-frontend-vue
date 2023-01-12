@@ -67,13 +67,6 @@ onMounted(() => {
 
 							<div class="row my-3">
 								<div class="col">
-									<!-- <div class="row">
-										<div class="col">
-											<small>
-												<div class="badge">Start</div>
-											</small>
-										</div>
-									</div> -->
 									<div class="row">
 										<div class="col">
 											<div class="badge bg-light text-start" :class="`text-${getBadgeColor(rent.status)}`">
@@ -87,36 +80,6 @@ onMounted(() => {
 										</div>
 									</div>
 								</div>
-
-								<!-- <div class="col d-flex justify-content-center align-items-center">to</div> -->
-
-								<!-- <div class="col">
-									<div class="row">
-										<div class="col">
-											<small>
-												<div class="badge">End</div>
-											</small>
-										</div>
-									</div>
-
-
-
-									<div class="row">
-										<div class="col">
-											<div class="badge bg-light text-start" :class="`text-${getBadgeColor(rent.status)}`">
-												<div class="row">
-													<div class="col">{{ getDateTime(rent.created_at).date }}</div>
-												</div>
-												<div class="row mt-2">
-													<div class="col">{{ getDateTime(rent.created_at).time }}</div>
-												</div>
-											</div>
-										</div>
-
-									
-										
-									</div>
-								</div> -->
 							</div>
 
 							<div class="row">

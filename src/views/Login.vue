@@ -2,12 +2,15 @@
 import { ref } from "vue";
 import router from "../router";
 import authService from "../service/modules/authService";
+import { useIndexStore } from "../stores";
 import { useAuthStore } from "../stores/auth";
 
-const authStore = useAuthStore();
 
-const username = ref("");
-const password = ref("");
+const authStore = useAuthStore();
+const indexStore = useIndexStore();
+
+const username = ref("admin");
+const password = ref("admin");
 const errorMessage = ref()
 
 async function login() {
@@ -16,6 +19,8 @@ async function login() {
 		console.log("login success")
 		authStore.isAuthenticated = true;
 		authStore.user = response.data.userdata;
+
+		indexStore.justLoggedIn = true;
 		router.push("/dashboard");
 	
 	} catch (err) {

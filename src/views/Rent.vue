@@ -3,6 +3,7 @@ import capitalize from "capitalize";
 import { onMounted, ref } from "vue";
 import rentService from "../service/modules/rentService";
 import bahasaDateTime from "../helper/indonesian-day-month"
+import getDateTime from "../service/modules/dateTimeService";
 
 const rentList = ref();
 const error = ref(false)
@@ -37,16 +38,6 @@ function getTextColor(rentStatus) {
 	}
 }
 
-function getDateTime(rentDate) {
-	const dateTime = new Date(rentDate)
-	const date = `${bahasaDateTime.day(dateTime.getDay())} ${dateTime.getDate()} ${bahasaDateTime.shortMonth(dateTime.getMonth())} ${dateTime.getFullYear()}`
-	const time = `${dateTime.getHours()} : ${dateTime.getMinutes()}`
-	
-	return {
-		date,
-		time
-	}
-}
 
 onMounted(() => {
   getRent();

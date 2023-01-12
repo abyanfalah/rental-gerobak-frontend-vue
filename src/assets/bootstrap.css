@@ -6203,7 +6203,7 @@ textarea.form-control-lg {
 .sticky-top {
   position: -webkit-sticky;
   position: sticky;
-  top: 0;
+  top: 0.5em;
   z-index: 1020;
 }
 

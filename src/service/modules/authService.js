@@ -1,5 +1,6 @@
 import { useAuthStore } from "../../stores/auth";
 import api from "../apiService";
+import router from "../../router";
 const url = api.defaults.baseURL + "auth/";
 
 export default {
@@ -15,8 +16,9 @@ export default {
   },
   checkAuth: async () => {
     const authStore = useAuthStore();
-    const response = (await api.get(url + "isLogin")).data;
-    authStore.isAuthenticated = response;
-    return response;
+    const isAuthenticated = (await api.get(url + "isLogin")).data;
+    if (!isAuthenticated) router.push("/login");
+    authStore.isAuthenticated = isAuthenticated;
+    return isAuthenticated;
   },
 };

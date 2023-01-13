@@ -3,6 +3,12 @@ import capitalize from "capitalize";
 import { onMounted, ref } from "vue";
 import dateTimeService from "../service/modules/dateTimeService";
 import userService from "../service/modules/userService";
+import ModalUserDelete from "../components/ModalUserDelete.vue"
+import { useIndexStore } from "../stores/index"
+import { useAuthStore } from "../stores/auth";
+
+const indexStore = useIndexStore()
+const authStore = useAuthStore(0)
 
 const userList = ref();
 const error = ref(false)
@@ -32,6 +38,8 @@ function getBadgeColor(userAccess) {
 
 function showUser(user) {
 	choosenUser.value = user
+	indexStore.choosenUser = user
+	
 }
 
 onMounted(() => {
@@ -41,7 +49,18 @@ onMounted(() => {
 
 <template>
 	<div>
-		<h1>Tabel user</h1>
+		<div class="row">
+			<div class="col">
+				<h1>Tabel user</h1>
+			</div>
+			<div class="col text-end">
+				<RouterLink class="btn btn-success shadow" to="/user/registration">
+					Tambah user baru
+					<i class="bi-plus"></i>
+				</RouterLink>
+			</div>
+		</div>
+
 		<div class="row">
 
 			<!-- user table column -->
@@ -126,17 +145,34 @@ onMounted(() => {
 							<div class="col">{{ choosenUser.updated_at ? dateTimeService(choosenUser.updated_at).full() : '-' }}</div>
 						</div>
 
-						<div class="row">
+						<div class="row" v-if="choosenUser.username != 'admin'">
 							<div class="col text-end">
+
+								<button class="btn me-1" :class="choosenUser.access == 'admin' ? 'btn-primary': 'btn-success'" v-if="authStore.isAdmin">
+									<div v-if="choosenUser.access !== 'admin'">
+										<i class="bi-person-check-fill"></i>
+										Jadikan sebagai admin
+									</div>
+
+									<div v-else>
+										<i class="bi-person-x-fill"></i>
+										Cabut akses admin
+									</div>
+									
+								</button>
+
 								<button class="btn btn-warning">
 									<i class="bi-pencil"></i>
 									Edit
 								</button>
 
-								<button class="btn btn-danger ms-1">
+
+								<button class="btn btn-danger ms-1" data-bs-toggle="modal" data-bs-target="#modalUserDelete">
 									<i class="bi-trash"></i>
 									Hapus
 								</button>
+
+								
 							</div>
 						</div>
 
@@ -146,8 +182,9 @@ onMounted(() => {
 		</div>
 	</div>
 
-	<div v-if="choosenUser">
+	<div v-if="choosenUser.id">
 		{{ choosenUser }}
 	</div>
 
+	<ModalUserDelete />
 </template>

@@ -24,42 +24,46 @@ onBeforeMount(() => {
 
 <template>
   <div>
-    <div class="card mt-3">
-      <div class="card-body">
-        <h1>Tabel pelanggan</h1>
-				<p class="text-center muted" v-if="error">Error: cannot fetch data.</p>
-        <table v-else class="table table-borderless table-striped">
-          <thead>
-            <tr>
-              <th>#</th>
-              <th>Nama</th>
-              <th>Telepon</th>
-              <th class="text-center">Opsi</th>
-            </tr>
-          </thead>
-
-          <tbody>
-            <tr v-for="(customer, index) in customerList">
-              <td>{{ ++index }}</td>
-              <td>{{ capitalize.words(customer.name) }}</td>
-              <td>{{ customer.phone }}</td>
-              <td class="text-center">
-                <div class="btn-group btn-group-sm">
-                  <button class="btn btn-primary">
-                    <i class="bi-eye"></i>
-                  </button>
-                  <button class="btn btn-warning">
-                    <i class="bi-pencil"></i>
-                  </button>
-                  <button class="btn btn-danger">
-                    <i class="bi-trash"></i>
-                  </button>
-                </div>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
+		<div class="row">
+			<div class="col-md-6">
+				<div class="card mt-3">
+					<div class="card-body">
+						<h1>Tabel pelanggan</h1>
+						<p class="text-center muted" v-if="error">Error: cannot fetch data.</p>
+						<table v-else class="table table-borderless table-striped">
+							<thead>
+								<tr>
+									<th>#</th>
+									<th>Nama</th>
+									<th>Telepon</th>
+									<th class="text-center">Opsi</th>
+								</tr>
+							</thead>
+		
+							<tbody>
+								<tr v-for="(customer, index) in customerList">
+									<td>{{ ++index }}</td>
+									<td>{{ capitalize.words(customer.name) }}</td>
+									<td>{{ customer.phone }}</td>
+									<td class="text-center">
+										<div class="btn-group btn-group-sm">
+											<button class="btn btn-primary">
+												<i class="bi-eye"></i>
+											</button>
+											<button class="btn btn-warning">
+												<i class="bi-pencil"></i>
+											</button>
+											<button class="btn btn-danger">
+												<i class="bi-trash"></i>
+											</button>
+										</div>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
   </div>
 </template>

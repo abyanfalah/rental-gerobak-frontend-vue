@@ -39,6 +39,14 @@ const router = createRouter({
       component: () => import("../views/User.vue"),
     },
     {
+      path: "/user/registration",
+      name: "userRegistration",
+      component: () => import("../views/UserRegistration.vue"),
+      meta: {
+        isImportant: true,
+      },
+    },
+    {
       path: "/customer",
       name: "customer",
       component: () => import("../views/Customer.vue"),
@@ -63,7 +71,7 @@ const router = createRouter({
       name: "rentDetail",
       component: () => import("../views/RentDetail.vue"),
       props: true,
-      alias: "/rent",
+      alias: "/rent/:id",
     },
   ],
 });

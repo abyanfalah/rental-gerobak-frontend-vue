@@ -5,6 +5,8 @@ import Sidebar from "./components/Sidebar.vue";
 import router from "./router";
 import ModalLogout from "./components/ModalLogout.vue";
 import ModalError from "./components/ModalError.vue";
+import ModalTaskSuccess from "./components/ModalTaskSuccess.vue";
+import ModalPageLeave from "./components/ModalPageLeave.vue";
 
 const authStore = useAuthStore();
 
@@ -28,4 +30,6 @@ const authStore = useAuthStore();
 
 	<ModalLogout />
 	<ModalError />
+	<ModalTaskSuccess />
+	<ModalPageLeave />
 </template>

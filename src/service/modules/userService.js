@@ -16,6 +16,6 @@ export default {
     return api.put(url, newData);
   },
   delete: (id) => {
-    return api.put(url + id);
+    return api.delete(url + id);
   },
 };

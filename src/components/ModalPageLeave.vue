@@ -24,14 +24,15 @@ async function logout() {
 </script>
 
 <template>
-	<div class="modal fade" data-bs-backdrop="static" id="modalLogout" >
+	<div class="modal fade" data-bs-backdrop="static" id="modalPageLeave" >
 		<div class="modal-dialog modal-dialog-centered">
 			<div class="modal-content">
 				<div class="modal-header bg-danger text-white">
-					<h5 class="modal-title" id="exampleModalLabel">Logout</h5>
+					<h5 class="modal-title" id="exampleModalLabel">Tinggalkan halaman?</h5>
 				</div>
 				<div class="modal-body">
-					Anda yakin ingin logout?
+					Perubahan yang belum tersimpan akan hilang.
+					Anda yakin meninggalkan halaman? 
 				</div>
 				<div class="modal-footer border-0">
 					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>

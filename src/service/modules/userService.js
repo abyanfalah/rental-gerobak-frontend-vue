@@ -12,8 +12,8 @@ export default {
   create: (newData) => {
     return api.post(url, newData);
   },
-  update: (newData) => {
-    return api.put(url, newData);
+  update: (newData, id) => {
+    return api.put(url + id, newData);
   },
   delete: (id) => {
     return api.delete(url + id);

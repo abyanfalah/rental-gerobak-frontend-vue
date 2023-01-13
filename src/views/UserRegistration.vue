@@ -148,6 +148,5 @@ async function registerUser() {
 		</div>
 
 
-		<button class="btn btn-primary" @click="router.push('/user')">go back</button>
 	</div>
 </template>

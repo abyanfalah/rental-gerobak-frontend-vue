@@ -93,6 +93,15 @@ onMounted(() => {
 										</span>
 									</td>
 								</tr>
+								
+								<tr>
+									<td colspan="4">
+										<RouterLink class="btn btn-success d-block shadow" to="/user/registration">
+											Tambah user baru
+											<i class="bi-plus"></i>
+										</RouterLink>
+									</td>
+								</tr>
 							</tbody>
 						</table>
 					</div>
@@ -101,7 +110,7 @@ onMounted(() => {
 
 			<!-- user detail column -->
 			<div class="col-md-6">
-				<div class="card sticky-top shadow-sm" v-if="choosenUser.id">
+				<div class="card sticky-top" v-if="choosenUser.id">
 					<div class="card-header d-flex justify-content-around">
 						Detail user
 						<small class="ms-auto">
@@ -162,11 +171,10 @@ onMounted(() => {
 									
 								</button>
 
-								<button class="btn btn-warning">
+								<RouterLink to="/user/edit" class="btn btn-warning">
 									<i class="bi-pencil"></i>
 									Edit
-								</button>
-
+								</RouterLink>
 
 								<button class="btn btn-danger ms-1" data-bs-toggle="modal" data-bs-target="#modalUserDelete">
 									<i class="bi-trash"></i>

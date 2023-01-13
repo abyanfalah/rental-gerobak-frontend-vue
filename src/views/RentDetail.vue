@@ -5,9 +5,10 @@ import customerService from '../service/modules/customerService';
 import rentService from '../service/modules/rentService';
 import userService from '../service/modules/userService';
 import ButtonBack from "../components/ButtonBack.vue";
-import getDateTime from "../service/modules/dateTimeService";
+import dateTimeService from "../service/modules/dateTimeService";
 
 
+const getDateTime = dateTimeService.getReadableDateTime
 const props = defineProps(['id'])
 const rent = ref({})
 

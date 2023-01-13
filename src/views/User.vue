@@ -7,6 +7,7 @@ import ModalUserDelete from "../components/ModalUserDelete.vue"
 import { useIndexStore } from "../stores/index"
 import { useAuthStore } from "../stores/auth";
 
+const getDateTime = dateTimeService.getReadableDateTime
 const indexStore = useIndexStore()
 const authStore = useAuthStore(0)
 
@@ -137,12 +138,12 @@ onMounted(() => {
 
 						<div class="row mb-3">
 							<div class="col-md-4 text-muted">Registrasi</div>
-							<div class="col">{{ dateTimeService(choosenUser.created_at).full() }}</div>
+							<div class="col">{{ getDateTime(choosenUser.created_at).full() }}</div>
 						</div>
 
 						<div class="row mb-3">
 							<div class="col-md-4 text-muted">Update terakhir</div>
-							<div class="col">{{ choosenUser.updated_at ? dateTimeService(choosenUser.updated_at).full() : '-' }}</div>
+							<div class="col">{{ choosenUser.updated_at ? getDateTime(choosenUser.updated_at).full() : '-' }}</div>
 						</div>
 
 						<div class="row" v-if="choosenUser.username != 'admin'">

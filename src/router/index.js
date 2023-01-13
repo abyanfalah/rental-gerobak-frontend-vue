@@ -47,6 +47,14 @@ const router = createRouter({
       },
     },
     {
+      path: "/user/edit",
+      name: "userEdit",
+      component: () => import("../views/UserEdit.vue"),
+      meta: {
+        isImportant: true,
+      },
+    },
+    {
       path: "/customer",
       name: "customer",
       component: () => import("../views/Customer.vue"),

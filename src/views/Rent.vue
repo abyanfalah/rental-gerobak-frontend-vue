@@ -2,8 +2,9 @@
 import capitalize from "capitalize";
 import { onMounted, ref } from "vue";
 import rentService from "../service/modules/rentService";
-import getDateTime from "../service/modules/dateTimeService";
+import dateTimeService from "../service/modules/dateTimeService";
 
+const getDateTime = dateTimeService.getReadableDateTime
 const rentList = ref();
 const error = ref(false)
 

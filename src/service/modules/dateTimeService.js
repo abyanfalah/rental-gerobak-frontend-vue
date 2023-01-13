@@ -1,19 +1,25 @@
 import bahasaDateTime from "../../helper/indonesian-day-month";
 
-export default function (dateTimeToParse) {
-  const dateTime = new Date(dateTimeToParse);
-  const date = `${bahasaDateTime.day(
-    dateTime.getDay()
-  )} ${dateTime.getDate()} ${bahasaDateTime.shortMonth(
-    dateTime.getMonth()
-  )} ${dateTime.getFullYear()}`;
-  const time = `${dateTime.getHours()} : ${dateTime.getMinutes()}`;
+export default {
+  getReadableDateTime: (dateTimeToParse) => {
+    const dateTime = new Date(dateTimeToParse);
+    const date = `${bahasaDateTime.day(
+      dateTime.getDay()
+    )} ${dateTime.getDate()} ${bahasaDateTime.shortMonth(
+      dateTime.getMonth()
+    )} ${dateTime.getFullYear()}`;
+    const time = `${dateTime.getHours()} : ${dateTime.getMinutes()}`;
 
-  const full = ` ${time}`;
+    return {
+      date,
+      time,
+      full: () => `${date} ${time}`,
+    };
+  },
 
-  return {
-    date,
-    time,
-    full: () => `${date} ${time}`,
-  };
-}
+  isToday: (dateTimeToParse) => {
+    const dateTime = new Date(dateTimeToParse);
+
+    console.log(dateTime.getDate());
+  },
+};

@@ -9,6 +9,7 @@ const name = ref("")
 const username = ref("")
 const password = ref("")
 const passwordConfirmation = ref("")
+const phone = ref("")
 
 const isValidName = ref(true)
 const isValidUsername = ref(true)
@@ -132,6 +133,16 @@ async function registerUser() {
 									:class="!isSamePassword ? 'border-danger' : null"
 									@blur="checkPasswordConfirmation">
 								 <div class="text-danger" v-if="!isSamePassword">password tidak sama!</div>
+							</div>
+
+							<div class="mb-3">
+								<label class="form-label">Nomor telpon</label>
+								<input 
+									v-model="phone" 
+									type="tel" 
+									class="form-control" 
+									>
+								 <!-- <div class="text-danger" v-if="!isSamePassword">password tidak sama!</div> -->
 							</div>
 				
 							<button type="submit" class="btn btn-primary">Simpan</button>

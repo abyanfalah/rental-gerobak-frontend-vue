@@ -46,6 +46,7 @@ function showUser(user) {
 onMounted(() => {
   getUser();
 });
+
 </script>
 
 <template>
@@ -195,5 +196,5 @@ onMounted(() => {
 		{{ choosenUser }}
 	</div>
 
-	<ModalUserDelete />
+	<ModalUserDelete @user-delete-success="getUser" />
 </template>

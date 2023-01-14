@@ -1,8 +1,12 @@
 <script setup>
 import { getCurrentInstance } from "vue";
+import { useRouter } from "vue-router";
 import router from "../router";
 import userService from "../service/modules/userService";
 import { useIndexStore } from "../stores/index"
+
+const emit = defineEmits(['userDeleteSuccess', 'userDeleteFailed'])
+
 const indexStore = useIndexStore()
 
 async function deleteUser() {
@@ -10,8 +14,7 @@ async function deleteUser() {
 	console.log(response)
 	if (response.status == 200) {
 		console.log("success, go refresh")
-		// router.push("/user")
-		getCurrentInstance()?.proxy?.$forceUpdate();
+		emit('userDeleteSuccess')
 	}
 }
 

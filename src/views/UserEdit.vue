@@ -15,6 +15,7 @@ const name = ref("")
 const username = ref("")
 const password = ref("")
 const passwordConfirmation = ref("")
+const phone = ref("")
 
 const isValidName = ref(true)
 const isValidUsername = ref(true)
@@ -100,8 +101,6 @@ async function updateUser() {
 		console.log("user updated")
 		router.push("/user")
 	}
-
-
 }
 
 console.log(indexStore.choosenUser)
@@ -110,10 +109,9 @@ console.log(indexStore.choosenUser)
 onBeforeMount(() => {
 	name.value = indexStore.choosenUser.name
 	username.value = indexStore.choosenUser.username
+	phone.value = indexStore.choosenUser.phone
 
 })
-
-
 </script>
 
 <template>
@@ -180,6 +178,16 @@ onBeforeMount(() => {
 										@blur="checkPasswordConfirmation">
 									 <div class="text-danger" v-if="!isSamePassword">password tidak sama!</div>
 								</div>
+							</div>
+
+							<div class="mb-3">
+								<label class="form-label">Nomor telpon</label>
+								<input 
+									v-model="phone" 
+									type="tel" 
+									class="form-control" 
+									>
+								 <!-- <div class="text-danger" v-if="!isSamePassword">password tidak sama!</div> -->
 							</div>
 
 				

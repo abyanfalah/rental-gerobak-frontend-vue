@@ -56,7 +56,7 @@ onMounted(() => {
 				<h1>Tabel user</h1>
 			</div>
 			<div class="col text-end">
-				<RouterLink class="btn btn-success shadow" to="/user/registration">
+				<RouterLink class="btn btn-success shadow-sm" to="/user/registration">
 					Tambah user baru
 					<i class="bi-plus"></i>
 				</RouterLink>
@@ -70,7 +70,7 @@ onMounted(() => {
 				<div class="card">
 					<div class="card-body">
 						<p class="text-center muted" v-if="error">Error: cannot fetch data.</p>
-						<table v-else class="table  table-hover">
+						<table v-else class="table table-sm table-hover">
 							<thead>
 								<tr>
 									<th>#</th>
@@ -95,9 +95,9 @@ onMounted(() => {
 									</td>
 								</tr>
 								
-								<tr>
+								<tr class="">
 									<td colspan="4">
-										<RouterLink class="btn btn-success d-block shadow" to="/user/registration">
+										<RouterLink class="btn btn-success d-block" to="/user/registration">
 											Tambah user baru
 											<i class="bi-plus"></i>
 										</RouterLink>

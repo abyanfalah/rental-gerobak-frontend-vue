@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<button class="btn btn-outline-primary" @click="$router.back()">
+		<button class="btn btn-outline-secondary" @click="$router.back()">
 			<i class="bi-arrow-left"></i>
 			Kembali
 		</button>

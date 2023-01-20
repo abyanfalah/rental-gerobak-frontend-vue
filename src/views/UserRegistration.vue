@@ -4,6 +4,8 @@ import { ref } from 'vue';
 import router from '../router';
 import userService from '../service/modules/userService';
 import clearString from '../helper/clear-string'
+import { useRoute, useRouter } from 'vue-router';
+import ButtonBack from '../components/ButtonBack.vue';
 
 const name = ref("")
 const username = ref("")
@@ -81,10 +83,17 @@ async function registerUser() {
 
 <template>
 	<div>
-		<h1>User baru</h1>
+		<div class="row">
+			<div class="col">
+				<h1>User baru</h1>
+			</div>
+			<div class="col text-end">
+				<ButtonBack />
+			</div>
+		</div>
 		<div class="row">
 			<div class="col-md-6">
-				<div class="card mt-5">
+				<div class="card">
 					<div class="card-body">
 						<form @submit.prevent="registerUser">
 				

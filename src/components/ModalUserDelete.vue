@@ -1,7 +1,4 @@
 <script setup>
-import { getCurrentInstance } from "vue";
-import { useRouter } from "vue-router";
-import router from "../router";
 import userService from "../service/modules/userService";
 import { useIndexStore } from "../stores/index"
 

@@ -17,7 +17,6 @@ async function getRent() {
 		rent.value = (await rentService.getById(props.id)).data.data
 		rent.value.customer = (await customerService.getById(rent.value.customer_id)).data.data
 		rent.value.user = (await userService.getById(rent.value.user_id)).data.data
-		// console.log(rent.value)
 	}catch (err) {
 		console.error(err)
 	}
@@ -100,6 +99,19 @@ onBeforeMount(() => {
 						<div class="row">
 							<div class="col">
 								<span>{{ rent.customer.phone }}</span>
+							</div>
+						</div>
+
+						<div class="row mt-3">
+							<div class="col">
+								<small class="text-muted">
+									Lokasi
+								</small>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col">
+								<span>{{ rent.location ?? "N/A" }}</span>
 							</div>
 						</div>
 

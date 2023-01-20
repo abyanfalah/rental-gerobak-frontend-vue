@@ -1,12 +1,12 @@
 <script setup>
 import capitalize from "capitalize";
-import { onBeforeMount, onMounted, ref } from "vue";
+import { onBeforeMount, onMounted, ref, watch } from "vue";
 import customerService from "../service/modules/customerService";
 import dateTimeService from "../service/modules/dateTimeService";
 import { useIndexStore } from "../stores";
 import ModalCustomerDelete from "../components/ModalCustomerDelete.vue"
 import ModalCustomerAdd from "../components/ModalCustomerAdd.vue";
-
+import ModalCustomerEdit from "../components/ModalCustomerEdit.vue";
 
 const getDateTime = dateTimeService.getReadableDateTime
 const indexStore = useIndexStore()
@@ -156,4 +156,5 @@ onBeforeMount(() => {
 
 	<ModalCustomerDelete @customer-delete-success="getCustomer"/>
 	<ModalCustomerAdd @customer-add-success="getCustomer"/>
+	<ModalCustomerEdit @customer-edit-success="getCustomer"/>
 </template>

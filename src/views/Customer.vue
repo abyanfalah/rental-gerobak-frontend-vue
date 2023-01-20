@@ -7,9 +7,11 @@ import { useIndexStore } from "../stores";
 import ModalCustomerDelete from "../components/ModalCustomerDelete.vue"
 import ModalCustomerAdd from "../components/ModalCustomerAdd.vue";
 import ModalCustomerEdit from "../components/ModalCustomerEdit.vue";
+import { useAuthStore } from "../stores/auth";
 
 const getDateTime = dateTimeService.getReadableDateTime
 const indexStore = useIndexStore()
+const authStore = useAuthStore()
 
 const customerList = ref();
 const error = ref(false)
@@ -127,8 +129,13 @@ onBeforeMount(() => {
 							<div class="col">{{ choosenCustomer.updated_at ? getDateTime(choosenCustomer.updated_at).full() : '-' }}</div>
 						</div>
 
-						<div class="row">
+						<div class="row" v-if="authStore.isAdmin">
 							<div class="col text-end">
+								<RouterLink class="btn btn-primary ms-1" to="/customer" >
+									<i class="list"></i>
+									Riwayat penyewaan
+								</RouterLink>
+								
 								<button class="btn btn-warning ms-1" data-bs-toggle="modal" data-bs-target="#modalCustomerEdit">
 									<i class="bi-pencil"></i>
 									Edit
@@ -138,6 +145,7 @@ onBeforeMount(() => {
 									<i class="bi-trash"></i>
 									Hapus
 								</button>
+
 
 								
 							</div>

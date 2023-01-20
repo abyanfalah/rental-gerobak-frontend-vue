@@ -6,11 +6,13 @@ export const useIndexStore = defineStore("index", () => {
   const justLoggedIn = ref(false);
   const choosenUser = ref({});
   const choosenCustomer = ref({});
+  const choosenGerobak = ref({});
 
   return {
     error,
     justLoggedIn,
     choosenUser,
     choosenCustomer,
+    choosenGerobak,
   };
 });

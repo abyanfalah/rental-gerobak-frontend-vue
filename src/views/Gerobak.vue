@@ -7,8 +7,9 @@ import gerobakTypeService from "../service/modules/gerobakTypeService"
 import { useIndexStore } from "../stores";
 import { useAuthStore } from "../stores/auth";
 import ModalGerobakDelete from "../components/ModalGerobakDelete.vue"
+import ModalGerobakAdd from "../components/ModalGerobakAdd.vue";
 
-const indexStore = useIndexStore()
+const indexStore = useIndexStore();
 const authStore = useAuthStore()
 const getDateTime = dateTimeService.getReadableDateTime
 
@@ -51,7 +52,6 @@ async function getGerobakListWithType() {
 	}
 }
 
-
 function getBadgeColor(gerobakStatus) {
 	const colors = {
 		ada: "success",
@@ -67,7 +67,12 @@ function showGerobak(gerobak) {
 	
 }
 
+function handleSuccessEvents() {
+	choosenGerobak.value = {}
+	indexStore.choosenGerobak = {}
+	getGerobakList()
 
+}
 
 onBeforeMount(() => {
 	getGerobakListWithType()
@@ -82,10 +87,10 @@ onBeforeMount(() => {
 					<h1>Tabel Gerobak</h1>
 			</div>
 				<div class="col text-end">
-					<RouterLink class="btn btn-success shadow-sm" to="/gerobak/new">
+					<button class="btn btn-success shadow-sm" data-bs-toggle="modal" data-bs-target="#modalGerobakAdd">
 						Tambah gerobak baru
 						<i class="bi-plus"></i>
-					</RouterLink>
+					</button>
 				</div>
 		</div>
 
@@ -135,10 +140,11 @@ onBeforeMount(() => {
 								</tr>
 								<tr class="">
 									<td colspan="3">
-										<RouterLink class="btn btn-success d-block" to="/gerobak/new">
-											Tambah gerobak baru
-											<i class="bi-plus"></i>
-										</RouterLink>
+									<button class="btn btn-success shadow-sm w-100" data-bs-toggle="modal" data-bs-target="#modalGerobakAdd">
+										Tambah gerobak baru
+										<i class="bi-plus"></i>
+									</button>
+										
 									</td>
 								</tr>
 							</tbody>
@@ -236,5 +242,6 @@ onBeforeMount(() => {
 		{{ choosenGerobak }}
 	</div>
 
-	<ModalGerobakDelete @gerobak-delete-success="getGerobakList" />
+	<ModalGerobakDelete @gerobak-delete-success="handleSuccessEvents" />
+	<ModalGerobakAdd @gerobak-add-success="handleSuccessEvents" />
 </template>

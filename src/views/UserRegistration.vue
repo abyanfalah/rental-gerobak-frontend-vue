@@ -69,6 +69,7 @@ async function registerUser() {
 		name: capitalize.words(name.value).trim(),
 		username: clearString(username.value),
 		password: password.value,
+		phone: phone.value
 	}
 
 	const response = await userService.create(data)

@@ -77,6 +77,7 @@ async function updateUser() {
 	let data = {
 		name: capitalize.words(name.value).trim(),
 		username: clearString(username.value),
+		phone: clearString(phone.value)
 	}
 
 	if (password.value.length > 0) { 
@@ -88,17 +89,18 @@ async function updateUser() {
 	const isNoChange =
 		(data.name === indexStore.choosenUser.name)
 		&&(data.username === indexStore.choosenUser.username)
+		&&(data.phone === indexStore.choosenUser.phone)
 
 
 	if (isNoChange) {
 		console.log("no changes were made")
-		return router.push("/user")
+		router.push("/user")
+		return
 	} 
 	
 	const response = await userService.update(data, indexStore.choosenUser.id)
 	console.log(response)
 	if (response.status === 200) {
-		console.log("user updated")
 		router.push("/user")
 	}
 }

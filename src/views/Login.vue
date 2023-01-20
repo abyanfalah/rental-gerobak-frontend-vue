@@ -25,31 +25,31 @@ async function login() {
 	
 	} catch (err) {
 		console.error(err)
+
+		// switch (err.response.status) {
+		// 	case 400: errorMessage.value = "Username atau password tidak valid.";
+		// 		break;
+		// 	case 500: errorMessage.value = "Terjadi error pada server. Bersihkan cache browser, log out dari komputer. Bila masih terjadi error, hubungi admin.";
+		// 		break;
+
+		// 	default: errorMessage.value = err.message;
+		// }
+
+			errorMessage.value = err.code
 	
-
-		switch (err.response.status) {
-			case 400: errorMessage.value = "Username atau password tidak valid.";
-				break;
-			case 500: errorMessage.value = "Terjadi error pada server. Bersihkan cache browser, log out dari komputer. Bila masih terjadi error, hubungi admin.";
-				break;
-
-			default: errorMessage.value = err.message;
-		}
-
-
-		console.log(errorMessage.value)
   }
 }
 </script>
 
 <template>
   <div class="mt-5 text-center">
-    <div class="text-center my-5">
+    <div class="text-center my-3">
       <h1 class="display-1"><i class="bi-minecart-loaded"></i></h1>
       <h1>Rental gerobak</h1>
     </div>
 
     <form @submit.prevent="login" class="form-signin">
+
       <h1 class="h3 mb-3 font-weight-normal">Login</h1>
       <input
         v-model="username"
@@ -69,6 +69,8 @@ async function login() {
       />
 
       <button class="btn btn-primary w-100" type="submit">Login</button>
+		<div v-if="errorMessage" @click="errorMessage = null" class="alert alert-danger mt-3">Login error: {{ errorMessage }}</div>
+			 
     </form>
   </div>
 </template>

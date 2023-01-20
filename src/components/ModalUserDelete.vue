@@ -12,6 +12,9 @@ async function deleteUser() {
 	if (response.status == 200) {
 		console.log("success, go refresh")
 		emit('userDeleteSuccess')
+	} else {
+		// TODO: use proper modal (use modal error if u can)
+		alert("user delete failed")
 	}
 }
 

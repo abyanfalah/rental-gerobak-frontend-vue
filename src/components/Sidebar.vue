@@ -34,7 +34,7 @@ const authStore = useAuthStore();
 
       <RouterLink to="/customer" class="nav-link" active-class="active">
         <i class="bi-person-lines-fill"></i>
-        Customers
+        Customer
       </RouterLink>
 
       <RouterLink to="/gerobak" class="nav-link" active-class="active">

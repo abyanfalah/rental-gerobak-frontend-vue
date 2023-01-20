@@ -5,6 +5,8 @@ import customerService from "../service/modules/customerService";
 import dateTimeService from "../service/modules/dateTimeService";
 import { useIndexStore } from "../stores";
 import ModalCustomerDelete from "../components/ModalCustomerDelete.vue"
+import ModalCustomerAdd from "../components/ModalCustomerAdd.vue";
+
 
 const getDateTime = dateTimeService.getReadableDateTime
 const indexStore = useIndexStore()
@@ -41,10 +43,10 @@ onBeforeMount(() => {
 				<h1>Tabel customer</h1>
 			</div>
 			<div class="col text-end">
-				<RouterLink class="btn btn-success shadow-sm" to="/customer">
+				<button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#modalCustomerAdd">
 					Tambah customer baru
 					<i class="bi-plus"></i>
-				</RouterLink>
+				</button>
 			</div>
 		</div>
 
@@ -71,12 +73,12 @@ onBeforeMount(() => {
 									<td>{{ customer.phone }}</td>
 								</tr>
 								
-								<tr class="">
+								<tr>
 									<td colspan="3">
-										<RouterLink class="btn btn-success d-block" to="/customer/registration">
+										<button class="btn btn-success d-block w-100" data-bs-toggle="modal" data-bs-target="#modalCustomerAdd">
 											Tambah customer baru
 											<i class="bi-plus"></i>
-										</RouterLink>
+										</button>
 									</td>
 								</tr>
 							</tbody>
@@ -153,4 +155,5 @@ onBeforeMount(() => {
 
 
 	<ModalCustomerDelete @customer-delete-success="getCustomer"/>
+	<ModalCustomerAdd @customer-add-success="getCustomer"/>
 </template>

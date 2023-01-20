@@ -9,7 +9,6 @@ const indexStore = useIndexStore()
 
 onMounted(function () {
 	setTimeout(function () {
-		// document.querySelector("#welcomeAlert").hide()
 		indexStore.justLoggedIn = false;
 	}, 2000)
 })

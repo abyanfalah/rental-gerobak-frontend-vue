@@ -15,7 +15,7 @@ const userList = ref();
 const error = ref(false)
 const choosenUser = ref({})
 
-async function getUser() {
+async function getUserList() {
   try {
     const response = await userService.getAll();
 		error.value = false
@@ -40,11 +40,19 @@ function getBadgeColor(userAccess) {
 function showUser(user) {
 	choosenUser.value = user
 	indexStore.choosenUser = user
-	
 }
 
+function handleSuccessEvents() {
+	choosenUser.value = {}
+	indexStore.choosenUser = {}
+	getUserList()
+
+}
+
+
+
 onMounted(() => {
-  getUser();
+  getUserList();
 });
 
 </script>
@@ -196,5 +204,5 @@ onMounted(() => {
 		{{ choosenUser }}
 	</div>
 
-	<ModalUserDelete @user-delete-success="getUser" />
+	<ModalUserDelete @user-delete-success="handleSuccessEvents" />
 </template>

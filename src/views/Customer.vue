@@ -17,7 +17,7 @@ const customerList = ref();
 const error = ref(false)
 const choosenCustomer = ref({})
 
-async function getCustomer() {
+async function getCustomerList() {
   try {
     const response = await customerService.getAll();
 		error.value = false
@@ -33,8 +33,15 @@ function showCustomer(customer) {
 	indexStore.choosenCustomer = customer
 }
 
+function handleSuccessEvents() {
+	choosenCustomer.value = {}
+	indexStore.choosenCustomer = {}
+	getCustomerList()
+
+}
+
 onBeforeMount(() => {
-  getCustomer();
+  getCustomerList();
 });
 </script>
 
@@ -162,7 +169,7 @@ onBeforeMount(() => {
 	</div>
 
 
-	<ModalCustomerDelete @customer-delete-success="getCustomer"/>
-	<ModalCustomerAdd @customer-add-success="getCustomer"/>
-	<ModalCustomerEdit @customer-edit-success="getCustomer"/>
+	<ModalCustomerDelete @customer-delete-success="handleSuccessEvents"/>
+	<ModalCustomerAdd @customer-add-success="handleSuccessEvents"/>
+	<ModalCustomerEdit @customer-edit-success="handleSuccessEvents"/>
 </template>

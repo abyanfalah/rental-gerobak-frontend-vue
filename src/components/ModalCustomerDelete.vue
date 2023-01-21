@@ -12,6 +12,7 @@ async function deleteCustomer() {
 	if (response.status == 200) {
 		console.log("success, go refresh")
 		emit('customerDeleteSuccess')
+		indexStore.actionSuccessMessage = "customer berhasil dihapus!"
 	} else {
 		// TODO: use proper modal (use modal error if u can)
 		alert("customer delete failed")

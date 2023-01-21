@@ -12,6 +12,8 @@ async function deleteGerobak() {
 	if (response.status == 200) {
 		console.log("success, go refresh")
 		emit('gerobakDeleteSuccess')
+		indexStore.actionSuccessMessage = "gerobak berhasil dihapus!"
+
 	} else {
 		// TODO: use proper modal (use modal error if u can)
 		alert("gerobak delete failed")

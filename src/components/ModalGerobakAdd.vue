@@ -3,6 +3,7 @@ import capitalize from "capitalize";
 import { ref } from "vue";
 import gerobakService from "../service/modules/gerobakService";
 import gerobakTypeService from "../service/modules/gerobakTypeService";
+import { useIndexStore } from "../stores";
 
 const emit = defineEmits(['gerobakAddSuccess', 'gerobakAddFailed'])
 
@@ -28,6 +29,7 @@ async function addGerobak() {
 	if (response.status == 200) {
 		console.log("success, go refresh")
 		emit('gerobakAddSuccess')
+		useIndexStore().actionSuccessMessage = "gerobak tersimpan!"
 	} else {
 		// TODO: use proper modal (use modal error if u can)
 		alert("gerobak add failed")

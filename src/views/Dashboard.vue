@@ -6,6 +6,7 @@ import { useAuthStore } from '../stores/auth';
 const authStore = useAuthStore();
 const indexStore = useIndexStore()
 
+indexStore.actionSuccessMessage = "berhasil masuk Dashboard"
 
 onMounted(function () {
 	setTimeout(function () {

@@ -1,12 +1,15 @@
-import { ref, computed } from "vue";
+import { ref, computed, watch } from "vue";
 import { defineStore } from "pinia";
 
 export const useIndexStore = defineStore("index", () => {
   const error = ref();
   const justLoggedIn = ref(false);
+
   const choosenUser = ref({});
   const choosenCustomer = ref({});
   const choosenGerobak = ref({});
+
+  const actionSuccessMessage = ref(null);
 
   return {
     error,
@@ -14,5 +17,6 @@ export const useIndexStore = defineStore("index", () => {
     choosenUser,
     choosenCustomer,
     choosenGerobak,
+    actionSuccessMessage,
   };
 });

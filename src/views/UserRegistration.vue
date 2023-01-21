@@ -6,6 +6,7 @@ import userService from '../service/modules/userService';
 import clearString from '../helper/clear-string'
 import { useRoute, useRouter } from 'vue-router';
 import ButtonBack from '../components/ButtonBack.vue';
+import { useIndexStore } from '../stores';
 
 const name = ref("")
 const username = ref("")
@@ -73,8 +74,9 @@ async function registerUser() {
 	}
 
 	const response = await userService.create(data)
-	console.log(response)
+	console.log("user create response => ", response)
 	if (response.status === 200) {
+		useIndexStore().actionSuccessMessage = "user baru tersimpan!"
 		router.push("/user")
 	}
 	

@@ -23,9 +23,6 @@ app.use(router);
 app.use(VueAxios, axios);
 app.use(pinia);
 
-// check session to server.
-// console.log("session check => ", await authService.checkAuth());
-
 try {
   await authService.checkAuth();
 } catch (err) {

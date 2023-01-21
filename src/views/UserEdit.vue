@@ -94,6 +94,7 @@ async function updateUser() {
 
 	if (isNoChange) {
 		console.log("no changes were made")
+		indexStore.actionSuccessMessage = "tidak ada perubahan pada data."
 		router.push("/user")
 		return
 	} 
@@ -101,6 +102,7 @@ async function updateUser() {
 	const response = await userService.update(data, indexStore.choosenUser.id)
 	console.log(response)
 	if (response.status === 200) {
+		indexStore.actionSuccessMessage = "perubahan berhasil disimpan!."
 		router.push("/user")
 	}
 }

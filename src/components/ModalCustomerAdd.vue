@@ -20,6 +20,7 @@ async function addCustomer() {
 	if (response.status == 200) {
 		console.log("success, go refresh")
 		emit('customerAddSuccess')
+		useIndexStore().actionSuccessMessage = "customer tersimpan!"
 	} else {
 		// TODO: use proper modal (use modal error if u can)
 		alert("customer add failed")

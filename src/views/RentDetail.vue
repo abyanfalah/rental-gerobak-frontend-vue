@@ -123,7 +123,7 @@ onBeforeMount(() => {
 						<div class="row">
 							<div class="col">
 								<small class="text-muted">
-									User / kasir pertama
+									Kasir pertama
 								</small>
 							</div>
 						</div>
@@ -150,7 +150,7 @@ onBeforeMount(() => {
 						<div class="row mt-3">
 							<div class="col">
 								<small class="text-muted">
-									User / kasir terakhir
+									Kasir terakhir
 								</small>
 							</div>
 						</div>

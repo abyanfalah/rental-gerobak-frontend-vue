@@ -24,7 +24,9 @@ app.use(VueAxios, axios);
 app.use(pinia);
 
 try {
-  await authService.checkAuth();
+  (async () => {
+    await authService.checkAuth();
+  })();
 } catch (err) {
   console.error(err);
   useAuthStore().isAuthenticated = false;

@@ -1,25 +1,25 @@
 <script setup>
 import { capitalize, onMounted } from 'vue';
+import AlertWelcome from '../components/AlertWelcome.vue';
 import { useIndexStore } from '../stores';
 import { useAuthStore } from '../stores/auth';
 
 const authStore = useAuthStore();
 const indexStore = useIndexStore()
 
-indexStore.actionSuccessMessage = "berhasil masuk Dashboard"
-
-onMounted(function () {
+if (indexStore.justLoggedIn) {
 	setTimeout(function () {
 		indexStore.justLoggedIn = false;
-	}, 2000)
-})
+	}, 2500)
+}
 </script>
 
 <template>
   <h1>Dashboard</h1>
-	<div v-if="indexStore.justLoggedIn" id="welcomeAlert" class="alert alert-success alert-dismissible">
-		Welcome {{ capitalize(authStore.user.name) }}
-		<button class="btn-close" data-bs-dismiss="alert" @click="indexStore.justLoggedIn = false"></button>
-	</div>
 
+
+
+	
+
+	<AlertWelcome />
 </template>

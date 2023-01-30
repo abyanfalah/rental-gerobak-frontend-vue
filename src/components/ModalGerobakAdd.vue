@@ -71,7 +71,7 @@ getGerobakType()
 							<button type="button" class="btn btn-danger me-1" data-bs-dismiss="modal">Batal</button>
 
 							<!-- TODO: find a way to do validation before closing modal -->
-							<button type="submit" class="btn btn-success" :class="isValidGerobakType ? '': 'disabled'" @mouseenter="validateInput">Simpan</button>
+							<button type="submit" class="btn btn-success" :class="isValidGerobakType ? '': 'disabled'" @mouseenter="validateInput" data-bs-dismiss="modal">Simpan</button>
 
 						</div>
 

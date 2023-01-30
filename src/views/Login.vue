@@ -26,16 +26,21 @@ async function login() {
 	} catch (err) {
 		console.error(err)
 
-		// switch (err.response.status) {
-		// 	case 400: errorMessage.value = "Username atau password tidak valid.";
-		// 		break;
-		// 	case 500: errorMessage.value = "Terjadi error pada server. Bersihkan cache browser, log out dari komputer. Bila masih terjadi error, hubungi admin.";
-		// 		break;
-
-		// 	default: errorMessage.value = err.message;
-		// }
-
+		if (err.response.status) {
+			console.log(err.response.status)
+			switch (err.response.status) {
+				case 400: errorMessage.value = "Kredensial tidak valid";
+					break;
+				case 500: errorMessage.value = "Terjadi error pada server. Bersihkan cache browser, log out dari komputer. Bila masih terjadi error, hubungi admin.";
+					break;
+	
+				default: errorMessage.value = err.message;
+			}
+		} else {
 			errorMessage.value = err.code
+		}
+
+			
 	
   }
 }
@@ -69,7 +74,7 @@ async function login() {
       />
 
       <button class="btn btn-primary w-100" type="submit">Login</button>
-		<div v-if="errorMessage" @click="errorMessage = null" class="alert alert-danger mt-3">Login error: {{ errorMessage }}</div>
+		<div v-if="errorMessage" @click="errorMessage = null" class="alert alert-danger mt-3">{{ errorMessage }}</div>
 			 
     </form>
   </div>

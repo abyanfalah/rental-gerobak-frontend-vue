@@ -51,7 +51,7 @@ onBeforeMount(() => {
 	<div v-if="rent && rent.customer && rent.user && rent.detail">
 		<div class="row">
 			<div class="col d-flex justify-content-between align-items-center">
-				<h1>Detail penyewaan</h1>
+				<h1>Detail rental</h1>
 				<ButtonBack/>
 			</div>
 		</div>
@@ -192,7 +192,7 @@ onBeforeMount(() => {
 														<span class="mb-1">
 															{{ getDateTime(rent.created_at).date }}
 														</span> 
-														<span>
+														<span >
 															{{ getDateTime(rent.created_at).time }} 
 														</span> 
 													</div>
@@ -204,7 +204,7 @@ onBeforeMount(() => {
 									
 									<!-- TODO: render conditional jika sudah lunas -->
 									<!-- end time -->
-									<div class="col">
+									<div class="col bg-danger text-white">
 
 										<div class="row">
 											<div class="col">

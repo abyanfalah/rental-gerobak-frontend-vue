@@ -3,10 +3,14 @@ import capitalize from "capitalize";
 import { onMounted, ref } from "vue";
 import rentService from "../service/modules/rentService";
 import dateTimeService from "../service/modules/dateTimeService";
+import { useIndexStore } from "../stores";
 
 const getDateTime = dateTimeService.getReadableDateTime
+const indexStore = useIndexStore()
+
 const rentList = ref();
 const error = ref(false)
+const choosenRent = ref({})
 
 
 async function getRent() {
@@ -38,6 +42,11 @@ function getTextColor(rentStatus) {
 	}
 }
 
+function showRent(rent) {
+	choosenRent.value = rent
+	indexStore.choosenRent = rent
+}
+
 
 onMounted(() => {
   getRent();
@@ -45,61 +54,121 @@ onMounted(() => {
 </script>
 
 <template>
-	<div class="container-fluid ms-0 ps-0">
-		<h1 class="mb-3">Daftar penyewaan</h1>
+		<div>
 		<div class="row">
-			<div class="col-md-4 mb-3" v-for="(rent, index) in rentList">
-				<RouterLink :to="`rent/${rent.id}`" class="text-decoration-none">
-					<div 
-						class="card shadow-sm"
-						:class="[`bg-${getBadgeColor(rent.status)}`, getTextColor(rent.status)]"
-					>
-						<div class="card-body">
-							<div class="row">
-								<div class="col">
-									<span class="fs-3">
-										{{ capitalize.words(rent.customer) }}
-									</span>
-								</div>
-								<div class="col text-end">
-									<div class="badge bg-light" :class="`text-${getBadgeColor(rent.status)}`">{{ rent.status }}</div>
-								</div>
-							</div>
-
-							<div class="row my-3">
-								<div class="col">
-									<div class="row">
-										<div class="col">
-											<div class="badge bg-light text-start" :class="`text-${getBadgeColor(rent.status)}`">
-												<div class="row">
-													<div class="col">{{ getDateTime(rent.created_at).date }}</div>
-												</div>
-												<div class="row mt-2">
-													<div class="col">{{ getDateTime(rent.created_at).time }}</div>
-												</div>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-
-							<div class="row">
-								<div class="col">
-									<small class="">
-										<small>
-											{{ rent.id }}
-										</small>
-									</small>
-								</div>
-								<div class="col-md-3 d-flex justify-content-end align-items-end">
-									{{ capitalize.words(rent.user) }}
-								</div>
-							</div>
-						
-						</div>
-					</div>
+			<div class="col">
+				<h1>Tabel rental</h1>
+			</div>
+			<div class="col text-end">
+				<RouterLink class="btn btn-success shadow-sm" to="/rent/registration">
+					Tambah rental baru
+					<i class="bi-plus"></i>
 				</RouterLink>
 			</div>
 		</div>
+
+		<div class="row">
+
+			<!-- rent table column -->
+			<div class="col-md-6">
+				<div class="card">
+					<div class="card-body">
+						<p class="text-center muted" v-if="error">Error: cannot fetch data.</p>
+						<table v-else class="table table-sm table-hover">
+							<thead>
+								<tr>
+									<th>#</th>
+									<th>Tanggal</th>
+									<th>Waktu</th>
+									<th>Penyewa</th>
+									<th>Status</th>
+								</tr>
+							</thead>
+
+							<tbody>
+								<tr @click="showRent(rent)" v-for="(rent, index) in rentList">
+									<td>{{ ++index }}</td>
+									<td>{{ getDateTime(rent.created_at).date }}</td>
+									<td>{{ getDateTime(rent.created_at).time }}</td>
+									<td>{{ capitalize.words(rent.customer) }}</td>
+									<td>
+										<span 
+											class="badge"
+											:class="`bg-${getBadgeColor(rent.status)}`"
+										>
+											{{ rent.status }}
+										</span>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+
+	
+
+			<!-- rent detail column -->
+			<div class="col-md-6">
+				<div class="card sticky-top" v-if="choosenRent.id">
+					<div class="card-header d-flex justify-content-around">
+						Detail rent
+						<small class="ms-auto">
+							<button class="btn-close" @click="choosenRent = {}"></button>
+						</small>
+					</div>
+					<div class="card-body p-4">
+
+						<div class="row mb-3">
+							<div class="col-md-4 text-muted">ID</div>
+							<div class="col"><small>{{ choosenRent.id }}</small></div>
+						</div>
+
+
+						<div class="row mb-3">
+							<div class="col text-end">
+								<router-link class="btn btn-primary" :to="`rent/${choosenRent.id}`">
+									<i class="bi-list"></i>
+									Lihat detail
+								</router-link>
+							</div>
+						</div>
+<!-- 					
+						<div class="row" v-if="choosenRent.rentname != 'admin'">
+							<div class="col text-end">
+
+								<button class="btn me-1" :class="choosenRent.access == 'admin' ? 'btn-primary': 'btn-success'" v-if="authStore.isAdmin">
+									<div v-if="choosenRent.access !== 'admin'">
+										<i class="bi-person-check-fill"></i>
+										Jadikan sebagai admin
+									</div>
+
+									<div v-else>
+										<i class="bi-person-x-fill"></i>
+										Cabut akses admin
+									</div>
+									
+								</button>
+
+								<RouterLink to="/rent/edit" class="btn btn-warning">
+									<i class="bi-pencil"></i>
+									Edit
+								</RouterLink>
+
+								<button class="btn btn-danger ms-1" data-bs-toggle="modal" data-bs-target="#modalRentDelete">
+									<i class="bi-trash"></i>
+									Hapus
+								</button>
+
+								
+							</div>
+						</div> -->
+
+					</div>
+				</div>
+			</div>
+		</div>
 	</div>
+
+	<div v-if="choosenRent.id">{{ choosenRent }}</div>
 </template>

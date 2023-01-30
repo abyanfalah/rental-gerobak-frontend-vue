@@ -49,7 +49,7 @@ function showRent(rent) {
 
 
 onMounted(() => {
-  getRent();
+	getRent();
 });
 </script>
 
@@ -121,8 +121,60 @@ onMounted(() => {
 
 						<div class="row mb-3">
 							<div class="col-md-4 text-muted">ID</div>
-							<div class="col"><small>{{ choosenRent.id }}</small></div>
+							<div class="col"><small class="font-monospace">{{ choosenRent.id }}</small></div>
 						</div>
+
+						<div class="row mb-3">
+							<div class="col-md-4 text-muted">Penyewa</div>
+							<div class="col">{{ capitalize.words(choosenRent.customer) }}</div>
+						</div>
+
+						<div class="row mb-3">
+							<div class="col-md-4 text-muted">Lokasi</div>
+							<div class="col">{{ capitalize(choosenRent.location) }}</div>
+						</div>
+
+						<div class="row mb-3">
+							<div class="col-md-4 text-muted">Start</div>
+							<div class="col">{{ getDateTime(choosenRent.created_at).full() }}</div>
+						</div>
+
+						<div class="row mb-3">
+							<div class="col-md-4 text-muted">Pembayaran terakhir</div>
+							<div class="col">
+								<span v-if="choosenRent.last_payment_at != null">
+									{{ getDateTime(choosenRent.last_payment_at).full() }}
+								</span>
+								<span v-else>-</span>
+							</div>
+						</div>
+
+						<div class="row mb-3">
+							<div class="col-md-4 text-muted">Status</div>
+							<div class="col">
+								<span 
+											class="badge"
+											:class="`bg-${getBadgeColor(choosenRent.status)}`"
+										>
+											{{ choosenRent.status }}
+										</span>
+							</div>
+						</div>
+
+						<div class="row mb-3">
+							<div class="col-md-4 text-muted">Gerobak ({{ choosenRent.detail.length }})</div>
+							<div class="col">
+								<span v-for="(detail,index) in choosenRent.detail">
+									<span v-if="index < 4">
+										<span>{{ detail.code }}</span>
+										<span v-if="index < choosenRent.detail.length - 1"> | </span>
+									</span>
+									<span v-else> ...</span>
+								</span>
+							</div>
+						</div>
+
+						
 
 
 						<div class="row mb-3">

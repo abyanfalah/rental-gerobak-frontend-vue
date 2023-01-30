@@ -5,7 +5,7 @@ export default {
     // TODO: add pagination params
     return api.get(url, {
       params: {
-        // with_detail: true,
+        with_detail: true,
         get_view: true,
       },
     });

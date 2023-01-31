@@ -4,6 +4,7 @@ import { onMounted, ref } from "vue";
 import rentService from "../service/modules/rentService";
 import dateTimeService from "../service/modules/dateTimeService";
 import { useIndexStore } from "../stores";
+import ModalRentPay from "../components/ModalRentPay.vue";
 
 const getDateTime = dateTimeService.getReadableDateTime
 const indexStore = useIndexStore()
@@ -81,16 +82,18 @@ onMounted(() => {
 									<th>Tanggal</th>
 									<th>Waktu</th>
 									<th>Penyewa</th>
+									<th>Qty</th>
 									<th>Status</th>
 								</tr>
 							</thead>
 
 							<tbody>
 								<tr @click="showRent(rent)" v-for="(rent, index) in rentList">
-									<td>{{ ++index }}</td>
-									<td>{{ getDateTime(rent.created_at).date }}</td>
+									<td class="text-muted">{{ ++index }}</td>
+									<td>{{ getDateTime(rent.created_at).noDayDate }}</td>
 									<td>{{ getDateTime(rent.created_at).time }}</td>
 									<td>{{ capitalize.words(rent.customer) }}</td>
+									<td class="text-center">{{ rent.detail.length }}</td>
 									<td>
 										<span 
 											class="badge"
@@ -109,7 +112,7 @@ onMounted(() => {
 	
 
 			<!-- rent detail column -->
-			<div class="col-md-6">
+			<div class="col">
 				<div class="card sticky-top" v-if="choosenRent.id">
 					<div class="card-header d-flex justify-content-around">
 						Detail rent
@@ -179,10 +182,16 @@ onMounted(() => {
 
 						<div class="row mb-3">
 							<div class="col text-end">
-								<router-link class="btn btn-primary" :to="`rent/${choosenRent.id}`">
+								<button v-if="choosenRent.status.toLowerCase() !== 'ok'" class="btn btn-primary ms-1" data-bs-toggle="modal" data-bs-target="#modalRentPay">
+									<i class="bi-currency-dollar"></i>
+									Bayar
+								</button>
+								
+								<router-link class="btn btn-secondary ms-1" :to="`rent/${choosenRent.id}`">
 									<i class="bi-list"></i>
 									Lihat detail
 								</router-link>
+
 							</div>
 						</div>
 <!-- 					
@@ -223,4 +232,6 @@ onMounted(() => {
 	</div>
 
 	<div v-if="choosenRent.id">{{ choosenRent }}</div>
+
+	<ModalRentPay />
 </template>

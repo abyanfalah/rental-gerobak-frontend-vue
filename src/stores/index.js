@@ -7,6 +7,7 @@ export const useIndexStore = defineStore("index", () => {
 
   const choosenUser = ref({});
   const choosenCustomer = ref({});
+  const choosenRentCustomer = ref({});
   const choosenGerobak = ref({});
   const choosenRent = ref({});
 
@@ -19,6 +20,7 @@ export const useIndexStore = defineStore("index", () => {
     choosenCustomer,
     choosenGerobak,
     choosenRent,
+    choosenRentCustomer,
     actionSuccessMessage,
   };
 });

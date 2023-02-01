@@ -75,6 +75,11 @@ const router = createRouter({
       component: () => import("../views/Rent.vue"),
     },
     {
+      path: "/rent/new",
+      name: "rentNew",
+      component: () => import("../views/RentNew.vue"),
+    },
+    {
       path: "/rent/:id",
       name: "rentDetail",
       component: () => import("../views/RentDetail.vue"),

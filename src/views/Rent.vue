@@ -61,7 +61,7 @@ onMounted(() => {
 				<h1>Tabel rental</h1>
 			</div>
 			<div class="col text-end">
-				<RouterLink class="btn btn-success shadow-sm" to="/rent/registration">
+				<RouterLink class="btn btn-success shadow-sm" to="/rent/new">
 					Tambah rental baru
 					<i class="bi-plus"></i>
 				</RouterLink>

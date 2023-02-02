@@ -21,7 +21,7 @@ onMounted(async () => {
 	<div class="modal fade" data-bs-backdrop="static" id="modalCustomerSelect">
 		<div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
 			<div class="modal-content">
-				<div class="modal-header bg-primary text-white">
+				<div class="modal-header bg-primary text-white shadow-sm">
 					<h5 class="modal-title">Pilih penyewa</h5>
 				</div>
 				<div class="modal-body">
@@ -51,7 +51,7 @@ onMounted(async () => {
 							</tbody>
 						</table>
 				</div>
-				<div class="modal-footer border-0 d-block">
+				<div class="modal-footer border-0 d-block shadow-lg">
 					<div class="row">
 						<div class="col px-0">
 							<input type="text" placeholder="Ketik disini untuk mencari ..." autofocus class="form-control mb-3" id="searchCustomerInput">

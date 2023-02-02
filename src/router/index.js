@@ -40,7 +40,7 @@ const router = createRouter({
     },
     {
       path: "/user/registration",
-      name: "userRegistration",
+      name: "user baru",
       component: () => import("../views/UserRegistration.vue"),
       meta: {
         isImportant: true,
@@ -48,7 +48,7 @@ const router = createRouter({
     },
     {
       path: "/user/edit",
-      name: "userEdit",
+      name: "edit user",
       component: () => import("../views/UserEdit.vue"),
       meta: {
         isImportant: true,
@@ -71,17 +71,17 @@ const router = createRouter({
     },
     {
       path: "/rent",
-      name: "rent",
+      name: "rental",
       component: () => import("../views/Rent.vue"),
     },
     {
       path: "/rent/new",
-      name: "rentNew",
+      name: "rental baru",
       component: () => import("../views/RentNew.vue"),
     },
     {
       path: "/rent/:id",
-      name: "rentDetail",
+      name: "detail rental",
       component: () => import("../views/RentDetail.vue"),
       props: true,
       alias: "/rent/:id",

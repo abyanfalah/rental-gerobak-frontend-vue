@@ -1,10 +1,16 @@
 <script setup>
+import { computed } from "@vue/reactivity";
 import capitalize from "capitalize";
+import { watch } from "vue";
 import router from "../router";
 import authService from "../service/modules/authService";
 import { useAuthStore } from "../stores/auth";
 const authStore = useAuthStore();
 
+
+function getCurrentRouteName() {
+	return router.currentRoute.value.name.toLowerCase()
+};
 </script>
 
 <template>
@@ -16,7 +22,18 @@ const authStore = useAuthStore();
       <i class="bi-minecart display-1 me-3"></i>
     </router-link>
 
+		
+
     <div class="nav nav-pills flex-column mb-auto text-white">
+			<RouterLink to="/rent/new" 
+				class="nav-link " 
+				active-class="bg-success text-white"
+				:class="getCurrentRouteName() !== 'rental baru' ? 'bg-white text-dark' : null"
+				>
+        	<i class="bi-plus-square-fill"></i>
+        	Rental baru
+      </RouterLink>
+			
       <RouterLink to="/dashboard" class="nav-link" active-class="active">
         <i class="bi-eye"></i>
         Dashboard

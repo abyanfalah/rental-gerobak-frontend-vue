@@ -3,7 +3,11 @@ const url = api.defaults.baseURL + "gerobak/";
 export default {
   getAll: () => {
     // TODO: add pagination params
-    return api.get(url);
+    return api.get(url, {
+      params: {
+        get_view: true,
+      },
+    });
   },
   getById: (id) => {
     return api.get(url + id);

@@ -231,7 +231,7 @@ onMounted(() => {
 		</div>
 	</div>
 
-	<div v-if="choosenRent.id">{{ choosenRent }}</div>
+	<!-- <div v-if="choosenRent.id">{{ choosenRent }}</div> -->
 
 	<ModalRentPay />
 </template>

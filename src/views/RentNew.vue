@@ -36,7 +36,7 @@ onBeforeUnmount(() => {
 			<div class="col-md-6">
 				<div class="card sticky-top">
 					<div class="card-header d-flex justify-content-between align-items-center">
-								<h4 class="text-muted">Penyewa</h4>
+								<h4 class="text-muted m-0">Penyewa</h4>
 
 								<button class="btn btn-primary shadow" data-bs-toggle="modal" data-bs-target="#modalCustomerSelect">Pilih penyewa <span v-if="indexStore.choosenRentCustomer.id">lain</span></button>
 					</div>
@@ -57,22 +57,21 @@ onBeforeUnmount(() => {
 			<!-- gerobak select column -->
 			<div class="col">
 				<div class="card" v-if="indexStore.choosenRentCustomer.id">
-					<div class="card-header d-flex justify-content-between">
-						<h4 class="text-muted">Gerobak</h4>
+					<div class="card-header d-flex justify-content-between align-items-center">
+						<h4 class="text-muted m-0">Gerobak</h4>
 						<button class="btn btn-primary shadow" data-bs-toggle="modal" data-bs-target="#modalGerobakSelect">Tambah gerobak</button>
 					</div>
 
 					<div class="card-body">
 						<div class="row">
-							<div class="col-6">
-								<div class="card">
+							<div class="col-6 mb-3">
+								<div class="card" v-if="false">
 									<div class="card-body">
-
+										<!-- terpilih gerobak disini -->
 									</div>
 								</div>
 							</div>
 						</div>
-						{{ gerobakList }}
 					</div>
 				</div>
 			</div>

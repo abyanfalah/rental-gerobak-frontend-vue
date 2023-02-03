@@ -7,11 +7,43 @@ import gerobakService from '../service/modules/gerobakService';
 const indexStore = useIndexStore()
 const gerobakList = ref([])
 const choosenGerobakList = ref([])
+const previouslyChoosenGerobakList = ref([])
 
 
-function addGerobakToList(gerobak) {
-	choosenGerobakList.value.push(gerobak)
-	console.log(gerobakList.value)
+
+function toggleGerobakAgainstList(gerobak) {
+	if (gerobak.status.toLowerCase() !== 'ada') return;
+
+	if(!choosenGerobakList.value.includes(gerobak)){
+		choosenGerobakList.value.push(gerobak)
+		// console.log(choosenGerobakList.value)
+		return
+	}
+
+	removeGerobakFromList(gerobak)
+}
+
+function removeGerobakFromList(gerobak) {
+	const foundIndex = choosenGerobakList.value.indexOf(gerobak)
+	if (foundIndex < 0) {
+		return false
+	}
+	choosenGerobakList.value.splice(foundIndex, 1);
+	// console.log(choosenGerobakList.value)
+}
+
+function saveChanges() {
+	indexStore.choosenGerobakList = []	
+	Object.assign(indexStore.choosenGerobakList, choosenGerobakList.value)	
+
+	previouslyChoosenGerobakList.value = []
+	Object.assign(previouslyChoosenGerobakList.value, choosenGerobakList.value)	
+
+}
+
+function revertChanges() {
+	choosenGerobakList.value = []
+	Object.assign(choosenGerobakList.value, previouslyChoosenGerobakList.value)
 }
 
 onMounted(async () => {
@@ -118,7 +150,7 @@ onMounted(async () => {
 								type="button" 
 								class="btn btn-secondary px-4" 
 								data-bs-dismiss="modal"
-								@click=""
+								@click="revertChanges()"
 								>
 									Batal
 							</button>

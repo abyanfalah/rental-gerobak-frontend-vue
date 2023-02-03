@@ -93,13 +93,23 @@ onMounted(async () => {
 						<div class="col px-0">
 							<input type="text" placeholder="Ketik disini untuk mencari ..." autofocus class="form-control mb-3" id="searchCustomerInput">
 						</div>
-						<div class="col-3 text-end px-0	">
+						<div class="col-5 text-end px-0	">
+							<button 
+								type="button" 
+								class="btn btn-danger px-3 me-1" 
+
+								data-bs-dismiss="modal"
+								@click=""
+								>
+									Reset
+							</button>
+
 							<button 
 								type="button" 
 								class="btn btn-primary px-3 me-1" 
 
 								data-bs-dismiss="modal"
-								@click=""
+								@click="saveChanges()"
 								>
 									Simpan
 							</button>

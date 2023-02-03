@@ -18,13 +18,16 @@ async function addCustomer() {
 	const response = await customerService.create(data)
 	console.log(response)
 	if (response.status == 200) {
-		console.log("success, go refresh")
 		emit('customerAddSuccess')
 		useIndexStore().actionSuccessMessage = "customer tersimpan!"
 	} else {
 		// TODO: use proper modal (use modal error if u can)
 		alert("customer add failed")
 	}
+
+	name.value = ""
+	address.value = ""
+	phone.value = ""
 }
 
 </script>
@@ -35,7 +38,7 @@ async function addCustomer() {
 			<div class="modal-content">
 				<div class="modal-header bg-success text-white fw-bold">Customer baru</div>
 				<div class="modal-body">
-					<form @submit.prevent="null" class="p-3">
+					<form @submit.prevent="addCustomer" class="p-3">
 
 						<div class="mb-3">
 							<label class="form-label">Nama</label>
@@ -74,7 +77,7 @@ async function addCustomer() {
 							<button type="button" class="btn btn-danger me-1" data-bs-dismiss="modal">Batal</button>
 
 							<!-- TODO: find a way to do validation before closing modal -->
-							<button type="submit" class="btn btn-success" data-bs-dismiss="modal"  @click="addCustomer">Simpan</button>
+							<button type="submit" class="btn btn-success" data-bs-dismiss="modal">Simpan</button>
 						</div>
 
 				

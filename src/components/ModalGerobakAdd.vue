@@ -25,9 +25,7 @@ async function addGerobak() {
 	if(!validateInput()) return false
 
 	const response = await gerobakService.create({type_id: type_id.value})
-	console.log(response)
 	if (response.status == 200) {
-		console.log("success, go refresh")
 		emit('gerobakAddSuccess')
 		useIndexStore().actionSuccessMessage = "gerobak tersimpan!"
 	} else {

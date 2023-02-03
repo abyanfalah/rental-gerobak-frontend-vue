@@ -204,7 +204,7 @@ onBeforeMount(() => {
 									
 									<!-- TODO: render conditional jika sudah lunas -->
 									<!-- end time -->
-									<div class="col bg-danger text-white">
+									<div class="col">
 
 										<div class="row">
 											<div class="col">
@@ -217,10 +217,10 @@ onBeforeMount(() => {
 												<span class="badge border text-dark p-2">
 													<div class="d-flex flex-column text-start">
 														<span class="mb-1">
-															{{ getDateTime(rent.created_at).date }}
+															{{ getDateTime(rent.last_payment_at).date }}
 														</span> 
 														<span>
-															{{ getDateTime(rent.created_at).time }} 
+															{{ getDateTime(rent.last_payment_at).time }} 
 														</span> 
 													</div>
 												</span>

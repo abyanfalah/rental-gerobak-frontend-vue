@@ -14,11 +14,20 @@ import { watch } from "vue";
 const indexStore = useIndexStore();
 const authStore = useAuthStore();
 
+let alertSuccessTimeout;
+function killTimeout() {
+	clearTimeout(alertSuccessTimeout)
+	console.log("clearTimeout")
+}
+
 watch(() => indexStore.actionSuccessMessage, () => {
-	setTimeout(function () {
-		indexStore.actionSuccessMessage = null;
-		console.log("notif alert timeout. disappearing")
-  }, 3000);
+	if (indexStore.actionSuccessMessage !== null) {
+		console.log("something is successfully done")
+		alertSuccessTimeout = setTimeout(function () {
+			indexStore.actionSuccessMessage = null;
+			console.log("notif alert timeout. disappearing")
+		}, 3000);
+	} 
 });
 
 
@@ -45,5 +54,5 @@ console.log("success message: ",indexStore.actionSuccessMessage)
 	<ModalError />
 	<ModalTaskSuccess />
 	<ModalPageLeave />
-	<AlertSuccess class="fixed-bottom w-50 mx-auto" v-if="indexStore.actionSuccessMessage !== null" />
+	<AlertSuccess @click="killTimeout()" class="fixed-bottom w-50 mx-auto" v-if="indexStore.actionSuccessMessage !== null" />
 </template>

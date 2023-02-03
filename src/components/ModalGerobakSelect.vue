@@ -55,6 +55,27 @@ onMounted(async () => {
 								<div class="card-body">
 									teprilih
 								</div>
+							</div> -->
+
+							<div class="sticky-top top-0">
+								<small class="text-muted d-block text-end">Klik untuk menghapus</small>
+								<table class="table table-bordered table-hover">
+									<thead>
+										<tr>
+											<th class="col-1 text-center">#</th>
+											<th>Gerobak terpilih</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr 
+											v-for="(gerobak, index) in choosenGerobakList"
+											@click="removeGerobakFromList(gerobak)" 
+											>
+											<td class="col-1 text-center">{{ ++index }}</td>
+											<td>{{ gerobak.code }}</td>
+										</tr>
+									</tbody>
+								</table>
 							</div>
 						</div>
 					</div>

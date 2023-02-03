@@ -24,9 +24,10 @@ async function login() {
 		router.push("/dashboard");
 	
 	} catch (err) {
-		console.error(err)
+		console.error("authService.login catch =>",err)
 
-		if (err.response.status) {
+
+		if (err.response) {
 			console.log(err.response.status)
 			switch (err.response.status) {
 				case 400: errorMessage.value = "Kredensial tidak valid";
@@ -40,9 +41,7 @@ async function login() {
 			errorMessage.value = err.code
 		}
 
-			
-	
-  }
+	}
 }
 </script>
 
@@ -74,7 +73,8 @@ async function login() {
       />
 
       <button class="btn btn-primary w-100" type="submit">Login</button>
-		<div v-if="errorMessage" @click="errorMessage = null" class="alert alert-danger mt-3">{{ errorMessage }}</div>
+
+		<div v-if="errorMessage" @click="errorMessage = null" class="alert bg-danger text-white rounded-0 mt-3 fixed-bottom bottom-0 m-0">{{ errorMessage }}</div>
 			 
     </form>
   </div>

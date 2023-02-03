@@ -17,7 +17,12 @@ export default {
   checkAuth: async () => {
     const authStore = useAuthStore();
     const isAuthenticated = (await api.get(url + "isLogin")).data;
-    if (!isAuthenticated) router.push("/login");
+
+    if (!isAuthenticated) {
+      authStore.user = {};
+      router.push("/login");
+    }
+
     authStore.isAuthenticated = isAuthenticated;
     return isAuthenticated;
   },

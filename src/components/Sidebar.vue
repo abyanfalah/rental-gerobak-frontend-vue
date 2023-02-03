@@ -1,15 +1,12 @@
 <script setup>
-import { computed } from "@vue/reactivity";
 import capitalize from "capitalize";
-import { watch } from "vue";
 import router from "../router";
-import authService from "../service/modules/authService";
 import { useAuthStore } from "../stores/auth";
+
 const authStore = useAuthStore();
 
-
 function getCurrentRouteName() {
-	return router.currentRoute.value.name.toLowerCase()
+	return router.currentRoute.value.name ?? ''
 };
 </script>
 
@@ -28,7 +25,7 @@ function getCurrentRouteName() {
 			<RouterLink to="/rent/new" 
 				class="nav-link " 
 				active-class="bg-success text-white"
-				:class="getCurrentRouteName() !== 'rental baru' ? 'bg-white text-dark' : null"
+				:class="getCurrentRouteName().toLowerCase() !== 'rental baru' ? 'bg-white text-dark' : null"
 				>
         	<i class="bi-plus-square-fill"></i>
         	Rental baru

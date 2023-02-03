@@ -32,33 +32,41 @@ onMounted(async () => {
 					<div class="row">
 						<div class="col">
 							<!-- gerobak list -->
-							<table class="table table-bordered table-hover">
+							<table class="table table-bordered table-hover ">
 								<thead>
 									<tr>
 										<th class="col-1 text-center">#</th>
 										<th>Kode gerobak</th>
-										<!-- <th>Tipe</th> -->
 									</tr>
 								</thead>
 								<tbody>
-									<tr v-for="(gerobak, index) in gerobakList">
-										<td class="col-1 text-center text-muted">{{ ++index }}</td>
+									<tr 
+										v-for="(gerobak, index) in gerobakList"
+										@click="toggleGerobakAgainstList(gerobak)" 
+										:class="{
+											'bg-primary text-white': choosenGerobakList.includes(gerobak), 'disabled bg-secondary text-white': gerobak.status.toLowerCase() !== 'ada'}" 
+										>
+										<td class="col-1 text-center">{{ ++index }}</td>
 										<td>{{ gerobak.code }}</td>
-										<!-- <td>{{ gerobak.type }}</td> -->
 									</tr>
 								</tbody>
 							</table>
 						</div>
 
+						<!-- choosen gerobak list -->
 						<div class="col">
-							<div class="card sticky-top top-0">
+							<!-- <div class="card sticky-top top-0">
 								<div class="card-body">
-									teprilih
+									
 								</div>
 							</div> -->
 
 							<div class="sticky-top top-0">
-								<small class="text-muted d-block text-end">Klik untuk menghapus</small>
+								<small class="text-muted d-block text-end">
+									
+									<span v-if="choosenGerobakList.length">Klik untuk menghapus</span>
+									<span v-else>&nbsp;</span>
+								</small>
 								<table class="table table-bordered table-hover">
 									<thead>
 										<tr>

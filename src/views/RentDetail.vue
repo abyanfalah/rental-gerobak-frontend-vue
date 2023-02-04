@@ -6,6 +6,7 @@ import rentService from '../service/modules/rentService';
 import userService from '../service/modules/userService';
 import ButtonBack from "../components/ButtonBack.vue";
 import dateTimeService from "../service/modules/dateTimeService";
+import ModalRentPay from '../components/ModalRentPay.vue';
 
 
 const getDateTime = dateTimeService.getReadableDateTime
@@ -22,15 +23,7 @@ async function getRent() {
 	}
 }
 
-function getBadgeColor(rentStatus) {
-	const colors = {
-		ok: "success",
-		berlangsung: "primary",
-		partial: "warning"
-	}
-
-	return colors[rentStatus.toLowerCase()];
-}
+const getBadgeColorByStatus = rentService.getBadgeColorByStatus
 
 
 function getTextColor(rentStatus) {
@@ -48,272 +41,283 @@ onBeforeMount(() => {
 </script>
 
 <template>
-	<div v-if="rent && rent.customer && rent.user && rent.detail">
-		<div class="row">
-			<div class="col d-flex justify-content-between align-items-center">
-				<h1>Detail rental</h1>
-				<ButtonBack/>
-			</div>
-		</div>
-		<div class="card shadow-sm">
-			<div class="card-body">
-
-				<!-- rent info row -->
-				<div class="row">
-
-					<!-- customer's column -->
-					<div class="col border-end">
-						<div class="row">
-							<div class="col">
-								<small class="text-muted">
-									Penyewa
-								</small>
-							</div>
-						</div>
-						<div class="row">
-							<div class="col">
-								<span class="fs-3">{{ capitalize.words(rent.customer.name) }}</span>
-							</div>
-						</div>
-
-						<div class="row mt-3">
-							<div class="col">
-								<small class="text-muted">
-									Alamat
-								</small>
-							</div>
-						</div>
-						<div class="row">
-							<div class="col">
-								<span>{{ rent.customer.address }}</span>
-							</div>
-						</div>
-
-						<div class="row mt-3">
-							<div class="col">
-								<small class="text-muted">
-									Telepon
-								</small>
-							</div>
-						</div>
-						<div class="row">
-							<div class="col">
-								<span>{{ rent.customer.phone }}</span>
-							</div>
-						</div>
-
-						<div class="row mt-3">
-							<div class="col">
-								<small class="text-muted">
-									Lokasi
-								</small>
-							</div>
-						</div>
-						<div class="row">
-							<div class="col">
-								<span>{{ rent.location ?? "N/A" }}</span>
-							</div>
-						</div>
-
-
-					</div>
-
-						<!-- user's column -->
-					<div class="col border-end">
-						<div class="row">
-							<div class="col">
-								<small class="text-muted">
-									Kasir pertama
-								</small>
-							</div>
-						</div>
-						<div class="row">
-							<div class="col">
-								<span class="fs-3">{{ capitalize.words(rent.user.name) }}</span>
-							</div>
-						</div>
-
-						<div class="row mt-3">
-							<div class="col">
-								<small class="text-muted">
-									Pembayaran terakhir
-								</small>
-							</div>
-						</div>
-						<div class="row">
-							<div class="col">
-								<span v-if="rent.last_payment_at">{{ getDateTime(rent.last_payment_at).full() }}</span>
-								<span v-else>N/A</span>
-							</div>
-						</div>
-
-						<div class="row mt-3">
-							<div class="col">
-								<small class="text-muted">
-									Kasir terakhir
-								</small>
-							</div>
-						</div>
-						<div class="row">
-							<div class="col">
-								<span>{{ capitalize.words(rent.user.name) }}</span>
-							</div>
-						</div>
-					</div>
-					
-					<!-- detail column -->
-					<div class="col-md-4 d-flex justify-content-start">
-						<div>
-
-							<div>
-								<small class="text-muted">ID</small>
-								<p>
-									<small class="font-monospace">	{{ rent.id }}</small>
-								</p>
-							</div>
-
-							<div>
-								<!-- row waktu -->
-								<div class="row">
-									
-									<!-- start time -->
-									<div class="col">
-
-										<div class="row">
-											<div class="col">
-												<small class="text-muted">Pinjam</small>
-											</div>
-										</div>
-
-										<div class="row">
-											<div class="col">
-												<span class="badge border text-dark p-2">
-													<div class="d-flex flex-column text-start">
-														<span class="mb-1">
-															{{ getDateTime(rent.created_at).date }}
-														</span> 
-														<span >
-															{{ getDateTime(rent.created_at).time }} 
-														</span> 
-													</div>
-												</span>
-											</div>
-										</div>
-										
-									</div>
-									
-									<!-- TODO: render conditional jika sudah lunas -->
-									<!-- end time -->
-									<div class="col">
-
-										<div class="row">
-											<div class="col">
-												<small class="text-muted">Lunas</small>
-											</div>
-										</div>
-
-										<div class="row">
-											<div class="col">
-												<span class="badge border text-dark p-2">
-													<div class="d-flex flex-column text-start">
-														<span class="mb-1">
-															{{ getDateTime(rent.last_payment_at).date }}
-														</span> 
-														<span>
-															{{ getDateTime(rent.last_payment_at).time }} 
-														</span> 
-													</div>
-												</span>
-											</div>
-										</div>
-										
-									</div>
-
-								</div>
-
-							</div>
-
-							<div class="mt-3">
-								<small class="text-muted">Status</small>
-								<p>
-									<span class="badge fs-2" :class="`bg-${getBadgeColor(rent.status)}`">
-										{{ rent.status }}
-									</span>
-								</p>
-							</div>
-
-
-						</div>
-					</div>
+	<div>
+		<div v-if="rent && rent.customer && rent.user && rent.detail">
+			<div class="row d-flex">
+				<div class="col ">
+					<h1>Detail rental</h1>
 				</div>
-
-				<!-- gerobak list row -->
-				<div class="row mt-3">
-					<div class="col">
-						<div class="card">
-							<div class="card-header d-flex justify-content-between align-items-center">
-								<span>
-									Daftar gerobak 
-									<span>({{ rent.detail.length }})</span>
-								</span>
-								
-								
-								<button class="btn btn-success" v-if="rent.status !== 'OK'">Tambah gerobak</button>
-							</div>
-							<div class="card-body">
-								<div class="row">
-									<div class="col-6 mb-3" v-for="(rentDetail, index) in rent.detail">
-										<div class="card text-white" :class="`bg-${getBadgeColor(rentDetail.status)}`">
-											<div class="card-body">
-												<div class="row">
-													<div class="col fw-bold">
-														{{ rentDetail.gerobak.code }}
-													</div>
-													<div class="col">
-														<div class="row">
-															<div class="col">
-																	<small>
-																		<small>
-																			mulai
-																		</small>
-																	</small>
-															</div>
-														</div>
-														
-													</div>
-												</div>
-											</div>
-										</div>
-									</div>
-
-									<div class="col-6" v-if="rent.status !== 'OK'">
-											<div class="card border-0 shadow">
-												<div class="card-body btn btn-outline-success ">
-													<span>Tambah gerobak <strong>&plus;</strong></span>
-												</div>
-											</div>
-									</div>
-								</div>
-							</div>
-						</div>
+				<div class="col d-flex justify-content-end">
+					<div class="me-2">
+						<button class="btn btn-primary px-4">Bayar</button>
 					</div>
-
-					<div class="col-4">
-						<div class="card sticky-top">
-							<div class="card-header">
-								Riwayat pembayaran
-								
-							</div>
-							<div class="card-body"></div>
-						</div>
-					</div>
+					<ButtonBack/>
 				</div>
 			</div>
-		</div>
-	</div>
-
+			<div class="card shadow-sm">
+				<div class="card-body">
 	
-	<div v-else>
-		<p>Error fetching rent data</p>
+					<!-- rent info row -->
+					<div class="row">
+	
+						<!-- customer's column -->
+						<div class="col border-end">
+							<div class="row">
+								<div class="col">
+									<small class="text-muted">
+										Penyewa
+									</small>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col">
+									<span class="fs-3">{{ capitalize.words(rent.customer.name) }}</span>
+								</div>
+							</div>
+	
+							<div class="row mt-3">
+								<div class="col">
+									<small class="text-muted">
+										Alamat
+									</small>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col">
+									<span>{{ rent.customer.address }}</span>
+								</div>
+							</div>
+	
+							<div class="row mt-3">
+								<div class="col">
+									<small class="text-muted">
+										Telepon
+									</small>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col">
+									<span>{{ rent.customer.phone }}</span>
+								</div>
+							</div>
+	
+							<div class="row mt-3">
+								<div class="col">
+									<small class="text-muted">
+										Lokasi
+									</small>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col">
+									<span>{{ rent.location ?? "N/A" }}</span>
+								</div>
+							</div>
+	
+	
+						</div>
+	
+							<!-- user's column -->
+						<div class="col border-end">
+							<div class="row">
+								<div class="col">
+									<small class="text-muted">
+										Kasir pertama
+									</small>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col">
+									<span class="fs-3">{{ capitalize.words(rent.user.name) }}</span>
+								</div>
+							</div>
+	
+							<div class="row mt-3">
+								<div class="col">
+									<small class="text-muted">
+										Pembayaran terakhir
+									</small>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col">
+									<span v-if="rent.last_payment_at">{{ getDateTime(rent.last_payment_at).full() }}</span>
+									<span v-else>N/A</span>
+								</div>
+							</div>
+	
+							<div class="row mt-3">
+								<div class="col">
+									<small class="text-muted">
+										Kasir terakhir
+									</small>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col">
+									<span>{{ capitalize.words(rent.user.name) }}</span>
+								</div>
+							</div>
+						</div>
+						
+						<!-- detail column -->
+						<div class="col-md-4 d-flex justify-content-start">
+							<div>
+	
+								<div>
+									<small class="text-muted">ID</small>
+									<p>
+										<small class="font-monospace">	{{ rent.id }}</small>
+									</p>
+								</div>
+	
+								<div>
+									<!-- row waktu -->
+									<div class="row">
+										
+										<!-- start time -->
+										<div class="col">
+	
+											<div class="row">
+												<div class="col">
+													<small class="text-muted">Pinjam</small>
+												</div>
+											</div>
+	
+											<div class="row">
+												<div class="col">
+													<span class="badge border text-dark p-2">
+														<div class="d-flex flex-column text-start">
+															<span class="mb-1">
+																{{ getDateTime(rent.created_at).date }}
+															</span> 
+															<span >
+																{{ getDateTime(rent.created_at).time }} 
+															</span> 
+														</div>
+													</span>
+												</div>
+											</div>
+											
+										</div>
+										
+										<!-- TODO: render conditional jika sudah lunas -->
+										<!-- end time -->
+										<div class="col">
+	
+											<div class="row">
+												<div class="col">
+													<small class="text-muted">Lunas</small>
+												</div>
+											</div>
+	
+											<div class="row">
+												<div class="col">
+													<span class="badge border text-dark p-2">
+														<div class="d-flex flex-column text-start">
+															<span class="mb-1">
+																{{ getDateTime(rent.last_payment_at).date }}
+															</span> 
+															<span>
+																{{ getDateTime(rent.last_payment_at).time }} 
+															</span> 
+														</div>
+													</span>
+												</div>
+											</div>
+											
+										</div>
+	
+									</div>
+	
+								</div>
+	
+								<div class="mt-3">
+									<small class="text-muted">Status</small>
+									<p>
+										<span class="badge fs-2" :class="`bg-${getBadgeColorByStatus(rent.status)}`">
+											{{ rent.status }}
+										</span>
+									</p>
+								</div>
+	
+	
+							</div>
+						</div>
+					</div>
+	
+					<!-- gerobak list row -->
+					<div class="row mt-3">
+						<div class="col">
+							<div class="card">
+								<div class="card-header d-flex justify-content-between align-items-center">
+									<span>
+										Daftar gerobak 
+										<span>({{ rent.detail.length }})</span>
+									</span>
+									
+									
+									<button class="btn btn-success" v-if="rent.status !== 'OK'">Tambah gerobak</button>
+								</div>
+								<div class="card-body">
+									<table v-if="rent.detail.length" class="table table-sm table-hover table-bordered">
+											<thead>
+												<tr>
+													<th>#</th>
+													<th>Kode</th>
+													<th>Start</th>
+													<th>Finish</th>
+													<th>Status</th>
+												</tr>
+											</thead>
+	
+											<tbody>
+												<tr
+													v-for="(detail, index) in rent.detail"
+												>
+													<td class="text-muted">{{ ++index }}</td>
+													<td>{{ detail.gerobak.code }}</td>
+													<td>
+														{{ getDateTime(detail.start_time).noDayDate }}&nbsp;
+														{{ getDateTime(detail.start_time).time }}
+													</td>
+													<td>
+														{{ getDateTime(detail.end_time).noDayDate }}&nbsp;
+														{{ getDateTime(detail.end_time).time }}
+													</td>
+													<td>
+														<span 
+															class="badge"
+															:class="`bg-${getBadgeColorByStatus(detail.status)}`"
+															>
+															{{ detail.status }}
+														</span>
+													</td>
+												</tr>
+											</tbody>
+									</table>
+								</div>
+							</div>
+						</div>
+	
+						<div class="col-4">
+							<div class="card sticky-top">
+								<div class="card-header">
+									Riwayat pembayaran
+									
+								</div>
+								<div class="card-body"></div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	
+		
+		<div v-else>
+			<p>Error fetching rent data</p>
+		</div>
 	</div>
+	<ModalRentPay />
 </template>

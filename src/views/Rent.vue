@@ -62,7 +62,7 @@ onMounted(() => {
 		<div class="row">
 
 			<!-- rent table column -->
-			<div class="col-md-6">
+			<div class="col-md-7">
 				<div class="card">
 					<div class="card-body">
 						<p class="text-center muted" v-if="error">Error: cannot fetch data.</p>

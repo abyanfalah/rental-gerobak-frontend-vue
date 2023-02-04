@@ -316,5 +316,4 @@ onBeforeMount(() => {
 	<div v-else>
 		<p>Error fetching rent data</p>
 	</div>
-	{{ rent }}
 </template>

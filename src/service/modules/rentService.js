@@ -10,6 +10,21 @@ export default {
       },
     });
   },
+  getOngoing: () => {
+    return api.get(url, {
+      params: {
+        status: "berlangsung",
+        with_detail: true,
+      },
+    });
+  },
+  getToday: () => {
+    return api.get(url + "today", {
+      params: {
+        with_detail: true,
+      },
+    });
+  },
   getById: (id) => {
     return api.get(url + id, {
       params: {
@@ -19,6 +34,16 @@ export default {
   },
   create: (newData) => {
     return api.post(url, newData);
+  },
+
+  getBadgeColorByStatus: (rentStatus) => {
+    const colors = {
+      ok: "success",
+      berlangsung: "primary",
+      partial: "warning",
+    };
+
+    return colors[rentStatus.toLowerCase()];
   },
   // update: (newData) => {
   //   return api.put(url, newData);

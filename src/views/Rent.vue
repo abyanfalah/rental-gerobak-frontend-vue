@@ -24,16 +24,7 @@ async function getRent() {
     console.error(err);
   }
 }
-
-function getBadgeColor(rentStatus) {
-	const colors = {
-		ok: "success",
-		berlangsung: "primary",
-		partial: "warning"
-	}
-
-	return colors[rentStatus.toLowerCase()];
-}
+const getBadgeColorByStatus = rentService.getBadgeColorByStatus
 
 function getTextColor(rentStatus) {
 	if (rentStatus.toLowerCase() !== "partial") {
@@ -97,7 +88,7 @@ onMounted(() => {
 									<td>
 										<span 
 											class="badge"
-											:class="`bg-${getBadgeColor(rent.status)}`"
+											:class="`bg-${getBadgeColorByStatus(rent.status)}`"
 										>
 											{{ rent.status }}
 										</span>
@@ -157,7 +148,7 @@ onMounted(() => {
 							<div class="col">
 								<span 
 											class="badge"
-											:class="`bg-${getBadgeColor(choosenRent.status)}`"
+											:class="`bg-${getBadgeColorByStatus(choosenRent.status)}`"
 										>
 											{{ choosenRent.status }}
 										</span>

@@ -252,14 +252,19 @@ onBeforeMount(() => {
 					<div class="col">
 						<div class="card">
 							<div class="card-header d-flex justify-content-between align-items-center">
-								Daftar gerobak
+								<span>
+									Daftar gerobak 
+									<span>({{ rent.detail.length }})</span>
+								</span>
+								
+								
 								<button class="btn btn-success" v-if="rent.status !== 'OK'">Tambah gerobak</button>
 							</div>
 							<div class="card-body">
 								<div class="row">
-									<div class="col-6" v-for="(rentDetail, index) in rent.detail">
+									<div class="col-6 mb-3" v-for="(rentDetail, index) in rent.detail">
 										<div class="card text-white" :class="`bg-${getBadgeColor(rentDetail.status)}`">
-											<div class="card-body ">
+											<div class="card-body">
 												<div class="row">
 													<div class="col fw-bold">
 														{{ rentDetail.gerobak.code }}

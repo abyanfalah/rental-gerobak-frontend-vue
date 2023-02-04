@@ -25,7 +25,7 @@ function getCurrentRouteName() {
 			<RouterLink to="/rent/new" 
 				class="nav-link " 
 				active-class="bg-success text-white"
-				:class="getCurrentRouteName().toLowerCase() !== 'rental baru' ? 'bg-white text-dark' : null"
+				:class="{'bg-white text-dark' : getCurrentRouteName().toLowerCase() !== 'rental baru'}"
 				>
         	<i class="bi-plus-square-fill"></i>
         	Rental baru

@@ -106,7 +106,7 @@ async function registerUser() {
 									v-model="name" 
 									type="text" 
 									class="form-control" 
-									:class="!isValidName ? 'border-danger' : null"
+									:class="{'border-danger' : !isValidName}"
 									@blur="validateName">
 								<div  class="text-danger" v-if="!isValidName">nama harus diisi!</div>
 							</div>
@@ -118,7 +118,7 @@ async function registerUser() {
 									@blur="validateUsername" 
 									@keydown="validateUsername" 
 									type="text" class="form-control" 
-									:class="!isValidUsername ? 'border-danger' : null"
+									:class="{'border-danger' : !isValidUsername}"
 									placeholder="5 karakter atau lebih">
 								<div  class="text-danger" v-if="!isValidUsername">username tidak valid!</div>
 								
@@ -131,7 +131,7 @@ async function registerUser() {
 									type="password" 
 									@blur="validatePassword" 
 									class="form-control" 
-									:class="!isValidPassword ? 'border-danger' : null"
+									:class="{'border-danger' : !isValidPassword}"
 									placeholder="8 karakter atau lebih.">
 								<div class="text-danger" v-if="!isValidPassword">kata sandi tidak valid!</div>
 							</div>
@@ -142,7 +142,7 @@ async function registerUser() {
 									v-model="passwordConfirmation" 
 									type="password" 
 									class="form-control" 
-									:class="!isSamePassword ? 'border-danger' : null"
+									:class="{'border-danger' : !isSamePassword}"
 									@blur="checkPasswordConfirmation">
 								 <div class="text-danger" v-if="!isSamePassword">password tidak sama!</div>
 							</div>

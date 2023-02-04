@@ -40,7 +40,7 @@ onMounted(async () => {
 								<tr  
 									@click="choosenCustomer = customer" 
 									v-for="(customer, index) in customerList"
-									:class="choosenCustomer.id === customer.id ? 'bg-primary text-white' : null"
+									:class="{'bg-primary text-white' : choosenCustomer.id === customer.id }"
 									>
 									<td>{{ ++index }}</td>
 									<td>{{ capitalize.words(customer.name) }}</td>

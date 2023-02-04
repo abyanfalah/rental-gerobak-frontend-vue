@@ -89,7 +89,10 @@ onMounted(() => {
 							</thead>
 
 							<tbody>
-								<tr @click="showUser(user)" v-for="(user, index) in userList">
+								<tr
+								 @click="showUser(user)" v-for="(user, index) in userList"
+								 :class="{'bg-dark text-white' : choosenUser.id === user.id}"
+								 >
 									<td>{{ ++index }}</td>
 									<td>{{ user.username }}</td>
 									<td>{{ capitalize.words(user.name) }}</td>

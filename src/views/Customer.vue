@@ -76,7 +76,10 @@ onBeforeMount(() => {
 							</thead>
 
 							<tbody>
-								<tr @click="showCustomer(customer)" v-for="(customer, index) in customerList">
+								<tr 
+									@click="showCustomer(customer)" v-for="(customer, index) in customerList"
+									:class="{'bg-dark text-white' : choosenCustomer.id === customer.id}"
+									>
 									<td>{{ ++index }}</td>
 									<td>{{ capitalize.words(customer.name) }}</td>
 									<td>{{ customer.phone }}</td>

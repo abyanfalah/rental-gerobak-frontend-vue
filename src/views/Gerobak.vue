@@ -112,7 +112,10 @@ onBeforeMount(() => {
 							</thead>
 		
 							<tbody>
-								<tr @click="showGerobak(gerobak)" v-for="(gerobak, index) in gerobakList">
+								<tr 
+									@click="showGerobak(gerobak)" v-for="(gerobak, index) in gerobakList"
+									:class="{'bg-dark text-white' : choosenGerobak.id === gerobak.id}"
+									>
 									<td>{{ ++index }}</td>
 									<td>{{ gerobak.code }}</td>
 									<td>

@@ -17,9 +17,7 @@ async function addCustomer() {
 		phone: phone.value
 	}
 	const response = await customerService.update(data, indexStore.choosenCustomer.id)
-	console.log(response)
 	if (response.status == 200) {
-		console.log("success, go refresh")
 		emit('customerEditSuccess')
 		useIndexStore().actionSuccessMessage = "perubahan berhasil disimpan!"
 	} else {
@@ -32,8 +30,6 @@ watch(() => indexStore.choosenCustomer, (customer) => {
 	name.value = customer.name
 	address.value = customer.address
 	phone.value = customer.phone
-
-	console.log(name, address, phone)
 });
 
 </script>

@@ -90,9 +90,7 @@ const router = createRouter({
 });
 
 router.beforeEach((to, from, next) => {
-  document.title = `${import.meta.env.VITE_APP_NAME} - ${capitalize.words(
-    to.name
-  )}`;
+  document.title = `${capitalize.words(to.name)}`;
 
   // auth guard router
   const authStore = useAuthStore();

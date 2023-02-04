@@ -173,6 +173,7 @@ onMounted(() => {
 							<div class="col text-end">
 
 								<button class="btn me-1" :class="choosenUser.access == 'admin' ? 'btn-primary': 'btn-success'" v-if="authStore.isAdmin">
+									
 									<div v-if="choosenUser.access !== 'admin'">
 										<i class="bi-person-check-fill"></i>
 										Jadikan sebagai admin
@@ -185,14 +186,26 @@ onMounted(() => {
 									
 								</button>
 
-								<RouterLink to="/user/edit" class="btn btn-warning">
+								<RouterLink to="/user/edit" class="btn btn-warning"
+								v-if="authStore.isAdmin"
+								>
 									<i class="bi-pencil"></i>
 									Edit
 								</RouterLink>
 
-								<button class="btn btn-danger ms-1" data-bs-toggle="modal" data-bs-target="#modalUserDelete">
+								<button class="btn btn-danger ms-1" data-bs-toggle="modal" data-bs-target="#modalUserDelete"
+								v-if="authStore.isAdmin"
+								>
 									<i class="bi-trash"></i>
 									Hapus
+								</button>
+
+								<button
+									class="btn btn-primary"
+									v-if="choosenUser.id === authStore.user.id"
+								>
+									<i class="bi-person-fill"></i>
+									Edit profil saya
 								</button>
 
 								

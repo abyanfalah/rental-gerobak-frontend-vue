@@ -1,16 +1,19 @@
 <script setup>
 import capitalize from 'capitalize';
-import { onBeforeMount, ref } from 'vue';
+import { onBeforeMount, onMounted, ref } from 'vue';
 import customerService from '../service/modules/customerService';
 import rentService from '../service/modules/rentService';
 import userService from '../service/modules/userService';
 import ButtonBack from "../components/ButtonBack.vue";
 import dateTimeService from "../service/modules/dateTimeService";
 import ModalRentPay from '../components/ModalRentPay.vue';
+import { useIndexStore } from '../stores';
 
 
 const getDateTime = dateTimeService.getReadableDateTime
 const props = defineProps(['id'])
+const indexStore = useIndexStore()
+
 const rent = ref({})
 
 async function getRent() {
@@ -18,22 +21,14 @@ async function getRent() {
 		rent.value = (await rentService.getById(props.id)).data.data
 		rent.value.customer = (await customerService.getById(rent.value.customer_id)).data.data
 		rent.value.user = (await userService.getById(rent.value.user_id)).data.data
+
+		indexStore.choosenRent = Object.assign({}, rent.value)
 	}catch (err) {
 		console.error(err)
 	}
 }
 
 const getBadgeColorByStatus = rentService.getBadgeColorByStatus
-
-
-function getTextColor(rentStatus) {
-	const colors = {
-		ok: "white",
-	}
-
-	return colors[rentStatus.toLowerCase()] ?? null;
-}
-
 
 onBeforeMount(() => {
 	getRent()
@@ -49,7 +44,7 @@ onBeforeMount(() => {
 				</div>
 				<div class="col d-flex justify-content-end">
 					<div class="me-2">
-						<button class="btn btn-primary px-4">Bayar</button>
+						<button class="btn btn-primary px-4" data-bs-toggle="modal" data-bs-target="#modalRentPay">Bayar</button>
 					</div>
 					<ButtonBack/>
 				</div>

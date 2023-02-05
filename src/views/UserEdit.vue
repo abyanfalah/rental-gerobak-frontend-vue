@@ -1,12 +1,13 @@
 <script setup>
 import capitalize from 'capitalize';
-import { onBeforeMount, ref } from 'vue';
+import { onBeforeMount, onMounted, ref, watch } from 'vue';
 import router from '../router';
 import userService from '../service/modules/userService';
 import clearString from '../helper/clear-string'
 import { useIndexStore } from '../stores';
 import { useAuthStore } from '../stores/auth';
 import ButtonBack from '../components/ButtonBack.vue'
+import { onBeforeRouteLeave } from 'vue-router';
 
 const indexStore = useIndexStore()
 const authStore = useAuthStore()
@@ -107,14 +108,45 @@ async function updateUser() {
 	}
 }
 
-console.log(indexStore.choosenUser)
-
+function isChanged() {
+	return
+	name.value !== indexStore.choosenUser.name
+	|| username.value !== indexStore.choosenUser.username
+	|| phone.value !== indexStore.choosenUser.phone
+}
 
 onBeforeMount(() => {
 	name.value = indexStore.choosenUser.name
 	username.value = indexStore.choosenUser.username
 	phone.value = indexStore.choosenUser.phone
 
+	indexStore.isExistUnsavedChanges = false
+})
+
+onMounted(() => {
+	// watch if there is changes to the form fields.
+	watch(() => [
+		name.value,
+		username.value,
+		password.value,
+		phone.value
+	], () => {
+		alert("ganti euy")
+		indexStore.isExistUnsavedChanges = true
+	})
+});
+
+onBeforeRouteLeave(() => {
+	if (!indexStore.isExistUnsavedChanges) {
+		return true
+	}
+
+	if (confirm("leave unsaved changes?")) {
+		indexStore.isExistUnsavedChanges = false;
+		return true;
+	}
+
+	return false
 })
 </script>
 

@@ -26,14 +26,6 @@ async function getRent() {
 }
 const getBadgeColorByStatus = rentService.getBadgeColorByStatus
 
-function getTextColor(rentStatus) {
-	if (rentStatus.toLowerCase() !== "partial") {
-		return "text-white"
-	} else {
-		return null
-	}
-}
-
 function showRent(rent) {
 	choosenRent.value = rent
 	indexStore.choosenRent = rent

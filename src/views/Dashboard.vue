@@ -69,7 +69,7 @@ onBeforeMount( async () => {
 							</tbody>
 					</table>
 
-					<span v-else class="d-block-text-center text-muted">(Data kosong)</span>
+					<span v-else class="d-block text-center text-muted">(Data kosong)</span>
 				</div>
 			</div>
 		</div>

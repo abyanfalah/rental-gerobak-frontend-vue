@@ -1,12 +1,14 @@
 <script setup>
 import capitalize from 'capitalize';
-import { ref } from 'vue';
+import { onBeforeMount, ref, watch } from 'vue';
 import router from '../router';
 import userService from '../service/modules/userService';
 import clearString from '../helper/clear-string'
-import { useRoute, useRouter } from 'vue-router';
+import { onBeforeRouteLeave, useRoute, useRouter } from 'vue-router';
 import ButtonBack from '../components/ButtonBack.vue';
 import { useIndexStore } from '../stores';
+
+const indexStore = useIndexStore()
 
 const name = ref("")
 const username = ref("")
@@ -82,6 +84,32 @@ async function registerUser() {
 	
 }
 
+// watch if there is changes to the form fields.
+watch(() => [
+	name.value,
+	username.value,
+	password.value,
+	phone.value
+], () => {
+	indexStore.isExistUnsavedChanges = true
+})
+
+onBeforeMount(() => {
+	indexStore.isExistUnsavedChanges = false
+})
+
+onBeforeRouteLeave(() => {
+	if (!indexStore.isExistUnsavedChanges) {
+		return true
+	}
+
+	if (confirm("leave unsaved changes?")) {
+		indexStore.isExistUnsavedChanges = false;
+		return true;
+	}
+
+	return false
+})
 </script>
 
 <template>

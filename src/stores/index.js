@@ -14,7 +14,10 @@ export const useIndexStore = defineStore("index", () => {
 
   const actionSuccessMessage = ref(null);
 
+  const isExistUnsavedChanges = ref(true);
+
   return {
+    isExistUnsavedChanges,
     error,
     justLoggedIn,
     choosenUser,

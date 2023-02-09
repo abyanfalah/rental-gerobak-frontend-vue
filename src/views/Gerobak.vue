@@ -14,10 +14,30 @@ const authStore = useAuthStore()
 const getDateTime = dateTimeService.getReadableDateTime
 
 const gerobakList = ref([])
+const filteredGerobakList = ref(false)
 const gerobakTypeNameList = ref({})
 const error = ref(false)
 
 const choosenGerobak = ref({})
+
+const gerobakTypeIdFilter = ref()
+const dataList = () => {
+	return filteredGerobakList.value || gerobakList.value
+}
+
+function filter() {
+	choosenGerobak.value = {}
+	indexStore.choosenGerobak = {}
+
+	filteredGerobakList.value = gerobakList.value.filter((gerobak) => 
+		gerobak.type_id == gerobakTypeIdFilter.value
+	);
+}
+
+function clearFilter() {
+	gerobakTypeIdFilter.value = false
+	filteredGerobakList.value = false
+}
 
 async function getGerobakList() {
 	try {
@@ -101,7 +121,36 @@ onBeforeMount(() => {
 			<!-- gerobak table col -->
 			<div class="col-md-6">
 				<div class="card">
+					<div class="card-header d-flex justify-content-between align-items-center">
+						<span>Tabel gerobak</span>
+						<div>
+							<!-- search bar -->
+							<div class="input-group">
+
+								<!-- select status -->
+								<!-- <select v-model="gerobakStatusFilter" class="form-select">
+									<option :selected="true">-- Status --</option>
+									<option v-for="(typeName, index) in gerobakTypeNameList" :value="index">
+										{{ capitalize(typeName) }}
+									</option>
+								</select> -->
+								
+								<!-- select type -->
+								<select @change="filter()" v-model="gerobakTypeIdFilter" class="form-select" placeholder="Tipe">
+							<option :selected="gerobakTypeIdFilter == false">-- Tipe --</option>
+									<option v-for="(typeName, index) in gerobakTypeNameList" :value="index">
+										{{ capitalize(typeName) }}
+									</option>
+								</select>
+								
+								<button class="btn" :class="{'btn-danger' : gerobakTypeIdFilter}" type="button" @click="clearFilter">
+										<i class="bi-x-lg"></i>
+								</button>
+							</div>
+						</div>
+					</div>
 					<div class="card-body">
+						
 						<p class="text-center muted" v-if="error">Error: cannot fetch data.</p>
 						<table v-else class="table table-sm table-hover">
 							<thead>
@@ -114,7 +163,7 @@ onBeforeMount(() => {
 		
 							<tbody>
 								<tr 
-									@click="showGerobak(gerobak)" v-for="(gerobak, index) in gerobakList"
+									@click="showGerobak(gerobak)" v-for="(gerobak, index) in dataList()"
 									:class="{'bg-dark text-white' : choosenGerobak.id === gerobak.id}"
 									>
 									<td>{{ ++index }}</td>

@@ -6,20 +6,27 @@ import userService from "../service/modules/userService";
 import ModalUserDelete from "../components/ModalUserDelete.vue"
 import { useIndexStore } from "../stores/index"
 import { useAuthStore } from "../stores/auth";
+import { computed } from "@vue/reactivity";
 
 const getDateTime = dateTimeService.getReadableDateTime
 const indexStore = useIndexStore()
 const authStore = useAuthStore(0)
 
 const userList = ref();
-const error = ref(false)
+const filteredUserList = ref(false)
 const choosenUser = ref({})
+
+const error = ref(false)
+
+const searchQuery = ref()
+const dataList = () => {
+	return filteredUserList.value || userList.value
+}
 
 async function getUserList() {
   try {
     const response = await userService.getAll();
 		error.value = false
-    // console.log(response.data.data);
 		userList.value = response.data.data;
   } catch (err) {
 		console.error(err);
@@ -27,6 +34,7 @@ async function getUserList() {
 		
   }
 }
+
 
 function getBadgeColor(userAccess) {
 	const colors = {
@@ -49,19 +57,31 @@ function handleSuccessEvents() {
 
 }
 
+function filter() {
+	if (!searchQuery.value) {
+		filteredUserList.value = false
+		return
+	}
+
+	filteredUserList.value = userList.value.filter((user) => 
+		user.name.toLowerCase().indexOf(searchQuery.value.toLowerCase()) > -1
+		|| user.username.toLowerCase().indexOf(searchQuery.value.toLowerCase()) > -1
+		|| user.phone.indexOf(searchQuery.value) > -1
+	)
+}
+
 
 
 onMounted(() => {
   getUserList();
 });
-
 </script>
 
 <template>
 	<div>
 		<div class="row">
 			<div class="col">
-				<h1>Tabel user</h1>
+				<h1>User</h1>
 			</div>
 			<div class="col text-end">
 				<RouterLink class="btn btn-success shadow-sm" to="/user/registration">
@@ -76,8 +96,18 @@ onMounted(() => {
 			<!-- user table column -->
 			<div class="col-md-6">
 				<div class="card">
+					<div class="card-header d-flex justify-content-between align-items-center">
+						<span>Tabel user</span>
+						<div>
+							<input
+							v-model="searchQuery"
+							@keyup="filter()"
+								class="form-control" type="text" placeholder="Ketik disini untuk mencari">
+						</div>
+					</div>
 					<div class="card-body">
 						<p class="text-center muted" v-if="error">Error: cannot fetch data.</p>
+						
 						<table v-else class="table table-sm table-hover">
 							<thead>
 								<tr>
@@ -90,7 +120,7 @@ onMounted(() => {
 
 							<tbody>
 								<tr
-								 @click="showUser(user)" v-for="(user, index) in userList"
+								 @click="showUser(user)" v-for="(user, index) in dataList()"
 								 :class="{'bg-dark text-white' : choosenUser.id === user.id}"
 								 >
 									<td>{{ ++index }}</td>
@@ -105,6 +135,7 @@ onMounted(() => {
 										</span>
 									</td>
 								</tr>
+								
 								
 								<tr class="">
 									<td colspan="4">

@@ -18,7 +18,7 @@ export default {
       dateTime.getMonth()
     )} ${dateTime.getFullYear()}`;
 
-    const noDayDate = `${dateTime.getDay()} ${bahasaDateTime.shortMonth(
+    const noDayDate = `${dateTime.getDate()} ${bahasaDateTime.shortMonth(
       dateTime.getMonth()
     )} ${dateTime.getFullYear()}`;
 

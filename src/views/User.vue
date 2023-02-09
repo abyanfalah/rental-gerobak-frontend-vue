@@ -6,18 +6,17 @@ import userService from "../service/modules/userService";
 import ModalUserDelete from "../components/ModalUserDelete.vue"
 import { useIndexStore } from "../stores/index"
 import { useAuthStore } from "../stores/auth";
-import { computed } from "@vue/reactivity";
 
 const getDateTime = dateTimeService.getReadableDateTime
 const indexStore = useIndexStore()
 const authStore = useAuthStore(0)
 
 const userList = ref();
-const filteredUserList = ref(false)
 const choosenUser = ref({})
 
 const error = ref(false)
 
+const filteredUserList = ref(false)
 const searchQuery = ref()
 const dataList = () => {
 	return filteredUserList.value || userList.value
@@ -54,7 +53,6 @@ function handleSuccessEvents() {
 	choosenUser.value = {}
 	indexStore.choosenUser = {}
 	getUserList()
-
 }
 
 function filter() {
@@ -63,6 +61,9 @@ function filter() {
 		return
 	}
 
+	choosenUser.value = {}
+	indexStore.choosenUser = {}
+
 	filteredUserList.value = userList.value.filter((user) => 
 		user.name.toLowerCase().indexOf(searchQuery.value.toLowerCase()) > -1
 		|| user.username.toLowerCase().indexOf(searchQuery.value.toLowerCase()) > -1
@@ -70,7 +71,10 @@ function filter() {
 	)
 }
 
-
+function clearFilter() {
+	searchQuery.value = null
+	filteredUserList.value = false
+}
 
 onMounted(() => {
   getUserList();
@@ -98,12 +102,20 @@ onMounted(() => {
 				<div class="card">
 					<div class="card-header d-flex justify-content-between align-items-center">
 						<span>Tabel user</span>
+
 						<div>
-							<input
-							v-model="searchQuery"
-							@keyup="filter()"
+							<!-- search bar -->
+							<div class="input-group">
+								<input
+								v-model="searchQuery"
+								@keyup="filter()"
 								class="form-control" type="text" placeholder="Ketik disini untuk mencari">
+									<button class="btn" :class="{'btn-danger' : searchQuery}" type="button" @click="clearFilter">
+											<i class="bi-x-lg"></i>
+									</button>
+							</div>
 						</div>
+						
 					</div>
 					<div class="card-body">
 						<p class="text-center muted" v-if="error">Error: cannot fetch data.</p>

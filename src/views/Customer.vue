@@ -208,9 +208,6 @@ onBeforeMount(() => {
 		</div>
 	</div>
 
-	<div v-if="choosenCustomer.id">
-		{{ choosenCustomer }}
-	</div>
 
 
 	<ModalCustomerDelete @customer-delete-success="handleSuccessEvents"/>

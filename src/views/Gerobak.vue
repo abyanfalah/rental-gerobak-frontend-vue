@@ -77,6 +77,7 @@ function handleSuccessEvents() {
 onBeforeMount(() => {
 	getGerobakListWithType()
 });
+
 </script>
 
 <template>
@@ -84,7 +85,7 @@ onBeforeMount(() => {
 		<!-- header row -->
 		<div class="row">
 			<div class="col">
-					<h1>Tabel Gerobak</h1>
+					<h1>Gerobak</h1>
 			</div>
 				<div class="col text-end">
 					<button class="btn btn-success shadow-sm" data-bs-toggle="modal" data-bs-target="#modalGerobakAdd">
@@ -239,10 +240,6 @@ onBeforeMount(() => {
 			</div>
 		</div>
 
-	</div>
-
-		<div v-if="choosenGerobak.id">
-		{{ choosenGerobak }}
 	</div>
 
 	<ModalGerobakDelete @gerobak-delete-success="handleSuccessEvents" />

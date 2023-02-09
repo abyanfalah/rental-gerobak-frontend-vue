@@ -115,7 +115,7 @@ onMounted(() => {
 									</button>
 							</div>
 						</div>
-						
+
 					</div>
 					<div class="card-body">
 						<p class="text-center muted" v-if="error">Error: cannot fetch data.</p>
@@ -262,10 +262,6 @@ onMounted(() => {
 				</div>
 			</div>
 		</div>
-	</div>
-
-	<div v-if="choosenUser.id">
-		{{ choosenUser }}
 	</div>
 
 	<ModalUserDelete @user-delete-success="handleSuccessEvents" />

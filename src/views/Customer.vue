@@ -17,6 +17,12 @@ const customerList = ref();
 const error = ref(false)
 const choosenCustomer = ref({})
 
+const filteredCustomerList = ref(false)
+const searchQuery = ref()
+const dataList = () => {
+	return filteredCustomerList.value || customerList.value
+}
+
 async function getCustomerList() {
   try {
     const response = await customerService.getAll();
@@ -37,7 +43,27 @@ function handleSuccessEvents() {
 	choosenCustomer.value = {}
 	indexStore.choosenCustomer = {}
 	getCustomerList()
+}
 
+function filter() {
+	if (!searchQuery.value) {
+		filteredCustomerList.value = false
+		return
+	}
+
+	choosenCustomer.value = {}
+	indexStore.choosenCustomer = {}
+
+	filteredCustomerList.value = customerList.value.filter((Customer) => 
+		Customer.name.toLowerCase().indexOf(searchQuery.value.toLowerCase()) > -1
+		// || Customer.address.toLowerCase().indexOf(searchQuery.value.toLowerCase()) > -1
+		|| Customer.phone.indexOf(searchQuery.value) > -1
+	)
+}
+
+function clearFilter() {
+	searchQuery.value = null
+	filteredCustomerList.value = false
 }
 
 onBeforeMount(() => {
@@ -49,7 +75,7 @@ onBeforeMount(() => {
 	<div>
 		<div class="row">
 			<div class="col">
-				<h1>Tabel customer</h1>
+				<h1>Customer</h1>
 			</div>
 			<div class="col text-end">
 				<button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#modalCustomerAdd">
@@ -64,6 +90,21 @@ onBeforeMount(() => {
 			<!-- customer table column -->
 			<div class="col-md-6">
 				<div class="card">
+					<div class="card-header d-flex justify-content-between align-items-center">
+						<span>Tabel customer</span>
+						<div>
+							<!-- search bar -->
+							<div class="input-group">
+								<input
+								v-model="searchQuery"
+								@keyup="filter()"
+								class="form-control" type="text" placeholder="Ketik disini untuk mencari">
+									<button class="btn" :class="{'btn-danger' : searchQuery}" type="button" @click="clearFilter">
+											<i class="bi-x-lg"></i>
+									</button>
+							</div>
+						</div>
+					</div>
 					<div class="card-body">
 						<p class="text-center muted" v-if="error">Error: cannot fetch data.</p>
 						<table v-else class="table table-sm table-hover">
@@ -77,7 +118,7 @@ onBeforeMount(() => {
 
 							<tbody>
 								<tr 
-									@click="showCustomer(customer)" v-for="(customer, index) in customerList"
+									@click="showCustomer(customer)" v-for="(customer, index) in dataList()"
 									:class="{'bg-dark text-white' : choosenCustomer.id === customer.id}"
 									>
 									<td>{{ ++index }}</td>

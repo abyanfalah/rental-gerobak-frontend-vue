@@ -39,7 +39,6 @@ onBeforeMount( async () => {
 <template>
   <h1>Dashboard</h1>
 	<div class="row">
-
 		<div class="col-md-7">
 			<!-- rent berlangsung -->
 			<div class="card shadow-sm-sm sticky-top">
@@ -108,7 +107,7 @@ onBeforeMount( async () => {
 							</tbody>
 					</table>
 
-					<span v-else class="d-block-text-center text-muted">(Data kosong)</span>
+					<span v-else class="d-block text-center text-muted">(Data kosong)</span>
 				</div>
 			</div>
 		</div>

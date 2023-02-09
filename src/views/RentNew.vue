@@ -7,7 +7,7 @@ import ModalGerobakSelect from '../components/ModalGerobakSelect.vue';
 import customerService from '../service/modules/customerService';
 import rentService from '../service/modules/rentService';
 import { useIndexStore } from '../stores';
-
+import router from '../router'
 
 const indexStore = useIndexStore()
 const rentLocation = ref("")
@@ -18,19 +18,30 @@ function isEmptyChoosenGerobak() {
 }
 
 async function confirmRent() {
-	const rentData = {	
-		gerobak_list : indexStore.choosenGerobakList.map((gerobak) => gerobak.id),
-		customer_id : indexStore.choosenRentCustomer.id,
-		location : rentLocation.value,
-		note : additionalNotes.value,
+	try {
+		const rentData = {	
+			gerobak_list : indexStore.choosenGerobakList.map((gerobak) => gerobak.id),
+			customer_id : indexStore.choosenRentCustomer.id,
+			location : rentLocation.value,
+			note : additionalNotes.value,
+		}
+	
+		const response = await rentService.create(rentData)
+		console.log(response)
+	
+		if (response.status == 200) {
+			indexStore.actionSuccessMessage = "Penyewaan baru berhasil dibuat!"
+			router.push('/rent')
+		} else {
+			indexStore.actionSuccessMessage = "Gagal membuat penyewaan baru"
+		}
+		
+	} catch {
+		indexStore.error =  "Gagal membuat penyewaan baru"
 	}
 
-	const response = await rentService.create(rentData)
-	console.log(response)
 
-	if (response.status = 200) {
-		indexStore.actionSuccessMessage = "Penyewaan baru berhasil dibuat!"
-	}
+
 }
 
 onBeforeMount(async () => {

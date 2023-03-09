@@ -9,8 +9,11 @@ export default {
   getById: (id) => {
     return api.get(url + id);
   },
-  create: (newData) => {
-    return api.post(url, newData);
+  // create: (newData) => {
+  //   return api.post(url, newData);
+  // },
+  create: (formData) => {
+    return api.post(url, formData);
   },
   update: (newData, id) => {
     return api.put(url + id, newData);
@@ -18,4 +21,5 @@ export default {
   delete: (id) => {
     return api.delete(url + id);
   },
+  userImageUrl: (id) => `${url}/${id}/image`,
 };

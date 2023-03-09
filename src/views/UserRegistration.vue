@@ -15,6 +15,7 @@ const username = ref("")
 const password = ref("")
 const passwordConfirmation = ref("")
 const phone = ref("")
+const profilePic = ref("")
 
 const isValidName = ref(true)
 const isValidUsername = ref(true)
@@ -28,7 +29,6 @@ function validateName() {
 	isValidName.value = validCondition
 	return validCondition;
 }
-
 
 function validateUsername() {
 	const validCondition = 
@@ -55,7 +55,6 @@ function checkPasswordConfirmation() {
 	return validCondition
 }
 
-
 function validateAll() {
 	validateName()
 	validateUsername()
@@ -66,21 +65,25 @@ function validateAll() {
 }
 
 async function registerUser() {
+
 	if (!validateAll()) return console.log("form is not valid!")
 
-	const data = {
-		name: capitalize.words(name.value).trim(),
-		username: clearString(username.value),
-		password: password.value,
-		phone: phone.value
-	}
+	// TODO: Uncomment this!
+	// indexStore.isExistUnsavedChanges = false;
 
-	const response = await userService.create(data)
+	const formData = new FormData()
+	formData.append("name", capitalize.words(name.value).trim())
+	formData.append("username", clearString(username.value))
+	formData.append("password", phone.value)
+	formData.append("profilePic", profilePic.value.files[0])
+
+	const response = await userService.create(formData)
 	console.log("user create response => ", response)
-	if (response.status === 200) {
-		useIndexStore().actionSuccessMessage = "user baru tersimpan!"
-		router.push("/user")
-	}
+
+	// if (response.status === 200) {
+	// 	useIndexStore().actionSuccessMessage = "user baru tersimpan!"
+	// 	router.push("/user")
+	// }
 	
 }
 
@@ -123,11 +126,10 @@ onBeforeRouteLeave(() => {
 			</div>
 		</div>
 		<div class="row">
-			<div class="col-md-6">
-				<div class="card">
-					<div class="card-body">
-						<form @submit.prevent="registerUser">
-				
+			<div class="col">
+				<form @submit.prevent="registerUser" enctype="multipart/form-data">
+					<div class="row">
+						<div class="col-md-6 pe-5">
 							<div class="mb-3">
 								<label class="form-label">Nama</label>
 								<input 
@@ -172,9 +174,9 @@ onBeforeRouteLeave(() => {
 									class="form-control" 
 									:class="{'border-danger' : !isSamePassword}"
 									@blur="checkPasswordConfirmation">
-								 <div class="text-danger" v-if="!isSamePassword">password tidak sama!</div>
+								<div class="text-danger" v-if="!isSamePassword">password tidak sama!</div>
 							</div>
-
+		
 							<div class="mb-3">
 								<label class="form-label">Nomor telpon</label>
 								<input 
@@ -182,19 +184,31 @@ onBeforeRouteLeave(() => {
 									type="tel" 
 									class="form-control" 
 									>
-								 <!-- <div class="text-danger" v-if="!isSamePassword">password tidak sama!</div> -->
+								<!-- <div class="text-danger" v-if="!isSamePassword">password tidak sama!</div> -->
 							</div>
 				
 							<button type="submit" class="btn btn-primary">Simpan</button>
-						</form>
+						</div>
+						
+						<div class="col-md-6 d-flex flex-column justify-content-center align-items-center border-start">
+							<!-- <i class="bi-person-plus-fill display-1"></i> -->
+							<!-- <input type="file" ref="profilePic"> -->
+
+							<div class="mb-3">
+								<label class="form-label">Foto profil</label>
+								<input 
+									ref="profilePic"
+									type="file" 
+									name="profilePic"
+									accept="image/*"
+									class="form-control" 
+									
+									>
+							</div>
+							
+						</div>
 					</div>
-				</div>
-			</div>
-	
-			<div class="col-md-6 d-flex flex-column justify-content-center align-items-center">
-				<i class="bi-person-plus-fill display-1"></i>
-				<br>
-				idk how to make this thing bigger
+				</form>
 			</div>
 		</div>
 

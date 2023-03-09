@@ -8,6 +8,7 @@ import { useIndexStore } from '../stores';
 import { useAuthStore } from '../stores/auth';
 import ButtonBack from '../components/ButtonBack.vue'
 import { onBeforeRouteLeave } from 'vue-router';
+import { computed } from '@vue/reactivity';
 
 const indexStore = useIndexStore()
 const authStore = useAuthStore()
@@ -17,6 +18,11 @@ const username = ref("")
 const password = ref("")
 const passwordConfirmation = ref("")
 const phone = ref("")
+const userImageUrl = computed(() =>
+	indexStore.choosenUser.image
+		? userService.userImageUrl(indexStore.choosenUser.id)
+		: null
+)
 
 const isValidName = ref(true)
 const isValidUsername = ref(true)
@@ -30,7 +36,6 @@ function validateName() {
 	isValidName.value = validCondition
 	return validCondition;
 }
-
 
 function validateUsername() {
 	const validCondition = 
@@ -56,7 +61,6 @@ function checkPasswordConfirmation() {
 	isSamePassword.value = validCondition
 	return validCondition
 }
-
 
 function validateAll() {
 	validateName()
@@ -120,7 +124,7 @@ onBeforeMount(() => {
 	username.value = indexStore.choosenUser.username
 	phone.value = indexStore.choosenUser.phone
 
-	indexStore.isExistUnsavedChanges = false
+	indexStore.isExistUnsavedChanges = false;
 })
 
 onMounted(() => {
@@ -234,9 +238,8 @@ onBeforeRouteLeave(() => {
 			</div>
 	
 			<div class="col-md-6 d-flex flex-column justify-content-center align-items-center">
-				<i class="bi-person-lines-fill display-1"></i>
-				<br>
-				idk how to make this thing bigger
+				<img class="rounded-circle" :src="userImageUrl" width="400">
+				<!-- {{ userImageUrl }} -->
 			</div>
 		</div>
 	</div>

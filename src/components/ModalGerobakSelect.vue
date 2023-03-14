@@ -29,7 +29,6 @@ function removeGerobakFromList(gerobak) {
 		return false
 	}
 	choosenGerobakList.value.splice(foundIndex, 1);
-	// console.log(choosenGerobakList.value)
 }
 
 function saveChanges() {
@@ -87,12 +86,6 @@ onMounted(async () => {
 
 						<!-- choosen gerobak list -->
 						<div class="col">
-							<!-- <div class="card sticky-top top-0">
-								<div class="card-body">
-									
-								</div>
-							</div> -->
-
 							<div class="sticky-top top-0">
 								<small class="text-muted d-block text-end">
 									

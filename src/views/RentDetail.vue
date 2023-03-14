@@ -4,12 +4,15 @@ import { onBeforeMount, onMounted, ref } from 'vue';
 import customerService from '../service/modules/customerService';
 import rentService from '../service/modules/rentService';
 import userService from '../service/modules/userService';
-import ButtonBack from "../components/ButtonBack.vue";
 import dateTimeService from "../service/modules/dateTimeService";
+import router from '../router';
+
+import ButtonBack from "../components/ButtonBack.vue";
 import ModalRentPay from '../components/ModalRentPay.vue';
+import ModalGerobakSelect from '../components/ModalGerobakSelect.vue';
+
 import { useIndexStore } from '../stores';
 import { onBeforeRouteLeave } from 'vue-router';
-import router from '../router';
 
 
 const getDateTime = dateTimeService.getReadableDateTime
@@ -65,8 +68,8 @@ onBeforeRouteLeave(() => {
 				<div class="col d-flex justify-content-end">
 					<div class="me-2">
 						<button 
-						class="btn px-4" 
-						:class="rent.status == 'OK' ? 'disabled btn-secondary' : 'btn-primary'"
+						v-if="rent.status != 'OK'"
+						class="btn px-4 btn-primary" 
 						@click="updateSubAmounts()" 
 						data-bs-toggle="modal" 
 						data-bs-target="#modalRentPay">Bayar</button>
@@ -277,7 +280,7 @@ onBeforeRouteLeave(() => {
 									</span>
 									
 									
-									<button class="btn btn-success" v-if="rent.status !== 'OK'">Tambah gerobak</button>
+									<button class="btn btn-success" v-if="rent.status !== 'OK'" data-bs-toggle="modal" data-bs-target="#modalGerobakSelect">Tambah gerobak</button>
 								</div>
 								<div class="card-body">
 									<table v-if="rent.detail.length" class="table table-sm table-hover table-bordered">
@@ -343,5 +346,7 @@ onBeforeRouteLeave(() => {
 	</div>
 
 	{{ rent }}
+	
+	<ModalGerobakSelect />
 	<ModalRentPay @payment-success="router.push('/dashboard')" />
 </template>

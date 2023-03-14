@@ -93,6 +93,7 @@ function closePayment() {
 	clearPaymentProcess()
 	indexStore.choosenRent = Object.assign({});
 	indexStore.actionSuccessMessage = "Pembayaran berhasil!";
+	transactionSuccess.value = false;
 	emit('paymentSuccess')
 }
 

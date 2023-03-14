@@ -123,12 +123,12 @@ onMounted(async () => {
 				<div class="modal-footer border-0 shadow-lg">
 					<div class="row w-100">
 						<div class="col px-0">
-							<input type="text" placeholder="Ketik disini untuk mencari ..." autofocus class="form-control mb-3" id="searchCustomerInput">
+							<input type="text" placeholder="Ketik disini untuk mencari ... (COMING SOON)" autofocus class="form-control mb-3" id="searchCustomerInput">
 						</div>
 						<div class="col-5 text-end px-0	">
 							<button 
 								type="button" 
-								class="btn btn-danger px-3 me-1" 
+								class="btn btn-danger px-3 me-1 disabled" 
 
 								data-bs-dismiss="modal"
 								@click=""

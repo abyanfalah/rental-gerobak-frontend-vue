@@ -27,13 +27,12 @@ async function confirmRent() {
 		}
 	
 		const response = await rentService.create(rentData)
-		console.log(response)
 	
 		if (response.status == 200) {
-			indexStore.actionSuccessMessage = "Penyewaan baru berhasil dibuat!"
 			router.push('/rent')
+			indexStore.actionSuccessMessage = "Penyewaan baru berhasil dibuat!"
 		} else {
-			indexStore.actionSuccessMessage = "Gagal membuat penyewaan baru"
+			indexStore.actionErrorMessage = "Gagal membuat penyewaan baru"
 		}
 		
 	} catch {
@@ -102,7 +101,7 @@ onBeforeUnmount(() => {
 									<!-- lokasi peminjaman -->
 									<div class="form-floating mb-3">
 										<textarea v-model="rentLocation" class="form-control" placeholder="Masukkan lokasi peminjaman" rows="10" cols="20" id="floatingTextarea"></textarea>
-										<label for="floatingTextarea">Masukkan lokasi peminjaman</label>
+										<label for="floatingTextarea">Lokasi peminjaman</label>
 										<div class="form-text">opsional</div>
 									</div>
 	

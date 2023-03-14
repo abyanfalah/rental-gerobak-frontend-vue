@@ -1,8 +1,9 @@
 <script setup>
-import { RouterLink, RouterView } from "vue-router";
+import { RouterView } from "vue-router";
 import { useAuthStore } from "./stores/auth";
-import Sidebar from "./components/Sidebar.vue";
 import router from "./router";
+
+import Sidebar from "./components/Sidebar.vue";
 
 import ModalLogout from "./components/ModalLogout.vue";
 import ModalError from "./components/ModalError.vue";
@@ -12,10 +13,8 @@ import ModalPageLeave from "./components/ModalPageLeave.vue";
 import AlertSuccess from "./components/AlertSuccess.vue";
 import AlertError from "./components/AlertError.vue";
 
-
 import { useIndexStore } from "./stores";
 import { watch } from "vue";
-import TestPage from "./views/TestPage.vue";
 
 const indexStore = useIndexStore();
 const authStore = useAuthStore();
@@ -26,16 +25,6 @@ function killTimeout() {
 	clearTimeout(alertErrorTimeout)
 	console.log("clearTimeout")
 }
-
-// watch(() => indexStore.actionSuccessMessage, () => {
-// 	if (indexStore.actionSuccessMessage !== null) {
-// 		console.log("something is successfully done")
-// 		alertSuccessTimeout = setTimeout(function () {
-// 			indexStore.actionSuccessMessage = null;
-// 			console.log("notif alert timeout. disappearing")
-// 		}, 3000);
-// 	} 
-// });
 
 watch(() => [
 		indexStore.actionSuccessMessage,
@@ -58,17 +47,7 @@ watch(() => [
 		}, 3000);
 	} 
 });
-
-
-// console.log("app.authStore.isAuthenticated =>", authStore.isAuthenticated);
-// console.log("success message: ",indexStore.actionSuccessMessage)
-
-
 </script>
-
-<!-- <template>
-	<TestPage />
-</template> -->
 
 <template>
   <div id="mainContainer" class="container-fluid ps-0">
@@ -79,7 +58,6 @@ watch(() => [
       <div class="col ps-0">
         <div class="mt-3">
           <RouterView />
-				
         </div>
       </div>
     </div>

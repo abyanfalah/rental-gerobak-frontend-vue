@@ -11,7 +11,6 @@ import "./assets/bootstrap.bundle";
 import "./assets/bootstrap.css";
 import "./assets/icons/bootstrap-icons.css";
 import { useAuthStore } from "./stores/auth";
-import { useRouter } from "vue-router";
 
 axios.defaults.withCredentials = true;
 const pinia = createPinia();

@@ -5,8 +5,8 @@ export default {
     // TODO: add pagination params
     return api.get(url, {
       params: {
-        with_detail: true,
         get_view: true,
+        with_detail: true,
       },
     });
   },
@@ -36,6 +36,10 @@ export default {
     return api.post(url, newData);
   },
 
+  getRentSubAmountList: (rentId) => {
+    return api.get(`${url}${rentId}/subamount`);
+  },
+
   getBadgeColorByStatus: (rentStatus) => {
     const colors = {
       ok: "success",
@@ -44,6 +48,13 @@ export default {
     };
 
     return colors[rentStatus.toLowerCase()];
+  },
+
+  payAll: (rentId) => {
+    return api.post(url + `${rentId}/pay/all`);
+  },
+  payPartial: (rentId, gerobak_id_list) => {
+    return api.post(url + `${rentId}/pay`, gerobak_id_list);
   },
   // update: (newData) => {
   //   return api.put(url, newData);

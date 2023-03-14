@@ -82,8 +82,9 @@ async function updateUser() {
 	let data = {
 		name: capitalize.words(name.value).trim(),
 		username: clearString(username.value),
-		phone: clearString(phone.value)
 	}
+
+	if(phone.value.length > 0) data.phone = clearString(phone.value)
 
 	if (password.value.length > 0) { 
 		data.password = password.value
@@ -135,7 +136,6 @@ onMounted(() => {
 		password.value,
 		phone.value
 	], () => {
-		alert("ganti euy")
 		indexStore.isExistUnsavedChanges = true
 	})
 });

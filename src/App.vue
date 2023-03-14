@@ -3,24 +3,45 @@ import { RouterLink, RouterView } from "vue-router";
 import { useAuthStore } from "./stores/auth";
 import Sidebar from "./components/Sidebar.vue";
 import router from "./router";
+
 import ModalLogout from "./components/ModalLogout.vue";
 import ModalError from "./components/ModalError.vue";
 import ModalTaskSuccess from "./components/ModalTaskSuccess.vue";
 import ModalPageLeave from "./components/ModalPageLeave.vue";
+
 import AlertSuccess from "./components/AlertSuccess.vue";
+import AlertError from "./components/AlertError.vue";
+
+
 import { useIndexStore } from "./stores";
 import { watch } from "vue";
+import TestPage from "./views/TestPage.vue";
 
 const indexStore = useIndexStore();
 const authStore = useAuthStore();
 
-let alertSuccessTimeout;
+let alertSuccessTimeout, alertErrorTimeout;
 function killTimeout() {
 	clearTimeout(alertSuccessTimeout)
+	clearTimeout(alertErrorTimeout)
 	console.log("clearTimeout")
 }
 
-watch(() => indexStore.actionSuccessMessage, () => {
+// watch(() => indexStore.actionSuccessMessage, () => {
+// 	if (indexStore.actionSuccessMessage !== null) {
+// 		console.log("something is successfully done")
+// 		alertSuccessTimeout = setTimeout(function () {
+// 			indexStore.actionSuccessMessage = null;
+// 			console.log("notif alert timeout. disappearing")
+// 		}, 3000);
+// 	} 
+// });
+
+watch(() => [
+		indexStore.actionSuccessMessage,
+		indexStore.actionErrorMessage
+], () => {
+		
 	if (indexStore.actionSuccessMessage !== null) {
 		console.log("something is successfully done")
 		alertSuccessTimeout = setTimeout(function () {
@@ -28,12 +49,26 @@ watch(() => indexStore.actionSuccessMessage, () => {
 			console.log("notif alert timeout. disappearing")
 		}, 3000);
 	} 
+
+	if (indexStore.actionErrorMessage !== null) {
+		console.log("some error occured")
+		alertErrorTimeout = setTimeout(function () {
+			indexStore.actionErrorMessage = null;
+			console.log("notif alert timeout. disappearing")
+		}, 3000);
+	} 
 });
 
 
-console.log("app.authStore.isAuthenticated =>", authStore.isAuthenticated);
-console.log("success message: ",indexStore.actionSuccessMessage)
+// console.log("app.authStore.isAuthenticated =>", authStore.isAuthenticated);
+// console.log("success message: ",indexStore.actionSuccessMessage)
+
+
 </script>
+
+<!-- <template>
+	<TestPage />
+</template> -->
 
 <template>
   <div id="mainContainer" class="container-fluid ps-0">
@@ -44,7 +79,7 @@ console.log("success message: ",indexStore.actionSuccessMessage)
       <div class="col ps-0">
         <div class="mt-3">
           <RouterView />
-					
+				
         </div>
       </div>
     </div>
@@ -54,5 +89,7 @@ console.log("success message: ",indexStore.actionSuccessMessage)
 	<ModalError />
 	<ModalTaskSuccess />
 	<ModalPageLeave />
+
 	<AlertSuccess @click="killTimeout()" class="fixed-bottom w-50 mx-auto" v-if="indexStore.actionSuccessMessage !== null" />
+	<AlertError @click="killTimeout()" class="fixed-bottom w-50 mx-auto" v-if="indexStore.actionErrorMessage !== null" />
 </template>

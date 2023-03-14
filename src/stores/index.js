@@ -13,6 +13,7 @@ export const useIndexStore = defineStore("index", () => {
   const choosenRent = ref({});
 
   const actionSuccessMessage = ref(null);
+  const actionErrorMessage = ref(null);
 
   const isExistUnsavedChanges = ref(true);
 
@@ -27,5 +28,6 @@ export const useIndexStore = defineStore("index", () => {
     choosenRent,
     choosenRentCustomer,
     actionSuccessMessage,
+    actionErrorMessage,
   };
 });

@@ -18,12 +18,14 @@ async function getRent() {
   try {
     const response = await rentService.getAll();
 		error.value = false
-    rentList.value = response.data.data;
+		rentList.value = response.data.data;
+		console.log(rentList.value)
   } catch (err) {
 		error.value = true
     console.error(err);
   }
 }
+
 const getBadgeColorByStatus = rentService.getBadgeColorByStatus
 
 function showRent(rent) {
@@ -31,6 +33,7 @@ function showRent(rent) {
 	indexStore.choosenRent = rent
 }
 
+console.log(indexStore.choosenRent)
 
 onMounted(() => {
 	getRent();
@@ -177,37 +180,6 @@ onMounted(() => {
 
 							</div>
 						</div>
-<!-- 					
-						<div class="row" v-if="choosenRent.rentname != 'admin'">
-							<div class="col text-end">
-
-								<button class="btn me-1" :class="choosenRent.access == 'admin' ? 'btn-primary': 'btn-success'" v-if="authStore.isAdmin">
-									<div v-if="choosenRent.access !== 'admin'">
-										<i class="bi-person-check-fill"></i>
-										Jadikan sebagai admin
-									</div>
-
-									<div v-else>
-										<i class="bi-person-x-fill"></i>
-										Cabut akses admin
-									</div>
-									
-								</button>
-
-								<RouterLink to="/rent/edit" class="btn btn-warning">
-									<i class="bi-pencil"></i>
-									Edit
-								</RouterLink>
-
-								<button class="btn btn-danger ms-1" data-bs-toggle="modal" data-bs-target="#modalRentDelete">
-									<i class="bi-trash"></i>
-									Hapus
-								</button>
-
-								
-							</div>
-						</div> -->
-
 					</div>
 				</div>
 			</div>

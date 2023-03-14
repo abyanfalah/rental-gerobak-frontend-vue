@@ -29,7 +29,7 @@ function viewRent(rentId) {
 onBeforeMount( async () => {
 	ongoingRentList.value = (await rentService.getOngoing()).data.data
 	todayRentList.value = (await rentService.getToday()).data.data
-	console.log(todayRentList.value)
+	// console.log(todayRentList.value)
 })
 
 

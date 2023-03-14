@@ -8,6 +8,8 @@ import ButtonBack from "../components/ButtonBack.vue";
 import dateTimeService from "../service/modules/dateTimeService";
 import ModalRentPay from '../components/ModalRentPay.vue';
 import { useIndexStore } from '../stores';
+import { onBeforeRouteLeave } from 'vue-router';
+import router from '../router';
 
 
 const getDateTime = dateTimeService.getReadableDateTime
@@ -30,8 +32,26 @@ async function getRent() {
 
 const getBadgeColorByStatus = rentService.getBadgeColorByStatus
 
+async function updateSubAmounts() {
+	console.log("update subamount")
+
+	const subAmountList = (await rentService.getRentSubAmountList(rent.value.id)).data.data
+
+	// console.log(rent.value.detail[0].sub_amount)
+
+	const detailCount = rent.value.detail.length
+	for (let i = 0; i < detailCount; i++){
+		rent.value.detail[i].sub_amount = parseInt(subAmountList[i])
+	}
+
+	indexStore.choosenRent = Object.assign({}, rent.value)
+}
+
 onBeforeMount(() => {
 	getRent()
+})
+onBeforeRouteLeave(() => {
+	indexStore.choosenRent = Object.assign({})
 })
 </script>
 
@@ -44,7 +64,12 @@ onBeforeMount(() => {
 				</div>
 				<div class="col d-flex justify-content-end">
 					<div class="me-2">
-						<button class="btn btn-primary px-4" data-bs-toggle="modal" data-bs-target="#modalRentPay">Bayar</button>
+						<button 
+						class="btn px-4" 
+						:class="rent.status == 'OK' ? 'disabled btn-secondary' : 'btn-primary'"
+						@click="updateSubAmounts()" 
+						data-bs-toggle="modal" 
+						data-bs-target="#modalRentPay">Bayar</button>
 					</div>
 					<ButtonBack/>
 				</div>
@@ -196,7 +221,6 @@ onBeforeMount(() => {
 											
 										</div>
 										
-										<!-- TODO: render conditional jika sudah lunas -->
 										<!-- end time -->
 										<div class="col">
 	
@@ -206,16 +230,17 @@ onBeforeMount(() => {
 												</div>
 											</div>
 	
-											<div class="row">
+											<div class="row" v-if="rent.status == 'OK'">
 												<div class="col">
 													<span class="badge border text-dark p-2">
-														<div class="d-flex flex-column text-start">
-															<span class="mb-1">
-																{{ getDateTime(rent.last_payment_at).date }}
-															</span> 
-															<span>
-																{{ getDateTime(rent.last_payment_at).time }} 
-															</span> 
+														<div
+															class="d-flex flex-column text-start">
+																<span class="mb-1">
+																	{{ getDateTime(rent.last_payment_at).date }}
+																</span> 
+																<span>
+																	{{ getDateTime(rent.last_payment_at).time }} 
+																</span> 
 														</div>
 													</span>
 												</div>
@@ -224,7 +249,7 @@ onBeforeMount(() => {
 										</div>
 	
 									</div>
-	
+									<small class="text-muted">durasi ....</small>
 								</div>
 	
 								<div class="mt-3">
@@ -271,14 +296,17 @@ onBeforeMount(() => {
 													v-for="(detail, index) in rent.detail"
 												>
 													<td class="text-muted">{{ ++index }}</td>
-													<td>{{ detail.gerobak.code }}</td>
+													<td>{{ detail.code }}</td>
 													<td>
 														{{ getDateTime(detail.start_time).noDayDate }}&nbsp;
 														{{ getDateTime(detail.start_time).time }}
 													</td>
 													<td>
-														{{ getDateTime(detail.end_time).noDayDate }}&nbsp;
-														{{ getDateTime(detail.end_time).time }}
+														<span v-if="detail.status == 'OK'">
+															{{ getDateTime(detail.end_time).noDayDate }}&nbsp;
+															{{ getDateTime(detail.end_time).time }}
+														</span>
+														<span v-else>-</span>
 													</td>
 													<td>
 														<span 
@@ -299,7 +327,6 @@ onBeforeMount(() => {
 							<div class="card sticky-top">
 								<div class="card-header">
 									Riwayat pembayaran
-									
 								</div>
 								<div class="card-body"></div>
 							</div>
@@ -314,5 +341,7 @@ onBeforeMount(() => {
 			<p>Error fetching rent data</p>
 		</div>
 	</div>
-	<ModalRentPay />
+
+	{{ rent }}
+	<ModalRentPay @payment-success="router.push('/dashboard')" />
 </template>

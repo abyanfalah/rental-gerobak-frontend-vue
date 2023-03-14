@@ -20,14 +20,11 @@ const router = createRouter({
         isAuthPage: true,
       },
     },
-    // {
-    //   path: "/register",
-    //   name: "register",
-    //   component: () => import("../views/Login.vue"),
-    //   meta: {
-    //     authPage: true,
-    //   },
-    // },
+    {
+      path: "/testpage",
+      name: "testpage",
+      component: () => import("../views/TestPage.vue"),
+    },
     {
       path: "/dashboard",
       name: "dashboard",

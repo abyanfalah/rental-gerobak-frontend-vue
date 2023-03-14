@@ -1,12 +1,13 @@
 <script setup>
 import capitalize from 'capitalize';
 import { onBeforeMount, ref, watch } from 'vue';
-import router from '../router';
 import userService from '../service/modules/userService';
 import clearString from '../helper/clear-string'
 import { onBeforeRouteLeave, useRoute, useRouter } from 'vue-router';
 import ButtonBack from '../components/ButtonBack.vue';
 import { useIndexStore } from '../stores';
+import router from '../router';
+
 
 const indexStore = useIndexStore()
 
@@ -69,7 +70,7 @@ async function registerUser() {
 	if (!validateAll()) return console.log("form is not valid!")
 
 	// TODO: Uncomment this!
-	// indexStore.isExistUnsavedChanges = false;
+	indexStore.isExistUnsavedChanges = false;
 
 	const formData = new FormData()
 	formData.append("name", capitalize.words(name.value).trim())
@@ -80,10 +81,10 @@ async function registerUser() {
 	const response = await userService.create(formData)
 	console.log("user create response => ", response)
 
-	// if (response.status === 200) {
-	// 	useIndexStore().actionSuccessMessage = "user baru tersimpan!"
-	// 	router.push("/user")
-	// }
+	if (response.status == 200) {
+		router.push("/user")
+		useIndexStore().actionSuccessMessage = "user baru tersimpan!"
+	}
 	
 }
 
@@ -127,7 +128,7 @@ onBeforeRouteLeave(() => {
 		</div>
 		<div class="row">
 			<div class="col">
-				<form @submit.prevent="registerUser" enctype="multipart/form-data">
+				<form @submit.prevent="registerUser()" enctype="multipart/form-data">
 					<div class="row">
 						<div class="col-md-6 pe-5">
 							<div class="mb-3">

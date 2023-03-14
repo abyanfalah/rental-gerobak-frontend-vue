@@ -1,6 +1,7 @@
 <script setup>
 import capitalize from "capitalize";
 import router from "../router";
+import { useIndexStore } from "../stores";
 import { useAuthStore } from "../stores/auth";
 
 const authStore = useAuthStore();
@@ -55,6 +56,28 @@ function getCurrentRouteName() {
         <i class="bi-minecart-loaded"></i>
         Gerobak
       </RouterLink>
+
+			<!-- TODO: Delete this -->
+			<div class="nav-item">
+				<button 
+					class="btn btn-success mb-3" 
+					@click="useIndexStore().actionSuccessMessage = 'test success message'"
+				>
+					Invoke success action
+				</button>
+				<button 
+					class="btn btn-danger mb-3" 
+					@click="useIndexStore().actionErrorMessage = 'test error message'"
+				>
+					Invoke error action
+				</button>
+			</div>
+
+			<RouterLink to="/testpage" class="nav-link" active-class="active">
+        <i class="bi-gear-wide"></i>
+        Testpage
+      </RouterLink>
+
     </div>
 
     <hr />

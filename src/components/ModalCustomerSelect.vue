@@ -54,7 +54,7 @@ onMounted(async () => {
 				<div class="modal-footer border-0 d-block shadow-lg">
 					<div class="row">
 						<div class="col px-0">
-							<input type="text" placeholder="Ketik disini untuk mencari ..." autofocus class="form-control mb-3" id="searchCustomerInput">
+							<input type="text" placeholder="Ketik disini untuk mencari ... (COMING SOON)" autofocus class="form-control mb-3" id="searchCustomerInput">
 						</div>
 						<div class="col-3 text-end px-0">
 							<button 

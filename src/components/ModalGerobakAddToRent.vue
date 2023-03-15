@@ -1,10 +1,13 @@
 <script setup>
 import { useIndexStore } from '../stores';
 import { onMounted, ref } from 'vue';
-import capitalize from 'capitalize';
-import gerobakService from '../service/modules/gerobakService';
 
-const indexStore = useIndexStore()
+import gerobakService from '../service/modules/gerobakService';
+import rentService from '../service/modules/rentService';
+
+const emit = defineEmits('addGerobakToRentSuccess')
+
+const indexStore = useIndexStore();
 const gerobakList = ref([])
 const choosenGerobakList = ref([])
 const previouslyChoosenGerobakList = ref([])
@@ -29,12 +32,22 @@ function removeGerobakFromList(gerobak) {
 	choosenGerobakList.value.splice(foundIndex, 1);
 }
 
-function saveChanges() {
-	indexStore.choosenGerobakList = []	
-	Object.assign(indexStore.choosenGerobakList, choosenGerobakList.value)	
+async function saveChanges() {
+	try {
+		const gerobakIdList = choosenGerobakList.value.map((gerobak) => gerobak.id)
 
-	previouslyChoosenGerobakList.value = []
-	Object.assign(previouslyChoosenGerobakList.value, choosenGerobakList.value)	
+		await rentService.addGerobakToRent(
+			indexStore.choosenRent.id,
+			gerobakIdList
+		)
+		indexStore.actionSuccessMessage = "gerobak berhasil ditambahkan ke penyewaan!"
+		choosenGerobakList.value = []
+		emit('addGerobakToRentSuccess')
+	} catch (err) {
+		indexStore.actionErrorMessage = "penambahan gerobak tidak berhasil"
+	}finally{		
+		await getGerobakList()
+	}
 
 }
 
@@ -43,8 +56,12 @@ function revertChanges() {
 	Object.assign(choosenGerobakList.value, previouslyChoosenGerobakList.value)
 }
 
+async function getGerobakList() {
+	gerobakList.value = (await gerobakService.getAll()).data.data	
+}
+
 onMounted(async () => {
-	gerobakList.value = (await gerobakService.getAll()).data.data
+	await getGerobakList()
 });
 
 
@@ -59,6 +76,8 @@ onMounted(async () => {
 				</div>
 				<div class="modal-body">
 					<div class="row">
+
+						<!-- gerobak list -->
 						<div class="col">
 							<!-- gerobak list -->
 							<table class="table table-bordered table-hover ">
@@ -109,6 +128,7 @@ onMounted(async () => {
 								</table>
 							</div>
 						</div>
+
 					</div>
 				</div>
 				<div class="modal-footer border-0 shadow-lg">

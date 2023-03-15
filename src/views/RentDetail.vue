@@ -333,6 +333,7 @@ onBeforeRouteLeave(() => {
 								</div>
 								<div class="card-body"></div>
 							</div>
+
 						</div>
 					</div>
 				</div>
@@ -347,6 +348,6 @@ onBeforeRouteLeave(() => {
 
 	{{ rent }}
 	
-	<ModalGerobakAddToRent />
+	<ModalGerobakAddToRent @add-gerobak-to-rent-success="getRent()" />
 	<ModalRentPay @payment-success="router.push('/dashboard')" />
 </template>

@@ -35,11 +35,9 @@ export default {
   create: (newData) => {
     return api.post(url, newData);
   },
-
   getRentSubAmountList: (rentId) => {
     return api.get(`${url}${rentId}/subamount`);
   },
-
   getBadgeColorByStatus: (rentStatus) => {
     const colors = {
       ok: "success",
@@ -49,12 +47,16 @@ export default {
 
     return colors[rentStatus.toLowerCase()];
   },
-
   payAll: (rentId) => {
     return api.post(url + `${rentId}/pay/all`);
   },
   payPartial: (rentId, gerobak_id_list) => {
     return api.post(url + `${rentId}/pay`, gerobak_id_list);
+  },
+  addGerobakToRent: (rentId, gerobak_id_list) => {
+    return api.post(url + `${rentId}/add_gerobak`, {
+      gerobak_id_list,
+    });
   },
   // update: (newData) => {
   //   return api.put(url, newData);

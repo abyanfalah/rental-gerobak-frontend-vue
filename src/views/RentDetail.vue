@@ -9,7 +9,7 @@ import router from '../router';
 
 import ButtonBack from "../components/ButtonBack.vue";
 import ModalRentPay from '../components/ModalRentPay.vue';
-import ModalGerobakSelect from '../components/ModalGerobakSelect.vue';
+import ModalGerobakAddToRent from '../components/ModalGerobakAddToRent.vue';
 
 import { useIndexStore } from '../stores';
 import { onBeforeRouteLeave } from 'vue-router';
@@ -280,7 +280,7 @@ onBeforeRouteLeave(() => {
 									</span>
 									
 									
-									<button class="btn btn-success" v-if="rent.status !== 'OK'" data-bs-toggle="modal" data-bs-target="#modalGerobakSelect">Tambah gerobak</button>
+									<button class="btn btn-success" v-if="rent.status !== 'OK'" data-bs-toggle="modal" data-bs-target="#modalGerobakAddToRent">Tambah gerobak</button>
 								</div>
 								<div class="card-body">
 									<table v-if="rent.detail.length" class="table table-sm table-hover table-bordered">
@@ -347,6 +347,6 @@ onBeforeRouteLeave(() => {
 
 	{{ rent }}
 	
-	<ModalGerobakSelect />
+	<ModalGerobakAddToRent />
 	<ModalRentPay @payment-success="router.push('/dashboard')" />
 </template>

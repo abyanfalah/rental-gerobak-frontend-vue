@@ -29,7 +29,7 @@ async function confirmRent() {
 		const response = await rentService.create(rentData)
 	
 		if (response.status == 200) {
-			router.push('/rent')
+			router.push('/dashboard')
 			indexStore.actionSuccessMessage = "Penyewaan baru berhasil dibuat!"
 		} else {
 			indexStore.actionErrorMessage = "Gagal membuat penyewaan baru"

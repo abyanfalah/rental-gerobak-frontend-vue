@@ -25,22 +25,14 @@ async function confirmRent() {
 			location : rentLocation.value,
 			note : additionalNotes.value,
 		}
-	
-		const response = await rentService.create(rentData)
-	
-		if (response.status == 200) {
-			router.push('/dashboard')
-			indexStore.actionSuccessMessage = "Penyewaan baru berhasil dibuat!"
-		} else {
-			indexStore.actionErrorMessage = "Gagal membuat penyewaan baru"
-		}
-		
+			
+		await rentService.create(rentData)
+		router.push('/dashboard')
+		indexStore.actionSuccessMessage = "Penyewaan baru berhasil dibuat!"
 	} catch {
+		indexStore.actionErrorMessage = "Gagal membuat penyewaan baru"
 		indexStore.error =  "Gagal membuat penyewaan baru"
 	}
-
-
-
 }
 
 onBeforeMount(async () => {

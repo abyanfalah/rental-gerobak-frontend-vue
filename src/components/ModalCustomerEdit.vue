@@ -16,13 +16,13 @@ async function addCustomer() {
 		address: address.value,
 		phone: phone.value
 	}
-	const response = await customerService.update(data, indexStore.choosenCustomer.id)
-	if (response.status == 200) {
+
+	try {
+		await customerService.update(data, indexStore.choosenCustomer.id)
 		emit('customerEditSuccess')
-		useIndexStore().actionSuccessMessage = "perubahan berhasil disimpan!"
-	} else {
-		// TODO: use proper modal (use modal error if u can)
-		alert("customer add failed")
+		indexStore.actionSuccessMessage = "perubahan berhasil disimpan!"
+	 } catch (err) {
+		console.error(err)
 	}
 }
 

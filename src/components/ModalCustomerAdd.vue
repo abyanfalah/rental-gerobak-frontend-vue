@@ -15,14 +15,14 @@ async function addCustomer() {
 		address: address.value,
 		phone: phone.value
 	}
-	const response = await customerService.create(data)
-	console.log(response)
-	if (response.status == 200) {
+
+	try { 
+		await customerService.create(data)
 		emit('customerAddSuccess')
 		useIndexStore().actionSuccessMessage = "customer tersimpan!"
-	} else {
-		// TODO: use proper modal (use modal error if u can)
-		alert("customer add failed")
+
+	} catch (err) {
+		console.error(err)
 	}
 
 	name.value = ""

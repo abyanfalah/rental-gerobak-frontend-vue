@@ -7,16 +7,12 @@ const emit = defineEmits(['gerobakDeleteSuccess', 'gerobakDeleteFailed'])
 const indexStore = useIndexStore()
 
 async function deleteGerobak() {
-	const response = await gerobakService.delete(indexStore.choosenGerobak.id)
-	console.log(response)
-	if (response.status == 200) {
-		console.log("success, go refresh")
+	try {
+		await gerobakService.delete(indexStore.choosenGerobak.id)
 		emit('gerobakDeleteSuccess')
 		indexStore.actionSuccessMessage = "gerobak berhasil dihapus!"
-
-	} else {
-		// TODO: use proper modal (use modal error if u can)
-		alert("gerobak delete failed")
+	 } catch (err) {
+		console.error(err)
 	}
 }
 

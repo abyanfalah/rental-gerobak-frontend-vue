@@ -78,14 +78,14 @@ async function registerUser() {
 	formData.append("password", phone.value)
 	formData.append("profilePic", profilePic.value.files[0])
 
-	const response = await userService.create(formData)
-	console.log("user create response => ", response)
-
-	if (response.status == 200) {
+	try {
+		await userService.create(formData)
 		router.push("/user")
-		useIndexStore().actionSuccessMessage = "user baru tersimpan!"
+		indexStore.actionSuccessMessage = "user baru tersimpan!"
+	 } catch (err) {
+		console.error(err)
+		indexStore.actionErrorMessage = err
 	}
-	
 }
 
 // watch if there is changes to the form fields.

@@ -24,14 +24,14 @@ function validateInput() {
 async function addGerobak() {
 	if(!validateInput()) return false
 
-	const response = await gerobakService.create({type_id: type_id.value})
-	if (response.status == 200) {
+	try {
+		await gerobakService.create({type_id: type_id.value})
 		emit('gerobakAddSuccess')
 		useIndexStore().actionSuccessMessage = "gerobak tersimpan!"
-	} else {
-		// TODO: use proper modal (use modal error if u can)
-		alert("gerobak add failed")
+	} catch (err) {
+		console.error(err)
 	}
+
 }
 
 async function getGerobakType() {

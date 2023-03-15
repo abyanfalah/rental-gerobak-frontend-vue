@@ -7,15 +7,13 @@ const emit = defineEmits(['userDeleteSuccess', 'userDeleteFailed'])
 const indexStore = useIndexStore()
 
 async function deleteUser() {
-	const response = await userService.delete(indexStore.choosenUser.id)
-	console.log(response)
-	if (response.status == 200) {
-		console.log("success, go refresh")
+	try
+	{
+		await userService.delete(indexStore.choosenUser.id)
 		emit('userDeleteSuccess')
 		indexStore.actionSuccessMessage = "user berhasil dihapus!"
-} else {
-		// TODO: use proper modal (use modal error if u can)
-		alert("user delete failed")
+	} catch (err) {
+		console.error(err)
 	}
 }
 

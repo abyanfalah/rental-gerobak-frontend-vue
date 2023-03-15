@@ -90,8 +90,6 @@ async function updateUser() {
 		data.password = password.value
 	}
 
-	console.log(data)
-
 	const isNoChange =
 		(data.name === indexStore.choosenUser.name)
 		&&(data.username === indexStore.choosenUser.username)
@@ -104,18 +102,18 @@ async function updateUser() {
 		router.push("/user")
 		return
 	} 
-	
-	const response = await userService.update(data, indexStore.choosenUser.id)
-	console.log(response)
-	if (response.status === 200) {
+
+	try {
+		await userService.update(data, indexStore.choosenUser.id)
 		indexStore.actionSuccessMessage = "perubahan berhasil disimpan!"
 		router.push("/user")
+	} catch (err) {
+		console.error(err)
 	}
 }
 
 function isChanged() {
-	return
-	name.value !== indexStore.choosenUser.name
+	return	name.value !== indexStore.choosenUser.name
 	|| username.value !== indexStore.choosenUser.username
 	|| phone.value !== indexStore.choosenUser.phone
 }

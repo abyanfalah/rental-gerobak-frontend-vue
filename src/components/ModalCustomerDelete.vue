@@ -7,15 +7,12 @@ const emit = defineEmits(['customerDeleteSuccess', 'customerDeleteFailed'])
 const indexStore = useIndexStore()
 
 async function deleteCustomer() {
-	const response = await customerService.delete(indexStore.choosenCustomer.id)
-	console.log(response)
-	if (response.status == 200) {
-		console.log("success, go refresh")
+	try { 
+		await customerService.delete(indexStore.choosenCustomer.id)
 		emit('customerDeleteSuccess')
 		indexStore.actionSuccessMessage = "customer berhasil dihapus!"
-	} else {
-		// TODO: use proper modal (use modal error if u can)
-		alert("customer delete failed")
+	} catch (err) {
+		console.error(err)
 	}
 }
 

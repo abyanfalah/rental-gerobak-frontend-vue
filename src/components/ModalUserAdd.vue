@@ -6,11 +6,11 @@ import { useIndexStore } from "../stores/index"
 const indexStore = useIndexStore()
 
 async function deleteUser() {
-	const response = await userService.delete(indexStore.choosenUser.id)
-	console.log(response)
-	if (response.status == 200) {
-		console.log("success, go refresh")
+	try {
+		await userService.delete(indexStore.choosenUser.id)
 		getCurrentInstance()?.proxy?.$forceUpdate();
+ 	} catch (err) {
+		console.error(err)
 	}
 }
 

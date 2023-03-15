@@ -6,13 +6,11 @@ const authStore = useAuthStore();
 
 async function logout() {
   try {
-    const response = await authService.logout();
-    if (response.status == 200) {
+			await authService.logout();
 			authStore.isAuthenticated = false;
 			authStore.user = null;
 			console.log("logout success");
       router.push("/login");
-    }
   } catch (err) {
     console.error(err);
 

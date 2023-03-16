@@ -23,30 +23,30 @@ let alertSuccessTimeout, alertErrorTimeout;
 function killTimeout() {
 	clearTimeout(alertSuccessTimeout)
 	clearTimeout(alertErrorTimeout)
-	console.log("clearTimeout")
 }
 
-watch(() => [
-		indexStore.actionSuccessMessage,
-		indexStore.actionErrorMessage
-], () => {
-		
-	if (indexStore.actionSuccessMessage !== null) {
-		console.log("something is successfully done")
-		alertSuccessTimeout = setTimeout(function () {
-			indexStore.actionSuccessMessage = null;
-			console.log("notif alert timeout. disappearing")
-		}, 3000);
-	} 
+// success message watcher
+watch(() => indexStore.actionSuccessMessage, () => {
+	if (!indexStore.actionSuccessMessage) return 
 
-	if (indexStore.actionErrorMessage !== null) {
-		console.log("some error occured")
-		alertErrorTimeout = setTimeout(function () {
-			indexStore.actionErrorMessage = null;
-			console.log("notif alert timeout. disappearing")
-		}, 3000);
-	} 
-});
+	killTimeout()
+	indexStore.actionErrorMessage = null
+	alertSuccessTimeout = setTimeout(() => {
+		indexStore.actionSuccessMessage = null
+	}, 3000)
+})
+
+// error message watcher
+watch(() => indexStore.actionErrorMessage, () => {
+	if (!indexStore.actionErrorMessage) return
+
+	killTimeout()
+	indexStore.actionSuccessMessage = null
+	alertErrorTimeout = setTimeout(() => {
+		indexStore.actionErrorMessage = null
+	}, 3000)
+})
+
 </script>
 
 <template>

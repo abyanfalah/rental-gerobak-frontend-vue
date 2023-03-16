@@ -1,10 +1,17 @@
 <script setup>
 import capitalize from "capitalize";
+import { computed } from "vue";
 import router from "../router";
+import userService from "../service/modules/userService";
 import { useIndexStore } from "../stores";
 import { useAuthStore } from "../stores/auth";
 
 const authStore = useAuthStore();
+
+const userImageUrl = computed(() =>
+	userService.userImageUrl(authStore.user.id)
+)
+
 
 function getCurrentRouteName() {
 	return router.currentRoute.value.name ?? ''
@@ -88,9 +95,12 @@ function getCurrentRouteName() {
         id="dropdownUser1"
         data-bs-toggle="dropdown"
         aria-expanded="false"
-      >
+      >	
         <!-- TODO: add user image -->
-        <strong v-if="authStore.user">{{ capitalize.words(authStore.user.name) }}</strong>
+				<div class="d-flex justify-content-around align-items-center">
+					<img :src="userImageUrl" class="rounded-circle" width="45">
+					<strong v-if="authStore.user" class="mx-1">{{ capitalize.words(authStore.user.name) }}</strong>
+				</div>
       </a>
       <ul
         class="dropdown-menu dropdown-menu-dark text-small shadow"

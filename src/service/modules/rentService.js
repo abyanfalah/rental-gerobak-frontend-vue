@@ -58,6 +58,9 @@ export default {
       gerobak_id_list,
     });
   },
+  getPaymentHistory: (rentId) => {
+    return api.get(url + `${rentId}/payment_history`);
+  },
   // update: (newData) => {
   //   return api.put(url, newData);
   // },

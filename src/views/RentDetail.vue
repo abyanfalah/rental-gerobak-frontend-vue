@@ -13,19 +13,31 @@ import ModalGerobakAddToRent from '../components/ModalGerobakAddToRent.vue';
 
 import { useIndexStore } from '../stores';
 import { onBeforeRouteLeave } from 'vue-router';
+import numeral from 'numeral';
+import { computed } from '@vue/reactivity';
 
 
 const getDateTime = dateTimeService.getReadableDateTime
 const props = defineProps(['id'])
 const indexStore = useIndexStore()
+const paymentHistory = ref([])
+const hoveredPaymentEndTime = ref()
 
 const rent = ref({})
+
+const getTotalPayment = computed(() => {
+	if (!paymentHistory.value.length) return 0
+
+	return paymentHistory.value.reduce((a,b) => parseInt(a) +  parseInt(b.sub_amount), 0)
+})
 
 async function getRent() {
 	try {
 		rent.value = (await rentService.getById(props.id)).data.data
 		rent.value.customer = (await customerService.getById(rent.value.customer_id)).data.data
 		rent.value.user = (await userService.getById(rent.value.user_id)).data.data
+
+		paymentHistory.value = (await rentService.getPaymentHistory(rent.value.id)).data.data
 
 		indexStore.choosenRent = Object.assign({}, rent.value)
 	}catch (err) {
@@ -291,19 +303,27 @@ onBeforeRouteLeave(() => {
 													<th>Start</th>
 													<th>Finish</th>
 													<th>Status</th>
+													<th>Subtotal</th>
 												</tr>
 											</thead>
 	
 											<tbody>
 												<tr
 													v-for="(detail, index) in rent.detail"
+													:class="{'bg-dark text-white' : detail.end_time == hoveredPaymentEndTime}"
 												>
 													<td class="text-muted">{{ ++index }}</td>
+
+													<!-- gerobak code -->
 													<td>{{ detail.code }}</td>
+
+													<!-- detail start time -->
 													<td>
 														{{ getDateTime(detail.start_time).noDayDate }}&nbsp;
 														{{ getDateTime(detail.start_time).time }}
 													</td>
+
+													<!-- detail end time -->
 													<td>
 														<span v-if="detail.status == 'OK'">
 															{{ getDateTime(detail.end_time).noDayDate }}&nbsp;
@@ -311,13 +331,20 @@ onBeforeRouteLeave(() => {
 														</span>
 														<span v-else>-</span>
 													</td>
-													<td>
+
+													<!-- status badge -->
+													<td class="text-center">
 														<span 
 															class="badge"
 															:class="`bg-${getBadgeColorByStatus(detail.status)}`"
 															>
 															{{ detail.status }}
 														</span>
+													</td>
+
+													<!-- subamount if status == ok -->
+													<td class="text-end">
+														<span>{{ detail.sub_amount }}</span>
 													</td>
 												</tr>
 											</tbody>
@@ -331,7 +358,34 @@ onBeforeRouteLeave(() => {
 								<div class="card-header">
 									Riwayat pembayaran
 								</div>
-								<div class="card-body"></div>
+								<div class="card-body">
+									<table v-if="paymentHistory" class="table table-sm table-bordered table-hover">
+										<thead>
+											<tr>
+												<th>#</th>
+												<th>Kasir</th>
+												<th>Waktu</th>
+												<th>Jumlah</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr 
+												v-for="(payment, index) in paymentHistory"
+												@click="hoveredPaymentEndTime ? hoveredPaymentEndTime = null : hoveredPaymentEndTime = payment.time"
+											
+												>
+												<td class="text-muted">{{ ++index }}</td>
+												<td>{{ capitalize(payment.name)  }}</td>
+												<td>{{ getDateTime(payment.time).full() }}</td>
+												<td>{{ numeral(payment.sub_amount).format('0,0') }}</td>
+											</tr>
+											<tr class="bg-success text-white">
+												<td colspan="3" class="text-center fw-bold">Total</td>
+												<td>{{ numeral(getTotalPayment).format('0,0') }}</td>
+											</tr>
+										</tbody>
+									</table>
+								</div>
 							</div>
 
 						</div>
@@ -346,7 +400,12 @@ onBeforeRouteLeave(() => {
 		</div>
 	</div>
 
-	{{ rent }}
+	
+
+	<!-- <p v-for="(detail, index) in rent.detail ">
+		{{ detail }}
+	</p> -->
+
 	
 	<ModalGerobakAddToRent @add-gerobak-to-rent-success="getRent()" />
 	<ModalRentPay @payment-success="router.push('/dashboard')" />

@@ -4,7 +4,11 @@ const url = api.defaults.baseURL + "user/";
 export default {
   getAll: () => {
     // TODO: add pagination params
-    return api.get(url);
+    return api.get(url, {
+      params: {
+        all: true,
+      },
+    });
   },
   getById: (id) => {
     return api.get(url + id);

@@ -69,13 +69,13 @@ async function registerUser() {
 
 	if (!validateAll()) return console.log("form is not valid!")
 
-	// TODO: Uncomment this!
 	indexStore.isExistUnsavedChanges = false;
 
 	const formData = new FormData()
 	formData.append("name", capitalize.words(name.value).trim())
 	formData.append("username", clearString(username.value))
-	formData.append("password", phone.value)
+	formData.append("password", password.value)
+	formData.append("phone", phone.value)
 	formData.append("profilePic", profilePic.value.files[0])
 
 	try {

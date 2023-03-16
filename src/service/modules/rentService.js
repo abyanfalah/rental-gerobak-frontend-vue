@@ -38,7 +38,7 @@ export default {
   getRentSubAmountList: (rentId) => {
     return api.get(`${url}${rentId}/subamount`);
   },
-  getBadgeColorByStatus: (rentStatus) => {
+  getColorByStatus: (rentStatus) => {
     const colors = {
       ok: "success",
       berlangsung: "primary",

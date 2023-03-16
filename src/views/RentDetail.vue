@@ -21,9 +21,10 @@ const getDateTime = dateTimeService.getReadableDateTime
 const props = defineProps(['id'])
 const indexStore = useIndexStore()
 const paymentHistory = ref([])
-const hoveredPaymentEndTime = ref()
+const selectedPaymentHistory = ref()
 
 const rent = ref({})
+const getColorByStatus = rentService.getColorByStatus
 
 const getTotalPayment = computed(() => {
 	if (!paymentHistory.value.length) return 0
@@ -39,13 +40,13 @@ async function getRent() {
 
 		paymentHistory.value = (await rentService.getPaymentHistory(rent.value.id)).data.data
 
+		console.log(selectedPaymentHistory.value)
+
 		indexStore.choosenRent = Object.assign({}, rent.value)
 	}catch (err) {
 		console.error(err)
 	}
 }
-
-const getBadgeColorByStatus = rentService.getBadgeColorByStatus
 
 async function updateSubAmounts() {
 	console.log("update subamount")
@@ -60,6 +61,24 @@ async function updateSubAmounts() {
 	}
 
 	indexStore.choosenRent = Object.assign({}, rent.value)
+}
+
+function toggleSelectedPaymentHistory(paymentHistory) {
+	
+	if (!selectedPaymentHistory.value) {
+		selectedPaymentHistory.value = paymentHistory.time
+		return;
+	}
+	
+	selectedPaymentHistory.value = null
+	
+	
+}
+
+function isInSelectedPaymentHistory(rentDetailEndTime) {
+	if (!selectedPaymentHistory.value) return false;
+
+	return selectedPaymentHistory.value == rentDetailEndTime
 }
 
 onBeforeMount(() => {
@@ -308,9 +327,9 @@ onBeforeRouteLeave(() => {
 											<tbody>
 												<tr
 													v-for="(detail, index) in rent.detail"
-													:class="{'bg-dark text-white' : detail.end_time == hoveredPaymentEndTime}"
+													:class="{'bg-dark text-white' : isInSelectedPaymentHistory(detail.end_time)}"
 												>
-													<td class="text-muted">{{ ++index }}</td>
+													<td>{{ ++index }}</td>
 
 													<!-- gerobak code -->
 													<td>{{ detail.code }}</td>
@@ -357,7 +376,7 @@ onBeforeRouteLeave(() => {
 									Riwayat pembayaran
 								</div>
 								<div class="card-body">
-									<table v-if="paymentHistory" class="table table-sm table-bordered table-hover">
+									<table v-if="paymentHistory.length" class="table table-sm table-bordered table-hover">
 										<thead>
 											<tr>
 												<th>#</th>
@@ -369,10 +388,10 @@ onBeforeRouteLeave(() => {
 										<tbody>
 											<tr 
 												v-for="(payment, index) in paymentHistory"
-												@click="hoveredPaymentEndTime ? hoveredPaymentEndTime = null : hoveredPaymentEndTime = payment.time"
-											
+												@click="toggleSelectedPaymentHistory(payment)"
+												:class="{'text-white bg-dark' : payment.time == selectedPaymentHistory}"
 												>
-												<td class="text-muted">{{ ++index }}</td>
+												<td>{{ ++index }}</td>
 												<td>{{ capitalize(payment.name)  }}</td>
 												<td>{{ getDateTime(payment.time).full() }}</td>
 												<td>{{ numeral(payment.sub_amount).format('0,0') }}</td>
@@ -383,6 +402,10 @@ onBeforeRouteLeave(() => {
 											</tr>
 										</tbody>
 									</table>
+
+									<small v-else class="d-block text-center text-muted">
+										(Belum ada pembayaran)
+									</small>
 								</div>
 							</div>
 
@@ -391,7 +414,7 @@ onBeforeRouteLeave(() => {
 				</div>
 			</div>
 		</div>
-	
+			
 		<div v-else>
 			<p>Error fetching rent data</p>
 		</div>

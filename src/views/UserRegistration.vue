@@ -185,15 +185,12 @@ onBeforeRouteLeave(() => {
 									type="tel" 
 									class="form-control" 
 									>
-								<!-- <div class="text-danger" v-if="!isSamePassword">password tidak sama!</div> -->
 							</div>
 				
 							<button type="submit" class="btn btn-primary">Simpan</button>
 						</div>
 						
 						<div class="col-md-6 d-flex flex-column justify-content-center align-items-center border-start">
-							<!-- <i class="bi-person-plus-fill display-1"></i> -->
-							<!-- <input type="file" ref="profilePic"> -->
 
 							<div class="mb-3">
 								<label class="form-label">Foto profil</label>

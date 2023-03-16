@@ -11,7 +11,7 @@ import router from '../router';
 const authStore = useAuthStore();
 const indexStore = useIndexStore()
 const getDateTime = dateTimeService.getReadableDateTime
-const getBadgeColorByStatus = rentService.getBadgeColorByStatus
+const getColorByStatus = rentService.getColorByStatus
 
 const ongoingRentList = ref([])
 const todayRentList = ref([])
@@ -98,7 +98,7 @@ onBeforeMount( async () => {
 									<td>
 										<span
 											class="badge"
-											:class="`bg-${getBadgeColorByStatus(rent.status)}`"
+											:class="`bg-${getColorByStatus(rent.status)}`"
 										>
 											{{ rent.status }}
 										</span>

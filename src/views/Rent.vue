@@ -27,7 +27,7 @@ async function getRent() {
   }
 }
 
-const getBadgeColorByStatus = rentService.getBadgeColorByStatus
+const getColorByStatus = rentService.getColorByStatus
 
 function showRent(rent) {
 	choosenRent.value = rent
@@ -113,7 +113,7 @@ onMounted( async () => {
 									<td>
 										<span 
 											class="badge"
-											:class="`bg-${getBadgeColorByStatus(rent.status)}`"
+											:class="`bg-${getColorByStatus(rent.status)}`"
 										>
 											{{ rent.status }}
 										</span>
@@ -173,7 +173,7 @@ onMounted( async () => {
 							<div class="col">
 								<span 
 											class="badge"
-											:class="`bg-${getBadgeColorByStatus(choosenRent.status)}`"
+											:class="`bg-${getColorByStatus(choosenRent.status)}`"
 										>
 											{{ choosenRent.status }}
 										</span>

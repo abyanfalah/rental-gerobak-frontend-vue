@@ -270,13 +270,11 @@ onBeforeRouteLeave(() => {
 								<div class="mt-3">
 									<small class="text-muted">Status</small>
 									<p>
-										<span class="badge fs-2" :class="`bg-${getBadgeColorByStatus(rent.status)}`">
+										<span class="badge fs-2" :class="`bg-${getColorByStatus(rent.status)}`">
 											{{ rent.status }}
 										</span>
 									</p>
 								</div>
-	
-	
 							</div>
 						</div>
 					</div>
@@ -336,7 +334,7 @@ onBeforeRouteLeave(() => {
 													<td class="text-center">
 														<span 
 															class="badge"
-															:class="`bg-${getBadgeColorByStatus(detail.status)}`"
+															:class="`bg-${getColorByStatus(detail.status)}`"
 															>
 															{{ detail.status }}
 														</span>
@@ -394,17 +392,10 @@ onBeforeRouteLeave(() => {
 			</div>
 		</div>
 	
-		
 		<div v-else>
 			<p>Error fetching rent data</p>
 		</div>
 	</div>
-
-	
-
-	<!-- <p v-for="(detail, index) in rent.detail ">
-		{{ detail }}
-	</p> -->
 
 	
 	<ModalGerobakAddToRent @add-gerobak-to-rent-success="getRent()" />

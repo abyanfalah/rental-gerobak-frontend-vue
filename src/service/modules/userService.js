@@ -25,5 +25,5 @@ export default {
   delete: (id) => {
     return api.delete(url + id);
   },
-  userImageUrl: (id) => `${url}/${id}/image`,
+  userImageUrl: (id) => `${url}${id}/image`,
 };

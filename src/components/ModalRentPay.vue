@@ -63,10 +63,14 @@ async function payment() {
 	}
 
 	const rent = indexStore.choosenRent
-	const rentDetails = indexStore.choosenRent.detail
 
 	const response = await rentService.payAll(rent.id)
-	return response.status == 200
+	if (response.status !== 200) {
+		errorMessage.value = `Terjadi kesalahan teknis: ${response.statusText}`
+		return false
+	}
+
+	return true
 }
 
 async function payAllHandler() {
@@ -172,6 +176,9 @@ function closePayment() {
 								<span class="h1">Transaksi berhasil!</span>
 							</div>
 						</div>
+
+						<!-- transaction error body -->
+
 					</div>
 
 					<!-- payment process footer -->

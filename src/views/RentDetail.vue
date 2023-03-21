@@ -40,9 +40,8 @@ async function getRent() {
 
 		paymentHistory.value = (await rentService.getPaymentHistory(rent.value.id)).data.data
 
-		console.log(selectedPaymentHistory.value)
-
 		indexStore.choosenRent = Object.assign({}, rent.value)
+
 	}catch (err) {
 		console.error(err)
 	}
@@ -84,6 +83,8 @@ function isInSelectedPaymentHistory(rentDetailEndTime) {
 onBeforeMount(() => {
 	getRent()
 })
+
+
 onBeforeRouteLeave(() => {
 	indexStore.choosenRent = Object.assign({})
 })

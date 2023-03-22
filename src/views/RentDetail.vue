@@ -362,7 +362,8 @@ onBeforeRouteLeave(() => {
 
 													<!-- subamount if status == ok -->
 													<td class="text-end">
-														<span>{{ detail.sub_amount }}</span>
+														<span v-if="detail.status == 'OK'">{{ detail.sub_amount }}</span>
+														<span v-else>-</span>
 													</td>
 												</tr>
 											</tbody>

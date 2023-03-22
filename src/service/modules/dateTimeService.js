@@ -10,7 +10,13 @@ export default {
       dateTime.getMonth()
     )} ${dateTime.getFullYear()}`;
 
-    const time = `${dateTime.getHours()} : ${dateTime.getMinutes()}`;
+    let hour = dateTime.getHours();
+    hour = hour < 10 ? "0" + hour : hour;
+
+    let minute = dateTime.getMinutes();
+    minute = minute < 10 ? "0" + minute : minute;
+
+    const time = `${hour} : ${minute}`;
 
     const shortDayDate = `${bahasaDateTime.shortDay(
       dateTime.getDay()

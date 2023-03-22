@@ -13,9 +13,6 @@ export default {
   getById: (id) => {
     return api.get(url + id);
   },
-  // create: (newData) => {
-  //   return api.post(url, newData);
-  // },
   create: (formData) => {
     return api.post(url, formData);
   },
@@ -26,4 +23,11 @@ export default {
     return api.delete(url + id);
   },
   userImageUrl: (id) => `${url}${id}/image`,
+  getColorByAccess: (access) => {
+    const colors = {
+      admin: "danger",
+      user: "primary",
+    };
+    return colors[access.toLowerCase()];
+  },
 };

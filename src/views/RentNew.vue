@@ -26,12 +26,15 @@ async function confirmRent() {
 			note : additionalNotes.value,
 		}
 			
-		await rentService.create(rentData)
-		router.push('/dashboard')
-		indexStore.actionSuccessMessage = "Penyewaan baru berhasil dibuat!"
-	} catch {
+		const response = await rentService.create(rentData)
+
+		if (response.status == 200) {
+			indexStore.actionSuccessMessage = "Penyewaan baru berhasil dibuat!"
+			router.push('/dashboard')
+		}
+	} catch(err) {
 		indexStore.actionErrorMessage = "Gagal membuat penyewaan baru"
-		indexStore.error =  "Gagal membuat penyewaan baru"
+		indexStore.error =  err
 	}
 }
 

@@ -104,8 +104,10 @@ onMounted( async () => {
 							</thead>
 
 							<tbody>
-								<tr @click="showRent(rent)" v-for="(rent, index) in rentList">
-									<td class="text-muted">{{ ++index }}</td>
+								<tr
+									:class="{'bg-dark text-white' : rent.id == choosenRent.id}" 
+									@click="showRent(rent)" v-for="(rent, index) in rentList">
+									<td >{{ ++index }}</td>
 									<td>{{ getDateTime(rent.created_at).noDayDate }}</td>
 									<td>{{ getDateTime(rent.created_at).time }}</td>
 									<td>{{ capitalize.words(rent.customer) }}</td>

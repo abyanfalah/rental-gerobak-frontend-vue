@@ -1,5 +1,6 @@
 import { ref, computed } from "vue";
 import { defineStore } from "pinia";
+import userService from "../service/modules/userService";
 
 // TODO: get solution for proper auth state persitence
 export const useAuthStore = defineStore(
@@ -12,10 +13,15 @@ export const useAuthStore = defineStore(
       return access.toLowerCase() === "admin";
     });
 
+    const userImageUrl = computed(() =>
+      userService.userImageUrl(user.value.id)
+    );
+
     return {
       isAuthenticated,
       isAdmin,
       user,
+      userImageUrl,
     };
   },
   {

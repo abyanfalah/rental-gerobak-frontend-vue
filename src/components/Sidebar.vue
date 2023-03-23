@@ -8,14 +8,12 @@ import { useAuthStore } from "../stores/auth";
 
 const authStore = useAuthStore();
 
-const userImageUrl = computed(() =>
-	userService.userImageUrl(authStore.user.id)
-)
+const userImageUrl = authStore.userImageUrl;
 
 
-function getCurrentRouteName() {
-	return router.currentRoute.value.name ?? ''
-};
+// function getCurrentRouteName() {
+// 	return router.currentRoute.value.name ?? ''
+// };
 </script>
 
 <template>
@@ -33,7 +31,6 @@ function getCurrentRouteName() {
 			<RouterLink to="/rent/new" 
 				class="nav-link " 
 				active-class="bg-success text-white"
-				:class="{'bg-white text-dark' : getCurrentRouteName().toLowerCase() !== 'rental baru'}"
 				>
         	<i class="bi-plus-square-fill"></i>
         	Rental baru
@@ -106,7 +103,7 @@ function getCurrentRouteName() {
         class="dropdown-menu dropdown-menu-dark text-small shadow"
         aria-labelledby="dropdownUser1"
       >
-        <li><a class="dropdown-item" href="#">Profil</a></li>
+        <li><RouterLink to="/me" class="dropdown-item">Profil</RouterLink></li>
         <li><hr class="dropdown-divider" /></li>
         <li>
           <button class="dropdown-item" data-bs-toggle="modal" data-bs-target="#modalLogout">Logout</button>

@@ -37,6 +37,7 @@ function showRent(rent) {
 const searchQuery = ref()
 function filter() {
 	console.log(`looking for ${searchQuery.value}`)
+	alert("coming soon")
 }
 
 onMounted( async () => {
@@ -77,7 +78,7 @@ onMounted( async () => {
 								v-model="searchQuery"
 								@keyup="filter()"
 								class="form-control" 
-								placeholder="Ketik disini untuk mencari">
+								placeholder="Ketik disini untuk mencari (coming soon)">
 								<datalist id="customers">
 									<option v-for="customer in customerList" :value="customer.name">{{ customer.name }}</option>
 								</datalist>

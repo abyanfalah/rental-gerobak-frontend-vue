@@ -131,6 +131,7 @@ onBeforeRouteLeave(() => {
 				<form @submit.prevent="registerUser()" enctype="multipart/form-data">
 					<div class="row">
 						<div class="col-md-6 pe-5">
+
 							<div class="mb-3">
 								<label class="form-label">Nama</label>
 								<input 
@@ -152,7 +153,6 @@ onBeforeRouteLeave(() => {
 									:class="{'border-danger' : !isValidUsername}"
 									placeholder="5 karakter atau lebih">
 								<div  class="text-danger" v-if="!isValidUsername">username tidak valid!</div>
-								
 							</div>
 				
 							<div class="mb-3">

@@ -83,6 +83,11 @@ const router = createRouter({
       props: true,
       alias: "/rent/:id",
     },
+    {
+      path: "/me",
+      name: "profil",
+      component: () => import("../views/Profile.vue"),
+    },
   ],
 });
 

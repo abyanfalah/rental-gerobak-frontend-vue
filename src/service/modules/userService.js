@@ -30,4 +30,12 @@ export default {
     };
     return colors[access.toLowerCase()];
   },
+  checkUsername: (usernameToCheck) => {
+    return api.get(url + "check_username", {
+      params: {
+        username: usernameToCheck,
+      },
+    });
+  },
+  getSession: () => api.get("/session"),
 };

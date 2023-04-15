@@ -1,11 +1,11 @@
 const dayList = [
+  "Minggu",
   "Senin",
   "Selasa",
   "Rabu",
   "Kamis",
   "Jum'at",
   "Sabtu",
-  "Minggu",
 ];
 
 const monthList = [
@@ -25,20 +25,10 @@ const monthList = [
 
 export default {
   day: (dayNum) => {
-    return dayList[dayNum - 1];
+    return dayList[dayNum];
   },
 
   month: (monthNum) => {
     return monthList[monthNum];
-  },
-
-  shortDay: (dayNum) => {
-    const result = dayList[dayNum - 1];
-    return result.substring(0, 3);
-  },
-
-  shortMonth: (monthNum) => {
-    const result = monthList[monthNum];
-    return result.substring(0, 3);
   },
 };

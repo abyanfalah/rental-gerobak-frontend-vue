@@ -1,14 +1,10 @@
 import bahasaDateTime from "../../helper/indonesian-day-month";
 
+const bdt = bahasaDateTime;
+
 export default {
   getReadableDateTime: (dateTimeToParse) => {
     const dateTime = new Date(dateTimeToParse);
-
-    const date = `${bahasaDateTime.day(
-      dateTime.getDay()
-    )} ${dateTime.getDate()} ${bahasaDateTime.shortMonth(
-      dateTime.getMonth()
-    )} ${dateTime.getFullYear()}`;
 
     let hour = dateTime.getHours();
     hour = hour < 10 ? "0" + hour : hour;
@@ -16,17 +12,23 @@ export default {
     let minute = dateTime.getMinutes();
     minute = minute < 10 ? "0" + minute : minute;
 
-    const time = `${hour} : ${minute}`;
+    console.clear();
+    console.log(dateTime.getDate());
 
-    const shortDayDate = `${bahasaDateTime.shortDay(
-      dateTime.getDay()
-    )} ${dateTime.getDate()} ${bahasaDateTime.shortMonth(
-      dateTime.getMonth()
-    )} ${dateTime.getFullYear()}`;
+    const dateNum = dateTime.getDate();
+    const day = bdt.day(dateTime.getDay());
+    const shortDay = day.substring(0, 3);
+    const month = bdt.month(dateTime.getMonth());
+    const shortMonth = month.substring(0, 3);
+    const fullYear = dateTime.getFullYear();
 
-    const noDayDate = `${dateTime.getDate()} ${bahasaDateTime.shortMonth(
-      dateTime.getMonth()
-    )} ${dateTime.getFullYear()}`;
+    const date = `${day} ${dateNum} ${shortMonth} ${fullYear}`;
+
+    const shortDayDate = `${shortDay} ${dateNum} ${shortMonth} ${fullYear}`;
+
+    const noDayDate = `${dateNum} ${shortMonth} ${fullYear}`;
+
+    const time = `${hour}:${minute}`;
 
     return {
       date,
